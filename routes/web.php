@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('cms.base.index');
+Route::get('/asd', function () {
+    return view('_layout.app');
 });
 
 Route::prefix('paket')->group(function () {
