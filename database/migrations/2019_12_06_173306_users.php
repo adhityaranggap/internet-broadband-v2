@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class Users extends Migration
 {
     /**
      * Run the migrations.
@@ -16,13 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username')->unique();
-            $table->string('nama');
-            $table->string('email')->unique();
+            $table->string('name');
+            $table->string('email');
             $table->string('contact_person');
             $table->text('password');
-            $table->string('alamat');
-            $table->unsignedInteger('router_id');
-            $table->unsignedInteger('akses_group_id')->default(0);
+            $table->string('address');
+            $table->unsignedInteger('role_id');
             $table->timestamps(); //generate created_at and update_at
         });
     }

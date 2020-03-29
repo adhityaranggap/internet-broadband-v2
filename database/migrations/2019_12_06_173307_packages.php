@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreatePackagesTable extends Migration
+class Packages extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,13 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama_paket');
-            $table->string('kec_internet');
-            $table->string('harga_paket');
+            $table->string('name');
+            $table->string('speed');
+            $table->integer('price');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *
