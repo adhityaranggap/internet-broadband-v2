@@ -87,7 +87,8 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::where('id', $id)->first();
+        return view('cms.users.customer.edit', compact ('data'));
     }
 
     /**
@@ -110,6 +111,15 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // menghapus data pegawai berdasarkan id yang dipilih
+	$user= User::where('id', $id)->first();
+        
+    if (is_null($user)){
+        return 'tidak ditemukan';
+    }else{
+        $user->delete();
+        return 'sucess delete';
+    }
+
     }
 }
