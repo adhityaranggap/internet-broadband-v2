@@ -16,33 +16,33 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Transactions</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="layout-default.html">All Tramsaction</a></li>
-                  <li><a class="nav-link" href="layout-transparent.html">Unpaid</a></li>
-                  <li><a class="nav-link" href="layout-top-navigation.html">Payments</a></li>
+                  <li><a class="nav-link" href="#">All Tramsaction</a></li>
+                  <li><a class="nav-link" href="#">Unpaid</a></li>
+                  <li><a class="nav-link" href="#">Payments</a></li>
                 </ul>
               </li>
              
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>Users</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="components-article.html">Customers</a></li>
-                  <li><a class="nav-link" href="components-article.html">Billing</a></li>
+                  <li><a class="nav-link" href="#">Customers</a></li>
+                  <li><a class="nav-link" href="#">Billing</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-bicycle"></i> <span>Packages</span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="gmaps-advanced-route.html">List package</a></li>
-                  <li><a href="gmaps-draggable-marker.html">Package Track</a></li>
+                  <li><a href="#">List package</a></li>
+                  <li><a href="#">Package Track</a></li>
  
                 </ul>
               </li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-invoice"></i> <span>Ticket</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="modules-calendar.html">All Ticket</a></li>
-                  <li><a class="nav-link" href="modules-chartjs.html">Create Ticket</a></li>
-                  <li><a class="nav-link" href="modules-datatables.html">Unsolved Ticket</a></li>
+                  <li><a class="nav-link" href="#">All Ticket</a></li>
+                  <li><a class="nav-link" href="#">Create Ticket</a></li>
+                  <li><a class="nav-link" href=" ml">Unsolved Ticket</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">

@@ -14,9 +14,11 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('stisla/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">    
+  @stack('css')
 </head>
 
 <body>
+  @include('_layout.modal')
   <div id="app">
     <div class="main-wrapper">
       <div class="navbar-bg"></div>
@@ -29,16 +31,17 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Blank Page</h1>
+            <h1>@yield('page_header', '')</h1>
           </div>
 
           <div class="section-body">
+            @yield('content')
           </div>
         </section>
       </div>
 
       <!-- Footer -->
-     @include('_layout.footer')
+      @include('_layout.footer')
       </footer>
     </div>
   </div>
@@ -53,10 +56,14 @@
 
   <!-- JS Libraies -->
 
+  <!-- Custome Modal Js -->
+  <script src="{{ asset('js/modal.js') }}"></script>
+
   <!-- Template JS File -->
   <script src="{{ asset('stisla/js/scripts.js') }}"></script>
   <script src="{{ asset('stisla/js/custom.js') }}"></script>
 
   <!-- Page Specific JS File -->
+  @stack('js')
 </body>
 </html>
