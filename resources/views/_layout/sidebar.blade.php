@@ -22,10 +22,10 @@
                 </ul>
               </li>
              
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown {{ Str::startsWith(Request::path(),'users') === true  ? 'active' : ''}}">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>Users</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="#">Customers</a></li>
+                  <li class="{{ Str::startsWith(Request::path(),'users/customers') ? 'active' : ''}}"><a class="nav-link" href="#">Customers</a></li>
                   <li><a class="nav-link" href="#">Billing</a></li>
                 </ul>
               </li>
