@@ -227,6 +227,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        //Add ons Class
+        'Component' => App\helpers\Component::class,
+        'StringHelper' => App\helpers\StringHelper::class
+
     ],
 
 ];
