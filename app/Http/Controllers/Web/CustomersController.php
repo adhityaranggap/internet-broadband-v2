@@ -37,7 +37,7 @@ class CustomersController extends Controller
             function ($data){                                
             
                     return
-                    \Component::btnRead('#', 'Detail Customer').
+                    //\Component::btnRead('#', 'Detail Customer').
                     \Component::btnUpdate(route('customer-edit', $data->id), 'Ubah Customer '. $data->name).
                     \Component::btnDelete(route('customer-destroy', $data->id), 'Hapus Customer '. $data->name);
                     
@@ -91,6 +91,7 @@ class CustomersController extends Controller
         return view('cms.users.customer.edit', compact ('data'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -100,7 +101,19 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::where('id', $id)->first();
+        $this->validate($request,[
+            'name'      =>  'required|max:255|string',
+            'username'  =>  'required|max:255|string|unique:users,username,'.$user->id,
+        ]);
+
+        
+        if($user){
+            User::where('id', $id)->update($request->only('name', 'username'));
+        }
+        
+        return false;
+
     }
 
     /**

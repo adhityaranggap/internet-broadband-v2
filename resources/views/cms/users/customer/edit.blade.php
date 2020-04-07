@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('customer-store') , $data->id }}">
+<form method="post" action="{{ route('customer-update', $data->id)  }}">
 @csrf
     <div class="form-group ">
         <label for="name">Username</label>
