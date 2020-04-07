@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('fetch')->group(function () {
+
+    Route::get('/unpaid', 'Api\ApiController@fetchAllUnpaid');
+    Route::get('/customers', 'Api\ApiController@fetchAllCustomers');
+    Route::get('/package/{package_id}', 'Api\ApiController@fetchByPackageId');
 });
+
+Route::post('/customers/store', 'Api\ApiController@storeCustomer');
+Route::post('/review/destroy/{review_id}', 'Api\ApiController@destroyReview');
+
+
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
