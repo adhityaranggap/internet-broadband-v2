@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use App\User, App\Role;
 
-class CustomersController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,6 +33,15 @@ class CustomersController extends Controller
             function ($data){
                 return $data->username;
         })         
+        ->editColumn('contact_person',
+            function ($data){
+                return $data->contact_person;
+        })               
+        ->editColumn('Address',
+            function ($data){
+                return $data->address;
+        })   
+              
         ->editColumn('action',
             function ($data){                                
             
@@ -65,7 +74,15 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+    		'username' => 'required',
+    		'address' => 'required',
+        ]);
+        $request['role_id'] = Role::ROLE_CUSTOMER;
+
+        User::create($request->except('_token'));
+ 
+        
     }
 
     /**
@@ -88,7 +105,7 @@ class CustomersController extends Controller
     public function edit($id)
     {
         $data = User::where('id', $id)->first();
-        return view('cms.users.customer.edit', compact ('data'));
+        return view('cms.users.billing.edit', compact ('data'));
     }
 
 
@@ -131,7 +148,7 @@ class CustomersController extends Controller
         return 'tidak ditemukan';
     }else{
         $user->delete();
-        return 'sucess delete';
+       
     }
 
     }

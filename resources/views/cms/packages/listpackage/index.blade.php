@@ -1,13 +1,13 @@
 @extends('_layout.app')
-@section('title', 'Data Customer')
-@section('page_header', 'User')
+@section('title', 'Data Package')
+@section('page_header', 'Package')
 @section('content')
 
     <div class="card card-primary">
         <div class="card-header">
-            <h4>Data Customer</h4>
+            <h4>Data Package</h4>
             <div class="card-header-action">
-                <a href="{{ route('customer-create') }}" class="btn btn-outline-primary modal-show" title="Tambah User Baru ">(+) Tambah Baru</a>                
+                <a href="{{ route('list-package-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Package Baru ">(+) Tambah Baru</a>                
             </div>
         </div>
         <div class="card-body ">
@@ -17,9 +17,8 @@
                     <tr>
                     <th scope="col">No</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Contact Person</th>
-                        <th scope="col">Address</th>
+                        <th scope="col">Speed</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -52,9 +51,8 @@
         columns:[
             {data: 'DT_RowIndex', name:'name', searchable: false},
             {data: 'name', name:'name'},
-            {data: 'username', name:'username'},
-            {data: 'contact_person', name:'contact_person'},
-            {data: 'address', name:'address'}, 
+            {data: 'speed', name:'speed'},
+            {data: 'price', name:'price'},
             {data: 'action', name:'action'},           
         ]
     });

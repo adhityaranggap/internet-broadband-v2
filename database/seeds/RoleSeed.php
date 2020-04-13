@@ -13,10 +13,16 @@ class RoleSeed extends Seeder
     {
         $arrRole =[
             [
-              'role'  =>  'Customer',             
-            ]        
+              'role'  =>  'Customer',                           
+            ],
+            [
+              'role'  =>  'Billing',                           
+            ],
+            [
+              'role'  =>  'Admin',                           
+            ]
           ];
-  
+    
           foreach($arrRole as $role){
               Role::create($role);
           }

@@ -10,6 +10,7 @@ class Role extends Model
     protected $primaryKey = "id";
 
     CONST ROLE_CUSTOMER = '1';
+    CONST ROLE_BILLING = '2';
 
     protected $fillable = [
         'id',         

@@ -21,7 +21,7 @@ class Transactions extends Migration
             $table->unsignedInteger('transaction_has_modified_id');
             $table->dateTime('expired_date');
             $table->tinyInteger('status');
-            $table->integer('harga');
+            $table->integer('price');
             $table->integer('fee');
             $table->timestamps();
         });

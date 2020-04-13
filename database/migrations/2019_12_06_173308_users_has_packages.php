@@ -17,8 +17,8 @@ class UsersHasPackages extends Migration
             $table->bigIncrements('id');
             $table->string('user_id');
             $table->string('package_id');
-            $table->enum('verification', ['awal bulan', 'tgl pembayaran'])->default('awal bulan');
-            $table->enum('status', ['aktif','nonaktif']);            
+            $table->enum('verification', ['First Month', 'Date Payment'])->default('First Month');
+            $table->enum('status', ['active','inactive']);            
             $table->text('notes');     
             $table->timestamps();
         });

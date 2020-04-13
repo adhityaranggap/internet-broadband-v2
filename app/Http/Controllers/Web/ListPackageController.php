@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DataTables;
-use App\User, App\Role;
+use App\Package, App\Role;
 
-class BillingController extends Controller
+class ListPackageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,36 +16,41 @@ class BillingController extends Controller
      */
     public function index()
     {
-        return view('cms.users.billing.index');
+        return view('cms.packages.listpackage.index');
     }
-
     public function datatables()
     {       
     
-        $data = User::where('role_id', Role::ROLE_BILLING)->get();
+        $data = package::all();
 
         return Datatables::of($data)  
         ->editColumn('name',
             function ($data){
                 return $data->name;
         })     
-        ->editColumn('username',
+        ->editColumn('speed',
             function ($data){
-                return $data->username;
+                return $data->speed;
         })         
+        ->editColumn('price',
+            function ($data){
+                return $data->price;
+        })               
+              
         ->editColumn('action',
             function ($data){                                
             
                     return
                     //\Component::btnRead('#', 'Detail Customer').
-                    \Component::btnUpdate(route('billing-edit', $data->id), 'Ubah Billing User '. $data->name).
-                    \Component::btnDelete(route('billing-destroy', $data->id), 'Hapus Billing User '. $data->name);
+                    \Component::btnUpdate(route('list-package-edit', $data->id), 'Ubah Package '. $data->name).
+                    \Component::btnDelete(route('list-package-destroy', $data->id), 'Hapus Package '. $data->name);
                     
         })
         ->addIndexColumn()
         // ->rawColumns(['action']) 
         ->make(true);          
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,8 +58,7 @@ class BillingController extends Controller
      */
     public function create()
     {
-        return view('cms.users.billing.create');
-
+        return view('cms.packages.listpackage.create');
     }
 
     /**
@@ -66,13 +70,12 @@ class BillingController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'username' => 'required',
     		'name' => 'required',
+            'speed' => 'required',
+            'price' => 'required'
         ]);
-        $request['role_id'] = Role::ROLE_BILLING;
-        // return $request->all();
-        User::create($request->except('_token'));
- 
+
+        Package::create($request->except('_token'));
     }
 
     /**
@@ -94,8 +97,8 @@ class BillingController extends Controller
      */
     public function edit($id)
     {
-        $data = User::where('id', $id)->first();
-        return view('cms.users.billing.edit', compact ('data'));
+        $data = Package::where('id', $id)->first();
+        return view('cms.packages.listpackage.edit', compact ('data'));
     }
 
     /**
@@ -107,19 +110,20 @@ class BillingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('id', $id)->first();
+        $data = Package::where('id', $id)->first();
         $this->validate($request,[
             'name'      =>  'required|max:255|string',
-            'username'  =>  'required|max:255|string|unique:users,username,'.$user->id,
+            'speed'  =>  'required|max:255|string,',
+            'price'  =>  'required|max:10|integer,',
+
         ]);
 
         
-        if($user){
-            User::where('id', $id)->update($request->except('_token'));
+        if($data){
+            Package::where('id', $id)->update($request->only('name', 'package', 'price'));
         }
         
         return false;
-
     }
 
     /**
@@ -130,13 +134,14 @@ class BillingController extends Controller
      */
     public function destroy($id)
     {
-        $user= User::where('id', $id)->first();
+     // menghapus data pegawai berdasarkan id yang dipilih
+	$data= Package::where('id', $id)->first();
         
-    if (is_null($user)){
+    if (is_null($data)){
         return 'tidak ditemukan';
     }else{
-        $user->delete();
-        return 'sucess delete';
+        $data->delete();
+       
     }
     }
 }

@@ -1,13 +1,13 @@
 @extends('_layout.app')
-@section('title', 'Data Customer')
+@section('title', 'Billing Access')
 @section('page_header', 'User')
 @section('content')
 
     <div class="card card-primary">
         <div class="card-header">
-            <h4>Data Customer</h4>
+            <h4>Billing Access</h4>
             <div class="card-header-action">
-                <a href="{{ route('customer-create') }}" class="btn btn-outline-primary modal-show" title="Tambah User Baru ">(+) Tambah Baru</a>                
+                <a href="{{ route('billing-create') }}" class="btn btn-outline-primary modal-show" title="Tambah User Baru ">(+) Tambah Baru</a>                
             </div>
         </div>
         <div class="card-body ">

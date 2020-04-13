@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('customer-store') }}">
+<form method="post" action="{{ route('billing-store') }}">
 @csrf
     <div class="form-group ">
     <label for="name">Username</label>
@@ -15,7 +15,7 @@
     </div>
     <div class="form-group ">
     <label for="name">Contact Person</label>
-    <input class="form-control" name="contact_person" type="text" placeholder="Required" value="" id="contact_person">
+        <input class="form-control" name="contact_person" type="text" placeholder="Required" value="" id="contact_person">
     </div>
     <div class="form-group ">
     <label for="name">Password</label>

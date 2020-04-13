@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/* Temporary */
+Route::get('/', 'Web\CustomerController@index')->name('customer-index');
 
 Route::get('/asd', function () {
     return view('_layout.app');
@@ -51,13 +53,13 @@ Route::prefix('transaction')->group(function () {
 Route::prefix('users')->group(function () {
 
     Route::prefix('customers')->group(function () {
-        Route::get('/', 'Web\CustomersController@index')->name('customer-index');
-        Route::get('/datatables', 'Web\CustomersController@datatables')->name('customer-datatables');
-        Route::get('/create', 'Web\CustomersController@create')->name('customer-create');
-        Route::post('/store', 'Web\CustomersController@store')->name('customer-store');
-        Route::get('/edit/{id}', 'Web\CustomersController@edit')->name('customer-edit');
-        Route::post('/update/{id}', 'Web\CustomersController@update')->name('customer-update');
-        Route::delete('/destroy/{id}', 'Web\CustomersController@destroy')->name('customer-destroy'); 
+        Route::get('/', 'Web\CustomerController@index')->name('customer-index');
+        Route::get('/datatables', 'Web\CustomerController@datatables')->name('customer-datatables');
+        Route::get('/create', 'Web\CustomerController@create')->name('customer-create');
+        Route::post('/store', 'Web\CustomerController@store')->name('customer-store');
+        Route::get('/edit/{id}', 'Web\CustomerController@edit')->name('customer-edit');
+        Route::post('/update/{id}', 'Web\CustomerController@update')->name('customer-update');
+        Route::delete('/destroy/{id}', 'Web\CustomerController@destroy')->name('customer-destroy'); 
     });
 
     Route::prefix('billing')->group(function () {
@@ -75,13 +77,13 @@ Route::prefix('users')->group(function () {
 Route::prefix('packages')->group(function () {
 
     Route::prefix('list-package')->group(function () {
-        Route::get('/', 'Web\PackageController@index')->name('package-index');
-        Route::get('/datatables', 'Web\PackageController@datatables')->name('package-datatables');
-        Route::get('/create', 'Web\PackageController@create')->name('package-create');
-        Route::post('/store', 'Web\PackageController@store')->name('package-store');
-        Route::get('/edit/{id}', 'Web\PackageController@edit')->name('package-edit');
-        Route::post('/update/{id}', 'Web\PackageController@update')->name('package-update');
-        Route::delete('/destroy/{id}', 'Web\PackageController@destroy')->name('package-destroy');  //only admin
+        Route::get('/', 'Web\ListPackageController@index')->name('list-package-index');
+        Route::get('/datatables', 'Web\ListPackageController@datatables')->name('list-package-datatables');
+        Route::get('/create', 'Web\ListPackageController@create')->name('list-package-create');
+        Route::post('/store', 'Web\ListPackageController@store')->name('list-package-store');
+        Route::get('/edit/{id}', 'Web\ListPackageController@edit')->name('list-package-edit');
+        Route::post('/update/{id}', 'Web\ListPackageController@update')->name('list-package-update');
+        Route::delete('/destroy/{id}', 'Web\ListPackageController@destroy')->name('list-package-destroy');  //only admin
     });
 
     Route::prefix('package-track')->group(function () {

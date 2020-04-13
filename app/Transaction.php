@@ -17,7 +17,7 @@ class Transaction extends Model
         'transaction_has_modified_id',
         'expired_date',
         'status',
-        'harga',
+        'price',
         'fee',
         'created_at',
         'updated_at'

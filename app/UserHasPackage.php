@@ -4,18 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Package extends Model
+class UserHasPackage extends Model
 {
-    protected $table = "packages";        
+    protected $table = "users_has_packages";        
     protected $primaryKey = "id";
 
     protected $fillable = [
         'id',         
-        'name',
-        'speed',
-        'price',
+        'user_id',
+        'package_id',
+        'verification',
+        'status',
+        'notes',
         'created_at',
         'updated_at'
         ];
-        
+
+   
 }

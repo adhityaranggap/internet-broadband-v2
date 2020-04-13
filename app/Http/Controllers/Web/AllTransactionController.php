@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DataTables;
+use App\USerHasPackage, App\User, App\Role, App\Package, App\Transaction;
 
 class AllTransactionController extends Controller
 {
@@ -14,9 +16,11 @@ class AllTransactionController extends Controller
      */
     public function index()
     {
-        //
+        return view('cms.transactions.alltransaction.index');
     }
 
+
+  
     /**
      * Show the form for creating a new resource.
      *
