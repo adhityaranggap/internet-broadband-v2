@@ -228,8 +228,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //Add ons Class
-        'Component' => App\helpers\Component::class,
-        'StringHelper' => App\helpers\StringHelper::class
+        'Component' => App\Helpers\Component::class,
+        'StringHelper' => App\Helpers\StringHelper::class,
+        'ImageUploadHelper' => App\Helpers\ImageUploadHelper::class,
+        'EnumTransaksi' => App\Enum\EnumTransaksi::class
 
     ],
 
