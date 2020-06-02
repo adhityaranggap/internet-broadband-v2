@@ -29,6 +29,12 @@ class Component
         return '<a href="'.$src.'" target="_blank" class="btn btn-outline-danger " title="'.$title.'"><i class="fas fa-file-pdf"></i> Cetak PDF</a> ';
     }
 
+    public static function btnDetailPaket($src, $title)
+    {
+        return '<a href="'.$src.'" class="btn btn-outline-primary btn-show" title="'.$title.'"><i class="far fa-eye"></i> Detail Paket</a> ';
+    }
+
+
     
     public static function badgetLinkSuccess($title)
     {
@@ -39,6 +45,10 @@ class Component
     public static function badgetLinkDanger($title)
     {
         return '<a href="#" class="badge badge-danger">'.$title.'</a>';
+    }
+    public static function badgetLinkWarning($title)
+    {
+        return '<a href="#" class="badge badge-warning">'.$title.'</a>';
     }
 
     public static function clickableImg($src, $maxWidth) {

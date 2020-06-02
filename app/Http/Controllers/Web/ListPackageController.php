@@ -70,9 +70,9 @@ class ListPackageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'name' => 'required',
-            'speed' => 'required',
-            'price' => 'required'
+    		'name' => 'required|string|max:255',
+            'speed' => 'required|string|max:15',
+            'price' => 'required|numeric|digits_between:1,10'
         ]);
 
         Package::create($request->except('_token'));

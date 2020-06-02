@@ -15,112 +15,136 @@ use Illuminate\Support\Facades\Route;
 /* Temporary */
 Route::get('/', 'Web\CustomerController@index')->name('customer-index');
 
-Route::get('/asd', function () {
-    return view('_layout.app');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+
+Route::post('/login-post', 'Web\LoginController@auth')->name('login-post');
+
+
+Route::get('/register', function () {
+    return view('register');
 });
 
-Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index');
+Route::middleware('auth')->group(function () {
 
-Route::prefix('transaction')->group(function () {
+    Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index');
+    Route::get('/logout', 'Web\LoginController@logout')->name('logout');
 
-    Route::prefix('all-transaction')->group(function () {//==
-        Route::get('/', 'Web\AllTransactionController@index')->name('all-transaction-index');
-        Route::get('/datatables', 'Web\AllTransactionController@datatables')->name('all-transaction-datatables');
-        Route::get('/create', 'Web\AllTransactionController@create')->name('all-transaction-create');
-        Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');
-        Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');
-        Route::post('/update/{id}', 'Web\AllTransactionController@update')->name('all-transaction-update');
-        Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
+
+    Route::prefix('transactions')->group(function () {
+
+        Route::prefix('all-transaction')->group(function () {//==
+            Route::get('/', 'Web\AllTransactionController@index')->name('all-transaction-index');//done
+            Route::get('/datatables', 'Web\AllTransactionController@datatables')->name('all-transaction-datatables');//done
+            Route::get('/create', 'Web\AllTransactionController@create')->name('all-transaction-create');//done
+            Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');//done
+            Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');//done
+            Route::post('/update/{id}', 'Web\AllTransactionController@update')->name('all-transaction-update');//done
+            Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
+        });
+
+        Route::prefix('unpaid')->group(function () {//==
+            Route::get('/', 'Web\UnpaidController@index')->name('unpaid-index');
+            Route::get('/datatables', 'Web\UnpaidController@datatables')->name('unpaid-datatables');              
+        });
+
+        // Route::prefix('payments')->group(function () {//==
+        //     Route::get('/', 'Web\PaymentsController@index')->name('payments-index');
+        //     Route::get('/datatables', 'Web\PaymentsController@datatables')->name('payments-datatables');
+        //     Route::get('/create', 'Web\PaymentsController@create')->name('payments-create');
+        //     Route::post('/store', 'Web\PaymentsController@store')->name('payments-store');
+        //     Route::get('/edit/{id}', 'Web\PaymentsController@edit')->name('payments-edit');
+        //     Route::post('/update/{id}', 'Web\PaymentsController@update')->name('payments-update');
+        //     Route::delete('/destroy/{id}', 'Web\PaymentsController@destroy')->name('payments-destroy'); //only admin
+        // });
+    
     });
 
-    Route::prefix('unpaid')->group(function () {//==
-        Route::get('/', 'Web\UnpaidController@index')->name('unpaid-index');
-        Route::get('/datatables', 'Web\UnpaidController@datatables')->name('unpaid-datatables');              
+    Route::prefix('users')->group(function () {
+
+        Route::prefix('customers')->group(function () {
+            Route::get('/', 'Web\CustomerController@index')->name('customer-index');//done
+            Route::get('/datatables', 'Web\CustomerController@datatables')->name('customer-datatables');//done
+            Route::get('/create', 'Web\CustomerController@create')->name('customer-create');//done
+            Route::post('/store', 'Web\CustomerController@store')->name('customer-store');//done
+            Route::get('/load', 'Web\CustomerController@loadData')->name('customer-load');//done
+            Route::get('/edit/{id}', 'Web\CustomerController@edit')->name('customer-edit');//done
+            Route::post('/update/{id}', 'Web\CustomerController@update')->name('customer-update');//done
+            Route::delete('/destroy/{id}', 'Web\CustomerController@destroy')->name('customer-destroy'); //done
+        });
+
+        Route::prefix('billing')->group(function () {
+            Route::get('/', 'Web\BillingController@index')->name('billing-index');//done
+            Route::get('/datatables', 'Web\BillingController@datatables')->name('billing-datatables');//done
+            Route::get('/create', 'Web\BillingController@create')->name('billing-create');//done
+            Route::post('/store', 'Web\BillingController@store')->name('billing-store');//done
+            Route::get('/edit/{id}', 'Web\BillingController@edit')->name('billing-edit');//done
+            Route::post('/update/{id}', 'Web\BillingController@update')->name('billing-update');//done
+            Route::delete('/destroy/{id}', 'Web\BillingController@destroy')->name('billing-destroy'); //done
+        });
+
     });
 
-    Route::prefix('payments')->group(function () {//==
-        Route::get('/', 'Web\PaymentsController@index')->name('payments-index');
-        Route::get('/datatables', 'Web\PaymentsController@datatables')->name('payments-datatables');
-        Route::get('/create', 'Web\PaymentsController@create')->name('payments-create');
-        Route::post('/store', 'Web\PaymentsController@store')->name('payments-store');
-        Route::get('/edit/{id}', 'Web\PaymentsController@edit')->name('payments-edit');
-        Route::post('/update/{id}', 'Web\PaymentsController@update')->name('payments-update');
-        Route::delete('/destroy/{id}', 'Web\PaymentsController@destroy')->name('payments-destroy'); //only admin
-    });
-   
-});
+    Route::prefix('packages')->group(function () {
 
-Route::prefix('users')->group(function () {
+        Route::prefix('customer-package-index')->group(function () {
+            Route::get('/', 'Web\CustomerPackageController@index')->name('customer-package-index');//done
+            Route::get('/datatables', 'Web\CustomerPackageController@datatables')->name('customer-package-datatables');//done
+            Route::get('/create', 'Web\CustomerPackageController@create')->name('customer-package-create');//done
+            Route::get('/load', 'Web\CustomerPackageController@loadData')->name('customer-package-load');//done
 
-    Route::prefix('customers')->group(function () {
-        Route::get('/', 'Web\CustomerController@index')->name('customer-index');
-        Route::get('/datatables', 'Web\CustomerController@datatables')->name('customer-datatables');
-        Route::get('/create', 'Web\CustomerController@create')->name('customer-create');
-        Route::post('/store', 'Web\CustomerController@store')->name('customer-store');
-        Route::get('/edit/{id}', 'Web\CustomerController@edit')->name('customer-edit');
-        Route::post('/update/{id}', 'Web\CustomerController@update')->name('customer-update');
-        Route::delete('/destroy/{id}', 'Web\CustomerController@destroy')->name('customer-destroy'); 
-    });
+            Route::post('/store', 'Web\CustomerPackageController@store')->name('customer-package-store');//done
+            Route::get('/edit/{id}', 'Web\CustomerPackageController@edit')->name('customer-package-edit');//done
+            
+            Route::post('/update/{id}', 'Web\CustomerPackageController@update')->name('customer-package-update');//done
+            Route::delete('/destroy/{id}', 'Web\CustomerPackageController@destroy')->name('customer-package-destroy');  //only admin
+        });
+        Route::prefix('list-package')->group(function () {
+            Route::get('/', 'Web\ListPackageController@index')->name('list-package-index');//done
+            Route::get('/datatables', 'Web\ListPackageController@datatables')->name('list-package-datatables');//done
+            Route::get('/create', 'Web\ListPackageController@create')->name('list-package-create');//done
+            Route::post('/store', 'Web\ListPackageController@store')->name('list-package-store');//done
+            Route::get('/edit/{id}', 'Web\ListPackageController@edit')->name('list-package-edit');//done
+            Route::post('/update/{id}', 'Web\ListPackageController@update')->name('list-package-update');//done
+            Route::delete('/destroy/{id}', 'Web\ListPackageController@destroy')->name('list-package-destroy');  //only admin
+        });
 
-    Route::prefix('billing')->group(function () {
-        Route::get('/', 'Web\BillingController@index')->name('billing-index');
-        Route::get('/datatables', 'Web\BillingController@datatables')->name('billing-datatables');
-        Route::get('/create', 'Web\BillingController@create')->name('billing-create');
-        Route::post('/store', 'Web\BillingController@store')->name('billing-store');
-        Route::get('/edit/{id}', 'Web\BillingController@edit')->name('billing-edit');
-        Route::post('/update/{id}', 'Web\BillingController@update')->name('billing-update');
-        Route::delete('/destroy/{id}', 'Web\BillingController@destroy')->name('billing-destroy'); 
-    });
+        Route::prefix('package-track')->group(function () {
+            Route::get('/', 'Web\PackageTrackController@index')->name('package-track-index');
+            Route::get('/datatables', 'Web\PackageTrackController@datatables')->name('package-track-datatables');
+            Route::get('/edit/{id}', 'Web\PackageTrackController@edit')->name('package-track-edit');
+            Route::post('/update/{id}', 'Web\PackageTrackController@update')->name('package-track-update');
+        });
 
-});
-
-Route::prefix('packages')->group(function () {
-
-    Route::prefix('list-package')->group(function () {
-        Route::get('/', 'Web\ListPackageController@index')->name('list-package-index');
-        Route::get('/datatables', 'Web\ListPackageController@datatables')->name('list-package-datatables');
-        Route::get('/create', 'Web\ListPackageController@create')->name('list-package-create');
-        Route::post('/store', 'Web\ListPackageController@store')->name('list-package-store');
-        Route::get('/edit/{id}', 'Web\ListPackageController@edit')->name('list-package-edit');
-        Route::post('/update/{id}', 'Web\ListPackageController@update')->name('list-package-update');
-        Route::delete('/destroy/{id}', 'Web\ListPackageController@destroy')->name('list-package-destroy');  //only admin
     });
 
-    Route::prefix('package-track')->group(function () {
-        Route::get('/', 'Web\PackageTrackController@index')->name('package-track-index');
-        Route::get('/datatables', 'Web\PackageTrackController@datatables')->name('package-track-datatables');
-        Route::get('/edit/{id}', 'Web\PackageTrackController@edit')->name('package-track-edit');
-        Route::post('/update/{id}', 'Web\PackageTrackController@update')->name('package-track-update');
-    });
+    Route::prefix('ticket')->group(function () {
 
-});
+        Route::prefix('all-ticket')->group(function () {
+            Route::get('/', 'Web\AllTicketController@index')->name('all-ticket-index');
+            Route::get('/datatables', 'Web\AllTicketController@datatables')->name('all-ticket-datatables');       
+            Route::get('/create', 'Web\AllTicketController@create')->name('all-ticket-create');
+            Route::post('/store', 'Web\AllTicketController@store')->name('all-ticket-store');      
+            Route::delete('/destroy/{id}', 'Web\AllTicketController@destroy')->name('all-ticket-destroy');  //only admin
+        });
 
-Route::prefix('ticket')->group(function () {
+      
+        Route::prefix('unsolved-ticket')->group(function () {
+            Route::get('/', 'Web\UnsolvedTicketController@index')->name('unsolved-ticket-index');
+            Route::get('/datatables', 'Web\UnsolvedTicketController@datatables')->name('unsolved-ticket-datatables');        
+            Route::get('/create', 'Web\UnsolvedTicketController@create')->name('unsolved-ticket-create');
+            Route::post('/store', 'Web\UnsolvedTicketController@store')->name('unsolved-ticket-store');      
+        });
 
-    Route::prefix('all-ticket')->group(function () {
-        Route::get('/', 'Web\AllTicketController@index')->name('all-ticket-index');
-        Route::get('/datatables', 'Web\AllTicketController@datatables')->name('all-ticket-datatables');       
-        Route::delete('/destroy/{id}', 'Web\AllTicketController@destroy')->name('all-ticket-destroy');  //only admin
-    });
-
-    Route::prefix('create-ticket')->group(function () {
-        Route::get('/', 'Web\CreateTicketController@index')->name('create-ticket-index');
-        Route::get('/datatables', 'Web\CreateTicketController@datatables')->name('create-ticket-datatables');
-        Route::get('/create', 'Web\CreateTicketController@create')->name('create-ticket-create');
-        Route::post('/store', 'Web\CreateTicketController@store')->name('create-ticket-store');      
-    });
-
-    Route::prefix('unsolved-ticket')->group(function () {
-        Route::get('/', 'Web\UnsolvedTicketController@index')->name('unsolved-ticket-index');
-        Route::get('/datatables', 'Web\UnsolvedTicketController@datatables')->name('unsolved-ticket-datatables');        
-        Route::get('/create', 'Web\UnsolvedTicketController@create')->name('unsolved-ticket-create');
-        Route::post('/store', 'Web\UnsolvedTicketController@store')->name('unsolved-ticket-store');      
     });
 
 });
 
 Route::prefix('review')->group(function () {
-    Route::get('/all-review', 'Web\AllReviewController@index')->name('review-index');
+    Route::get('/', 'Web\AllReviewController@index')->name('review-index');
     Route::get('/datatables', 'Web\AllReviewController@datatables')->name('review-datatables');
     Route::get('/create', 'Web\AllReviewController@create')->name('review-create');
     Route::post('/store', 'Web\AllReviewController@store')->name('review-store');    

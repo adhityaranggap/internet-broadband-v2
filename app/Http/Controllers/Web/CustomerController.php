@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DataTables;
 use App\User, App\Role;
+use Illuminate\Support\Facades\DB;
+
 
 class CustomerController extends Controller
 {
@@ -16,13 +18,13 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('cms.users.customer.index');
+       return view('cms.users.customer.index');
     }
 
     public function datatables()
     {       
     
-        $data = User::where('role_id', Role::ROLE_CUSTOMER)->get();
+        $data = User::all();
 
         return Datatables::of($data)  
         ->editColumn('name',
@@ -46,7 +48,7 @@ class CustomerController extends Controller
             function ($data){                                
             
                     return
-                    //\Component::btnRead('#', 'Detail Customer').
+                    // \Component::btnDetailPaket(route('customer-detail'), 'Detail Customer').
                     \Component::btnUpdate(route('customer-edit', $data->id), 'Ubah Customer '. $data->name).
                     \Component::btnDelete(route('customer-destroy', $data->id), 'Hapus Customer '. $data->name);
                     
@@ -85,6 +87,18 @@ class CustomerController extends Controller
         
     }
 
+    public function loadData(Request $request)
+    {
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = DB::table('users_has_packages')
+            ->join('users','users_has_packages.user_id','users.id')
+            ->join('packages','users_has_packages.package_id','packages.id')
+            ->select('users_has_packages.id as id', 'users.username', 'packages.name', 'users.email', 'packages.price')->where('users.username', 'like', '%' . $cari . '%')->get();
+            
+            return response()->json($data);
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -104,8 +118,17 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $data = User::where('id', $id)->first();
-        return view('cms.users.billing.edit', compact ('data'));
+        $data = array();
+        $data['user'] = User::where('id', $id)->first();
+        
+        $data['package'] = DB::table('users_has_packages')
+            ->join('packages','users_has_packages.package_id','packages.id')
+            ->select('packages.name as package_name','packages.speed', 'packages.price')
+            ->where('users_has_packages.user_id', $data['user']->id)
+            ->get();
+
+            
+        return view('cms.users.customer.edit', compact ('data'));
     }
 
 
@@ -118,18 +141,26 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('id', $id)->first();
+
+        $data = User::where('id', $id)->first();
         $this->validate($request,[
-            'name'      =>  'required|max:255|string',
-            'username'  =>  'required|max:255|string|unique:users,username,'.$user->id,
+            'username'   =>  'required|max:255|string|unique:users,username,'.$data->id,
+            'name'        =>  'required|max:255|string',
+            'address'      =>  'required|max:255|string'
         ]);
 
         
-        if($user){
-            User::where('id', $id)->update($request->only('name', 'username'));
-        }
+
         
-        return false;
+        if($data)
+        {
+            User::where('id', $id)->update($request->only('username','name','address'));
+            return "Data Berhasil di Update";
+
+        }else{
+            return false;
+        }
+
 
     }
 

@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\User, App\UserHasPackage;
 class Package extends Model
 {
     protected $table = "packages";        
@@ -17,5 +17,8 @@ class Package extends Model
         'created_at',
         'updated_at'
         ];
-        
+    public function User()
+        {
+            return $this->belongsToMany('App\UserHasPackage');
+        }
 }

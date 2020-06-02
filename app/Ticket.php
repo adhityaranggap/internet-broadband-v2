@@ -9,9 +9,14 @@ class Ticket extends Model
     protected $table = "tickets";        
     protected $primaryKey = "id";
 
+
+    CONST PRIORITY_LOW = '1';
+    CONST PRIORITY_MEDIUM = '2';
+    CONST PRIORITY_HIGH = '3';
+
     protected $fillable = [
         'id',         
-        'customer_has_package_id',
+        'users_has_packages_id',
         'subject',
         'description',
         'priority',

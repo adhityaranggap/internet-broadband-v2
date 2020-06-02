@@ -16,7 +16,7 @@ class Tickets extends Migration
         Schema::create('tickets', function (Blueprint $table) {
 
                 $table->bigIncrements('id');
-                $table->unsignedInteger('customer_has_package_id');
+                $table->unsignedInteger('users_has_packages_id');
                 $table->string('subject');
                 $table->text('description');
                 $table->integer('priority');

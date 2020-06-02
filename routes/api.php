@@ -14,11 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('fetch')->group(function () {
+Route::post('/login', 'Api\LoginController@login');
 
-    Route::get('/unpaid', 'Api\ApiController@fetchAllUnpaid');
-    Route::get('/customers', 'Api\ApiController@fetchAllCustomers');
-    Route::get('/package/{package_id}', 'Api\ApiController@fetchByPackageId');
+Route::middleware(['jwt.verify'])->group(function () {
+
+    Route::prefix('fetch')->group(function () {
+
+        Route::prefix('users')->group(function () {
+            Route::get('/customers', 'Api\ApiController@fetchAllCustomers');
+
+        });
+        Route::get('/unpaid', 'Api\ApiController@fetchAllUnpaid');
+        Route::get('/customers', 'Api\ApiController@fetchAllCustomers');
+        Route::get('/package/{package_id}', 'Api\ApiController@fetchByPackageId');
+    });
+
 });
 
 Route::post('/customers/store', 'Api\ApiController@storeCustomer');

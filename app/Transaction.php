@@ -17,6 +17,7 @@ class Transaction extends Model
         'expired_date',
         'status',
         'price',
+        'paid',
         'fee',
         'created_at',
         'updated_at'

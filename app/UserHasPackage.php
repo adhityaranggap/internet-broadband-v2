@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+// use App\User, App\Package;
 
 class UserHasPackage extends Model
 {
@@ -19,6 +20,13 @@ class UserHasPackage extends Model
         'created_at',
         'updated_at'
         ];
-
+        // public function Package()
+        // {
+        //     return $this->belongsToMany('App\Package');
+        // }
+        // public function User()
+        // {
+        //     return $this->belongsToMany('App\User');
+        // }
    
 }

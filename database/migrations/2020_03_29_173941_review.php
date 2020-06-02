@@ -15,7 +15,7 @@ class Review extends Migration
     {
         Schema::create('review', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('customer_has_package');
+            $table->unsignedInteger('users_has_packages_id');
             $table->text('review');
             $table->integer('star');
             $table->timestamps();

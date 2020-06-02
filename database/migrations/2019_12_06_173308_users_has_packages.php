@@ -18,8 +18,8 @@ class UsersHasPackages extends Migration
             $table->string('user_id');
             $table->string('package_id');
             $table->enum('verification', ['First Month', 'Date Payment'])->default('First Month');
-            $table->enum('status', ['active','inactive']);            
-            $table->text('notes');     
+            $table->enum('status', ['active','inactive'])->default('active');            
+            $table->text('notes')->nullable();     
             $table->timestamps();
         });
     }

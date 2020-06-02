@@ -27,7 +27,7 @@ class AllTransactionController extends Controller
     {       
     
         $arrSelect = [
-            'users.name as name',
+            'users.username as name',
             'transactions.expired_date as expired_date',
             'packages.name as package_name',
             'transactions.price as price',
@@ -89,7 +89,8 @@ class AllTransactionController extends Controller
      */
     public function create()
     {
-        return view('cms.transactions.alltransaction.create');
+        $packages = \App\Package::all();
+        return view('cms.transactions.alltransaction.create', compact('packages'));
     }
 
     /**
@@ -129,11 +130,21 @@ class AllTransactionController extends Controller
      */
     public function edit($id)
     {
+        $arrResponse = [
+            'transactions.id as id',
+            'users.name',
+            'users.contact_person',
+            'transactions.paid',
+            'packages.name as package_name',
+            'transactions.price as payment_billing', 
+            'expired_date'
+        ];
+
         $data = DB::table('transactions')
         ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->join('users','users_has_packages.user_id','users.id')
-        ->select('transactions.id as id', 'users.name', 'users.contact_person', 'packages.name as package_name', 'transactions.price as payment_billing', 'expired_date' )
+        ->select($arrResponse)
         ->where('transactions.id', $id)->first();
         
         
@@ -148,15 +159,20 @@ class AllTransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $transaction = Transaction::where('id', $id)->first();
+        $maxPaid = $transaction->price-$transaction->paid;
+        $this->validate($request, [
+            'paid' =>  'required|numeric|max:'.$maxPaid,
+
+        ]);
+    
         if($request->type_payment === "Transfer"){
             $this->validate($request, [
                 'file' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
             ]);
         }
- 
+        
         $request['updated_at'] = now();
-        $request['status'] = \EnumTransaksi::STATUS_LUNAS;
-
 
         $arrResponse = [
             'users_has_packages.id as id',
@@ -165,6 +181,14 @@ class AllTransactionController extends Controller
             'transactions.status',
             'packages.price',
         ];
+
+        $sisa = $transaction->price - $request->paid;
+
+        if($sisa == 0){
+            $request['status'] = \EnumTransaksi::STATUS_LUNAS;
+        }else{
+            $request['status'] = \EnumTransaksi::STATUS_BELUM_LUNAS;
+        }
         
         $transaction = DB::table('transactions')
         ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
@@ -185,22 +209,25 @@ class AllTransactionController extends Controller
                         $request['payment_proof'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
                     }
     
-                    Transaction::where('id', $id)->update($request->only('updated_at', 'payment_proof', 'fee', 'status'));
+                    Transaction::where('id', $id)->update($request->only('updated_at', 'payment_proof', 'fee', 'status', 'paid'));
     
                 }else{
-                    Transaction::where('id', $id)->update($request->only('updated_at', 'fee', 'status'));
+                    Transaction::where('id', $id)->update($request->only('updated_at', 'fee', 'status', 'paid'));
                 }    
                 
-                Transaction::create([
-                    'user_has_package_id'   =>  $transaction->id,
-                    'transaction_has_modified_id'   => 1,
-                    'notes'                 => '-',
-                    'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),
-                    'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                    'price'                 =>  $transaction->price,
-                    'fee'                   =>  $transaction->fee,
-                    'created_at'            =>  now(),                   
-                ]);
+                if($request->lunas === \EnumTransaksi::STATUS_LUNAS){
+                    Transaction::create([
+                        'user_has_package_id'   =>  $transaction->id,
+                        'transaction_has_modified_id'   => 1,
+                        'notes'                 => '-',
+                        'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),
+                        'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                        'price'                 =>  $transaction->price,
+                        'fee'                   =>  $transaction->fee,
+                        'created_at'            =>  now(),                   
+                    ]);
+                }
+
             }
           
         }

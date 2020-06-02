@@ -11,12 +11,14 @@
         "php": "^7.2.5",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
+        "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "^6.3",
+        "intervention/image": "^2.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "nesbot/carbon": "^2.27",
-        "fzaninotto/faker": "^1.9",
-        "intervention/image": "^2.5",
+        "sopamo/laravel-filepond": "^0.4.0",
+        "tymon/jwt-auth": "dev-develop",
         "yajra/laravel-datatables-oracle": "^9.7"
     },
     "require-dev": {

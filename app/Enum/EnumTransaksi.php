@@ -11,6 +11,7 @@ class EnumTransaksi
     CONST STATUS_TENGGANG         = '1'; //TELAT BULAN
     CONST STATUS_VERIFIKASI       = '2'; //BUTUH VERIFIKASI    
     CONST STATUS_LUNAS            = '3'; //LUNAS    
+    CONST STATUS_BELUM_LUNAS      = '4'; //BELUM LUNAS    
 
 
     public static function status($status)
@@ -23,6 +24,8 @@ class EnumTransaksi
             return \Component::badgetLinkDanger("Butuh Verifikasi");
         }else if($status == 3){
             return \Component::badgetLinkSuccess("Lunas");
+        }else if($status == 4){
+            return \Component::badgetLinkWarning("Belum Lunas");
         }
     }
 

@@ -19,4 +19,14 @@ class Role extends Model
         'updated_at'
     ];
 
+    public function user()
+    {
+        return $this->hasMany('App\User', 'role_id', 'id');
+    }
+
+    public static function generate($role_id)
+    {
+        return Role::where('id', $role_id)->first();
+    }
+
 }
