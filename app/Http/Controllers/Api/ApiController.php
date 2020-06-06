@@ -25,6 +25,6 @@ class ApiController extends Controller
 
     public function destroyReview($review_id)
     {
-        
+    
     }
 }
