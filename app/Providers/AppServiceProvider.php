@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Database\Schema\Builder; // Import Builder where defaultStringLength method is defined
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::share('appName', 'Internet Broadband V2');
+        Builder::defaultStringLength(191); // Update defaultStringLength
+
     }
 }
