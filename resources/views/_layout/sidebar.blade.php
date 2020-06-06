@@ -3,7 +3,7 @@
           <div class="sidebar-brand">
             <a href="index.html">{{ $appName }}</a>
           </div>
-          @if(Auth::check() && auth()->user()->role_id == App\Role::ROLE_ADMIN)
+          @if(Auth::check() && auth()->user()->role_id != App\Role::ROLE_CUSTOMER)
 
           <ul class="sidebar-menu">
               <li class="menu-header">Dashboard</li>
