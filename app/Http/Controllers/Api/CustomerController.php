@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator; //validate
 use App\User;
 
 class CustomerController extends Controller
@@ -20,7 +21,23 @@ class CustomerController extends Controller
     }
     public function create (Request $request)
     {
+        //    //start validate
+        //    $rules = [
+        //     'username'       => 'required|max:50',
+        //     'address'        => 'required|max:100',
+        //     'name'           => 'required|max:50', 
+        //     'password'       => 'required|min:8', 
+        //     'email'          => 'required|email', 
+        //     'contact_person' => 'required',
+        //     'role_id'        => 'requeid|integer|max:1'
+        // ];
 
+        // $validator = Validator::make($request->all(), $rules);
+
+        // if ($validator->fails()) {
+        //     return  \MessageHelper::unprocessableEntity($validator->messages());
+        // }
+        // //end validate
         $data = User::create($request->all());
 
         return response()->json([

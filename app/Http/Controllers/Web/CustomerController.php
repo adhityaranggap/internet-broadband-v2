@@ -77,8 +77,12 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'username' => 'required',
-    		'address' => 'required',
+    		'username'       => 'required|max:50',
+            'address'        => 'required|max:100',
+            'name'           => 'required|max:50', 
+            'password'       => 'required|min:8', 
+            'email'          => 'required|email', 
+            'contact_person' => 'required', 
         ]);
         $request['role_id'] = Role::ROLE_CUSTOMER;
 
@@ -91,11 +95,11 @@ class CustomerController extends Controller
     {
         if ($request->has('q')) {
             $cari = $request->q;
-            // $data = DB::table('users_has_packages')
+            $data = DB::table('users_has_packages')
             ->join('users','users_has_packages.user_id','users.id')
             ->join('packages','users_has_packages.package_id','packages.id')
             ->select('users_has_packages.id as id', 'users.username', 'packages.name', 'users.email', 'packages.price')->where('users.username', 'like', '%' . $cari . '%')->get();
-            
+
             return response()->json($data);
         }
     }

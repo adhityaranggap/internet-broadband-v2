@@ -6,11 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+
+use Illuminate\Support\Facades\Validator; //validate
+
 use App\User;
 
 class LoginController extends Controller
 {
     public function login(Request $request){
+
+        //start validate
+        $rules = [
+            'email'         =>  'required|email',
+            'password'      =>  'required|min:4'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return  \MessageHelper::unprocessableEntity($validator->messages());
+        }
+        //end
+
         $credentials = $request->only('email', 'password');
 
         $token = JWTAuth::attempt($credentials);

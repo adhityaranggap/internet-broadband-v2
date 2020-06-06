@@ -231,6 +231,7 @@ return [
         'Component' => App\Helpers\Component::class,
         'StringHelper' => App\Helpers\StringHelper::class,
         'ImageUploadHelper' => App\Helpers\ImageUploadHelper::class,
+        'MessageHelper' => App\Helpers\MessageHelper::class,
         'EnumTransaksi' => App\Enum\EnumTransaksi::class,
         'EnumRole' => App\Enum\EnumRole::class
 
