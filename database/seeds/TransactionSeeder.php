@@ -19,11 +19,11 @@ class TransactionSeeder extends Seeder
             'user_has_package_id'      =>  $i,
             'notes'     => $faker->sentence($nbWords = 6, $variableNbWords = true),
             'transaction_has_modified_id' => $i,
-            'expired_date' => '2020-04-05 00:00:00',
+            'expired_date' => '2020-06-05 00:00:00',
             'status' => '1',
             'price' => '150000',
-            'paid' => '150000',
-            'fee' => '0'
+            'paid' => 0,
+            'fee' => 0
                 
             ]);
             }

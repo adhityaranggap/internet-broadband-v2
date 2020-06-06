@@ -21,13 +21,29 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::prefix('fetch')->group(function () {
 
         Route::prefix('users')->group(function () {
-            Route::get('/customers', 'Api\ApiController@fetchAllCustomers');
+            Route::get('/customers', 'Api\CustomerController@fetchAllCustomers');
 
-        });
+            });
         Route::get('/unpaid', 'Api\ApiController@fetchAllUnpaid');
         Route::get('/customers', 'Api\ApiController@fetchAllCustomers');
         Route::get('/package/{package_id}', 'Api\ApiController@fetchByPackageId');
+        });
     });
+    Route::prefix('store')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::post('/customers', 'Api\CustomerController@create');
+        });
+    });
+    Route::prefix('delete')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::delete('/customers/{username}', 'Api\CustomerController@delete');
+        });
+    });
+    Route::prefix('update')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::post('/customers/{username}', 'Api\CustomerController@update');
+    });
+
 
 });
 

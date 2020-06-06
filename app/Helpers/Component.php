@@ -38,17 +38,17 @@ class Component
     
     public static function badgetLinkSuccess($title)
     {
-        return '<a href="#" class="badge badge-success">'.$title.'</a>';
+        return '<a href="#" class="badge badge-success"><i class="fas fa-check-double"></i> '.$title.'</a>';
 
     }
 
     public static function badgetLinkDanger($title)
     {
-        return '<a href="#" class="badge badge-danger">'.$title.'</a>';
+        return '<a href="#" class="badge badge-danger"><i class="fas fa-exclamation"></i> '.$title.'</a>';
     }
     public static function badgetLinkWarning($title)
     {
-        return '<a href="#" class="badge badge-warning">'.$title.'</a>';
+        return '<a href="#" class="badge badge-warning"><i class="fas fa-minus-square"></i> '.$title.'</a>';
     }
 
     public static function clickableImg($src, $maxWidth) {

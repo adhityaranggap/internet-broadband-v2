@@ -105,9 +105,6 @@ class AllTransactionController extends Controller
             'file'                    =>  'required|mimes:jpeg,bmp,png|max:10000',
             'notes'                     =>  'nullable',
         ]);
-        
-
-
 
     }
 
@@ -137,7 +134,8 @@ class AllTransactionController extends Controller
             'transactions.paid',
             'packages.name as package_name',
             'transactions.price as payment_billing', 
-            'expired_date'
+            'expired_date',
+            'transactions.updated_at'
         ];
 
         $data = DB::table('transactions')
@@ -161,6 +159,8 @@ class AllTransactionController extends Controller
     {
         $transaction = Transaction::where('id', $id)->first();
         $maxPaid = $transaction->price-$transaction->paid;
+        $UserPay = $request->paid+$transaction->paid;
+        
         $this->validate($request, [
             'paid' =>  'required|numeric|max:'.$maxPaid,
 
@@ -173,6 +173,7 @@ class AllTransactionController extends Controller
         }
         
         $request['updated_at'] = now();
+        $request['paid'] = $UserPay;
 
         $arrResponse = [
             'users_has_packages.id as id',
@@ -210,12 +211,12 @@ class AllTransactionController extends Controller
                     }
     
                     Transaction::where('id', $id)->update($request->only('updated_at', 'payment_proof', 'fee', 'status', 'paid'));
-    
                 }else{
+                    
                     Transaction::where('id', $id)->update($request->only('updated_at', 'fee', 'status', 'paid'));
                 }    
                 
-                if($request->lunas === \EnumTransaksi::STATUS_LUNAS){
+                if($request->status === \EnumTransaksi::STATUS_LUNAS){
                     Transaction::create([
                         'user_has_package_id'   =>  $transaction->id,
                         'transaction_has_modified_id'   => 1,
@@ -224,6 +225,7 @@ class AllTransactionController extends Controller
                         'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
                         'price'                 =>  $transaction->price,
                         'fee'                   =>  $transaction->fee,
+                        'paid'                   =>  $transaction->fee,
                         'created_at'            =>  now(),                   
                     ]);
                 }

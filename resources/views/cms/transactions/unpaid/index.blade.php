@@ -1,13 +1,13 @@
 @extends('_layout.app')
-@section('title', 'Customer Package')
-@section('page_header', 'Customer Package')
+@section('title', 'Unpaid Transaction')
+@section('page_header', 'Transaction')
 @section('content')
 
     <div class="card card-primary">
         <div class="card-header">
-            <h4>Customer Package</h4>
+            <h4>Unpaid Transaction</h4>
             <div class="card-header-action">
-                <a href="{{ route('customer-package-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Package Baru ">(+) Tambah Baru</a>                
+                <a href="{{ route('unpaid-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>                
             </div>
         </div>
         <div class="card-body ">
@@ -16,10 +16,12 @@
                     <thead>
                     <tr>
                     <th scope="col">No</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Package Name</th>
-                        <th scope="col">Speed</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Bulan Pembayaran</th>
+                        <th scope="col">Paket</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Tenggang Pembayaran</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -28,7 +30,10 @@
         </div>
     </div>
 
+
 @endsection
+
+@push('css')
 
 @push('css')
 <!-- add Css Here -->
@@ -63,11 +68,13 @@
         serverSide:true,
         ajax: "{{ url()->current().'/datatables' }}",
         columns:[
-            {data: 'DT_RowIndex', name:'username', searchable: false},
-            {data: 'username', name:'username'},
+            {data: 'DT_RowIndex', name:'name', searchable: false},
+            {data: 'name', name:'name'},
+            {data: 'month_date', name:'month_date'},
             {data: 'package_name', name:'package_name'},
-            {data: 'speed', name:'speed'},
             {data: 'price', name:'price'},
+            {data: 'expired_date', name:'expired_date'},
+            {data: 'status', name:'status'},
             {data: 'action', name:'action'},           
         ]
     });

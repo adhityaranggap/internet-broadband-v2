@@ -11,6 +11,7 @@ class Role extends Model
 
     CONST ROLE_CUSTOMER = '1';
     CONST ROLE_BILLING = '2';
+    CONST ROLE_ADMIN = '3';
 
     protected $fillable = [
         'id',         

@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -231,7 +231,8 @@ return [
         'Component' => App\Helpers\Component::class,
         'StringHelper' => App\Helpers\StringHelper::class,
         'ImageUploadHelper' => App\Helpers\ImageUploadHelper::class,
-        'EnumTransaksi' => App\Enum\EnumTransaksi::class
+        'EnumTransaksi' => App\Enum\EnumTransaksi::class,
+        'EnumRole' => App\Enum\EnumRole::class
 
     ],
 

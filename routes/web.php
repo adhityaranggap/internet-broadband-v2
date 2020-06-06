@@ -46,9 +46,14 @@ Route::middleware('auth')->group(function () {
             Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
         });
 
-        Route::prefix('unpaid')->group(function () {//==
+        Route::prefix('unpaid')->group(function () {
             Route::get('/', 'Web\UnpaidController@index')->name('unpaid-index');
-            Route::get('/datatables', 'Web\UnpaidController@datatables')->name('unpaid-datatables');              
+            Route::get('/datatables', 'Web\UnpaidController@datatables')->name('unpaid-datatables');
+            Route::get('/create', 'Web\UnpaidController@create')->name('unpaid-create');
+            Route::post('/store', 'Web\UnpaidController@store')->name('unpaid-store');
+            Route::get('/edit/{id}', 'Web\UnpaidController@edit')->name('unpaid-edit');
+            Route::post('/update/{id}', 'Web\UnpaidController@update')->name('unpaid-update');
+            Route::delete('/destroy/{id}', 'Web\UnpaidController@destroy')->name('unpaid-destroy');              
         });
 
         // Route::prefix('payments')->group(function () {//==

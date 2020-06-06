@@ -107,8 +107,9 @@ class CustomerPackageController extends Controller
             'package_id' => 'required|integer|max:15',
             'note'  => 'nullable',
         ]);
-            
+        
         UserHasPackage::create($request->except('_token'));
+
     }
 
     /**

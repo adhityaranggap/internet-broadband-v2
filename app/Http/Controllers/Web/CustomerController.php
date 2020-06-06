@@ -91,7 +91,7 @@ class CustomerController extends Controller
     {
         if ($request->has('q')) {
             $cari = $request->q;
-            $data = DB::table('users_has_packages')
+            // $data = DB::table('users_has_packages')
             ->join('users','users_has_packages.user_id','users.id')
             ->join('packages','users_has_packages.package_id','packages.id')
             ->select('users_has_packages.id as id', 'users.username', 'packages.name', 'users.email', 'packages.price')->where('users.username', 'like', '%' . $cari . '%')->get();
