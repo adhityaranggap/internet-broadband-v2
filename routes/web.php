@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /* Temporary */
-Route::get('/', 'Web\CustomerController@index')->name('customer-index');
+Route::get('/', 'Web\CustomerController@index')->name('customer-index');//done
 
 
 Route::get('/login', function () {
