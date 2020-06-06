@@ -11,6 +11,23 @@ class UserSeed extends Seeder
      */
     public function run()
     {
+      //faker
+        $faker = Faker\Factory::create();                      
+        for($i=0 ; $i<=100; $i++){   
+            $username = $faker->unique()->username;
+
+            User::create([
+                'name'      =>  $faker->name,
+                'username'  =>  $faker->unique()->username,
+                'password'  =>  bcrypt('12345678'),
+                'email'     =>  $faker->unique()->email,
+                'contact_person'    =>  $faker->unique()->e164PhoneNumber,
+                'address'   =>  $faker->address,
+                'role_id'   =>  Role::ROLE_CUSTOMER,   
+            ]);
+
+        }    
+
         $arrUser =[
           [
             'name'  =>  'Aditya',
@@ -27,21 +44,6 @@ class UserSeed extends Seeder
             User::create($user);
         }
 
-        // //faker
-        // $faker = Faker\Factory::create();                      
-        // for($i=0 ; $i<=100; $i++){   
-        //     $username = $faker->unique()->username;
-
-        //     User::create([
-        //         'name'      =>  $faker->name,
-        //         'username'  =>  $faker->unique()->username,
-        //         'password'  =>  bcrypt('12345678'),
-        //         'email'     =>  $faker->unique()->email,
-        //         'contact_person'    =>  $faker->unique()->e164PhoneNumber,
-        //         'address'   =>  $faker->address,
-        //         'role_id'   =>  Role::ROLE_CUSTOMER,   
-        //     ]);
-
-        // }    
+        
     }
 }
