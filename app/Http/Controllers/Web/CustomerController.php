@@ -85,6 +85,7 @@ class CustomerController extends Controller
             'contact_person' => 'required', 
         ]);
         $request['role_id'] = Role::ROLE_CUSTOMER;
+        $request['password'] = bcrypt(request('password'));
 
         User::create($request->except('_token'));
  

@@ -70,6 +70,7 @@ class BillingController extends Controller
     		'name' => 'required',
         ]);
         $request['role_id'] = Role::ROLE_BILLING;
+        $request['password'] = bcrypt(request('password'));
         // return $request->all();
         User::create($request->except('_token'));
  
