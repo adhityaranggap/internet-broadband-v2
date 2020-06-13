@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator; //validate
 use App\User;
 
+
 class CustomerController extends Controller
 {
     public function fetchAllCustomers(){
         // return -data All Array Role Customer
-        $users = User::all();
+        $users = User::paginate();
+
 
         return response()->json([
             'message'   =>  $users->count(). ' Data user ditemukan',
@@ -29,7 +31,7 @@ class CustomerController extends Controller
             'password'       => 'required|min:8', 
             'email'          => 'required|email', 
             'contact_person' => 'required',
-            'role_id'        => 'required|integer|max:1'
+            'role_id'        => 'required|integer'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -48,6 +50,23 @@ class CustomerController extends Controller
     }
     public function update (Request $request, $username)
     {        
+                //start validate
+                   $rules = [
+                    'username'       => 'required|max:50',
+                    'address'        => 'required|max:100',
+                    'name'           => 'required|max:50', 
+                    'password'       => 'required|min:8', 
+                    'email'          => 'required|email', 
+                    'contact_person' => 'required',
+                    'role_id'        => 'required|integer'
+                ];
+        
+                $validator = Validator::make($request->all(), $rules);
+        
+                if ($validator->fails()) {
+                    return  \MessageHelper::unprocessableEntity($validator->messages());
+                }
+                //end validate
 
         $data = User::where('username', $username)->first();
         
