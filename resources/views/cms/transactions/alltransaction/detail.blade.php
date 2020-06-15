@@ -39,7 +39,14 @@
     </tr>
   </thead> 
 </table>
-<div class="form-group ">
+<!-- <a href="{{url('storage/app/'.$data->file)}}" src="{{ asset('storage/app/'.$data->file) }}" class="btn pop btn-primary btn-sm" size="25%" title="{{$data->file}}">{{ $data->file }}</a> -->
+<div class="form-group">
+ <!-- <input type="file" class="form-control" name="user_photo" id="userphoto">
+ <img style="max-width: calc(100% - 20px)" src="/storage/app/{{ $data->file }}"> -->
+ <img class="img-fluid" src="{{ url('storage/'.$data->file) }}" alt="" style="50%">
+
+</div>
+<!-- <div class="form-group ">
     <label for="type_payment">Tipe Pembayaran</label>
     <select class="form-control" id="type_payment" name="type_payment">
             <option value="Transfer">Transfer</option>
@@ -57,7 +64,7 @@
     <div class="form-group ">
     <label for="paid">Nominal Dibayar</label>
         <input class="form-control" name="paid" type="number" value="{{ $data->payment_billing - $data->paid}}" id="paid">
-    </div>
+    </div> -->
 
 </form>
 

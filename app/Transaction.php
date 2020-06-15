@@ -18,6 +18,8 @@ class Transaction extends Model
         'status',
         'price',
         'paid',
+        'file',
+        'payment_method',
         'fee',
         'created_at',
         'updated_at'

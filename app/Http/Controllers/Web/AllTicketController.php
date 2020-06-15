@@ -24,7 +24,7 @@ class AllTicketController extends Controller
     {       
     
         $data = Ticket::all();
-        
+
         return Datatables::of($data)         
         ->editColumn('ticket_number',
             function ($data){
@@ -84,17 +84,30 @@ class AllTicketController extends Controller
      */
     public function store(Request $request)
     {
-        // // $this->validate($request,[
-    	// // 	'name' => 'required|string|max:255',
-        // //     'speed' => 'required|string|max:15',
-        // //     'price' => 'required|numeric|digits_between:1,10'
-        // // ]);
+        // $this->validate($request,[
+    	// 	'name' => 'required|string|max:255',
+        //     'speed' => 'required|string|max:15',
+        // ]);
 
-        // $data = DB::table('users_has_packages')
-        // ->whereIn('user_id', $request->['']
-        // ->select('id')
+        $data = DB::table('users_has_packages')
+        ->whereIn('user_id', auth()->user()->id)
+        ->select('id');
 
-        // Ticket::create($request->except('_token'));
+        $request ['users_has_packages_id'] = $data->id;
+        $request ['ticket_number'] = 1000;
+        $request ['status'] = 1000;
+        
+        vardump ($request);
+        Ticket::create($request->only(
+            'users_has_packages_id',
+            'subject', 
+            'description',
+            'priority',
+            'attachment',
+            'status',
+            'ticket_number'
+        ));
+
     }
 
     /**

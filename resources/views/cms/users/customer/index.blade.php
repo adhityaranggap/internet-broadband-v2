@@ -61,6 +61,7 @@
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
         processing:true,
         serverSide:true,
+        
         ajax: "{{ url()->current().'/datatables' }}",
         columns:[
             {data: 'DT_RowIndex', name:'name', searchable: false},

@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /* Temporary */
-Route::get('/', 'Web\CustomerController@index')->name('customer-index');//done
-
+Route::get('/', function () {
+    return view('login');
+})->name('login');
 
 Route::get('/login', function () {
     return view('login');
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/create', 'Web\AllTransactionController@create')->name('all-transaction-create');//done
             Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');//done
             Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');//done
+            Route::get('/detail/{id}', 'Web\AllTransactionController@detail')->name('all-transaction-detail');//done
             Route::post('/update/{id}', 'Web\AllTransactionController@update')->name('all-transaction-update');//done
             Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
         });

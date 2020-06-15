@@ -12,7 +12,7 @@ class CustomerController extends Controller
 {
     public function fetchAllCustomers(){
         // return -data All Array Role Customer
-        $users = User::paginate();
+        $users = User::paginate(25);
 
 
         return response()->json([

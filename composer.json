@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "coraxster/flysystem-aws-s3-v3-minio": "^1.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "fzaninotto/faker": "^1.9",
@@ -18,6 +19,7 @@
         "laravel/tinker": "^2.0",
         "nesbot/carbon": "^2.27",
         "sopamo/laravel-filepond": "^0.4.0",
+        "syamsoul/laravel-datatable-ssp": "^2.3",
         "tymon/jwt-auth": "dev-develop",
         "yajra/laravel-datatables-oracle": "^9.7"
     },

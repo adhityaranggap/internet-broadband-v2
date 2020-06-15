@@ -21,7 +21,9 @@ class Transactions extends Migration
             $table->dateTime('expired_date');
             $table->tinyInteger('status');
             $table->integer('price');
-            $table->integer('paid');
+            $table->integer('paid')->nullable();
+            $table->string('file')->nullable();
+            $table->string('payment_method')->nullable();
             $table->integer('fee');
             $table->timestamps();
         });

@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
 use DataTables;
-use App\User, App\UserHasPackage, App\Package, App\Transaction;
+use Auth;
+use App\User, App\UserHasPackage, App\Package, App\Transaction, App\TransactionHasModified;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
  
@@ -33,6 +34,7 @@ class AllTransactionController extends Controller
             'transactions.price as price',
             'transactions.id as id',
             'transactions.status as status',
+            'users.role_id'
         ];
         // $data = transaction::all();
         $data = DB::table('users')
@@ -73,7 +75,7 @@ class AllTransactionController extends Controller
             function ($data){                                
             
                     return
-                    //\Component::btnRead('#', 'Detail Customer').
+                    \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name);
                     // \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Package '. $data->name);
                     
@@ -149,6 +151,38 @@ class AllTransactionController extends Controller
         return view('cms.transactions.alltransaction.edit', compact ('data'));    }
 
     /**
+     * Detail the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        $arrResponse = [
+            'transactions.id as id',
+            'users.name',
+            'users.contact_person',
+            'transactions.paid',
+            'packages.name as package_name',
+            'transactions.price as payment_billing', 
+            'expired_date',
+            'transactions.updated_at',
+            'transactions.payment_method',
+            'transactions.file'
+        ];
+
+        $data = DB::table('transactions')
+        ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
+        ->join('packages','users_has_packages.package_id','packages.id')
+        ->join('users','users_has_packages.user_id','users.id')
+        ->select($arrResponse)
+        ->where('transactions.id', $id)->first();
+        
+        
+        return view('cms.transactions.alltransaction.detail', compact ('data'));    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -165,7 +199,7 @@ class AllTransactionController extends Controller
             'paid' =>  'required|numeric|max:'.$maxPaid,
 
         ]);
-    
+    //payment_proof
         if($request->type_payment === "Transfer"){
             $this->validate($request, [
                 'file' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
@@ -202,24 +236,39 @@ class AllTransactionController extends Controller
 
             if($transaction->status != \EnumTransaksi::STATUS_LUNAS){
                 if($request->type_payment === "Transfer"){
+                //payment_proof
                     if($request->file('file')){
                         $dir = 'payment_proof/';
                         $size = '360';
-                        $format = 'payment_proof';
+                        $format = 'file';
                         $image = $request->file('file');         
-                        $request['payment_proof'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
+                        $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
                     }
-    
-                    Transaction::where('id', $id)->update($request->only('updated_at', 'payment_proof', 'fee', 'status', 'paid'));
+                    $request ['payment_method'] = 'Transfer';
+                    // $request['transaction_id'] = $id;
+                    // $request['user_id'] = Auth::id();
+                    // TransactionHasModified::create($request->except('_token'));
+                    // // $request ['transaction_has_modified_id'] = DB::getPdo()->lastInsertId();
+
+                    Transaction::where('id', $id)->update($request->only('updated_at','payment_method','notes', 'file', 'fee', 'status', 'paid'));
                 }else{
-                    
-                    Transaction::where('id', $id)->update($request->only('updated_at', 'fee', 'status', 'paid'));
+                    $request ['payment_method'] = 'Cash';
+                    // return Auth::id();
+                    // $request['transaction_id'] = $id;
+                    // $request['user_id'] = Auth::id();
+                    // TransactionHasModified::create($request->except('_token'));
+                    // $request ['transaction_has_modified_id'] = DB::getPdo()->lastInsertId();
+
+                    Transaction::where('id', $id)->update($request->only('updated_at','notes','payment_method','transaction_has_modified_id', 'fee', 'status', 'paid'));
+                   
+
                 }    
                 
                 if($request->status === \EnumTransaksi::STATUS_LUNAS){
                     Transaction::create([
                         'user_has_package_id'   =>  $transaction->id,
-                        'transaction_has_modified_id'   => 1,
+                        // 'transaction_has_modified_id'   => DB::getPdo()->lastInsertId(),
+                        'transaction_has_modified_id'   => '1',
                         'notes'                 => '-',
                         'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),
                         'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,

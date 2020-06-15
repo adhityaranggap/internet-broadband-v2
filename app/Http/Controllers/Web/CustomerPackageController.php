@@ -92,6 +92,24 @@ class CustomerPackageController extends Controller
         $package = Package::all('name', 'id');
 
         return view('cms.packages.customerpackage.create', compact ('package'));
+        // $arrSelect = [
+        //     'users.username as username',
+        //     'users_has_packages.id as id',
+        //     'packages.name as package_name',
+        //     'packages.speed as speed',
+        //     'packages.id as package_id',
+        //     'packages.price as price'
+        // ];
+        // $package = Package::all('name', 'id');
+        // $data = DB::table('users')
+        // ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+        // ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+        // ->select($arrSelect)
+        // // ->where('users_has_packages.id',$id)
+        // ->first();
+        // // $data = UserHasPackage::where('id', $id)->first();
+        // return view('cms.packages.customerpackage.edit', compact ('data','package'));
+    
     }
 
     /**
@@ -103,12 +121,31 @@ class CustomerPackageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'user_id' => 'required|integer|max:100',
+    		'user_id' => 'required|integer',
             'package_id' => 'required|integer|max:15',
             'note'  => 'nullable',
         ]);
-        
+        // simpan di user has package
         UserHasPackage::create($request->except('_token'));
+        
+        // buat transaksi baru dari paket yang diambil
+        $id = DB::getPdo()->lastInsertId();;
+        $data = DB::table('users_has_packages')
+        ->join('packages','users_has_packages.package_id','packages.id')
+        ->select('packages.price')
+        ->where('users_has_packages.id', $id)->first();
+
+        Transaction::create([
+            'user_has_package_id'   =>  $id,
+            'transaction_has_modified_id'   => 1,
+            'notes'                 => '-',
+            'expired_date'          => Carbon::now()->addMonths(1),
+            'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
+            'price'                 =>  $data->price,
+            'fee'                   =>  0,
+            'paid'                   =>  0,
+            'created_at'            =>  now(),                   
+        ]);
 
     }
 
