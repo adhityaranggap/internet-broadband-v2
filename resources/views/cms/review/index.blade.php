@@ -16,7 +16,9 @@
                     <thead>
                     <tr>
                     <th scope="col">No</th>
+                        <th scope="col">Username</th>
                         <th scope="col">Review</th>
+                        <th scope="col">Paket</th>
                         <th scope="col">Star</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -49,7 +51,9 @@
         ajax: "{{ url()->current().'/datatables' }}",
         columns:[
             {data: 'DT_RowIndex', name:'review', searchable: false},
+            {data: 'username', name:'username'},
             {data: 'review', name:'review'},
+            {data: 'package_name', name:'package_name'},
             {data: 'star', name:'star'},
             {data: 'action', name:'action'},           
         ]

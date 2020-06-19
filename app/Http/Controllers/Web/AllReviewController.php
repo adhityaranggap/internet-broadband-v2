@@ -23,13 +23,35 @@ class AllReviewController extends Controller
     public function datatables()
     {       
     
-        $data = Review::all();
+        // $data = Review::all();
+        $arrSelect = [
+            'packages.name as package_name',
+            'users_has_packages.id as users_has_packages_id',
+            'users.username as username',
+            'review.star as star',
+            'review.review',
+            'review.id as id'
+        ];
+        $data = DB::table('users')
+        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+        ->join('review','users_has_packages.id','=','review.users_has_packages_id')
+        ->select($arrSelect)
+        ->get();
 
         return Datatables::of($data)  
+        ->editColumn('username',
+            function ($data){
+                return $data->username;
+        })     
         ->editColumn('review',
             function ($data){
                 return $data->review;
-        })     
+        })                       
+        ->editColumn('package_name',
+            function ($data){
+                return $data->package_name;
+        })                       
         ->editColumn('star',
             function ($data){
                 return $data->star;
@@ -59,7 +81,7 @@ class AllReviewController extends Controller
         ->join('packages', 'users_has_packages.package_id', 'packages.id') 
         ->select([
             'packages.name as name',
-            'users_has_packages.id as user_has_package_id'
+            'users_has_packages.id as users_has_packages_id'
         ])
         ->get();
         
@@ -75,7 +97,7 @@ class AllReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Review::create($request->except('_token'));
     }
 
     /**
@@ -120,6 +142,12 @@ class AllReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $data= Review::where('id', $id)->first();
+        
+        if (is_null($data)){
+            return 'tidak ditemukan';
+        }else{
+            $data->delete();
+           
+        }    }
 }

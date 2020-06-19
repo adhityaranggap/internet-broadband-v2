@@ -11,37 +11,45 @@
             <input class="form-control" name="email"  type="text" value="{{ auth()->user()->email }}" id="email" disabled>
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="form-group col-6">
-        <label for="created_at">Created At </label>
-            <input class="form-control" name="created_at"  type="text" value="{{ now() }}" id="created_at" disabled>
-        </div>
-        <div class="form-group col-6">
-        <label for="priority">Priority</label>
-        <select name="priority" class=form-control id="priority">
-            <option value="{{ App\Ticket::PRIORITY_LOW }}">LOW</option>
-            <option value="{{ App\Ticket::PRIORITY_MEDIUM }}">MEDIUM</option>
-            <option value="{{ App\Ticket::PRIORITY_HIGH }}">HIGH</option>
-        </select>
-        </div>
-    </div> -->
-    
+
     <div class="form-group ">
     <label for="Package">Package</label>
-        <select name="package" class=form-control id="package">
+        <select name="users_has_packages_id" class=form-control id="users_has_packages_id">
              @foreach($packages as $package)
-            <option value="{{$package->user_has_package_id}}">{{$package->name}}</option>
+            <option value="{{$package->users_has_packages_id}}">{{$package->name}}</option>
                 @endforeach       
         </select>
     </div>
     <div class="form-group ">
-    <label for="subject">Subject</label>
-        <input class="form-control" name="subject"  type="text" value="" placeholder="Required" id="subject">
+    <label for="review">Review</label>
+        <input class="form-control" name="review"  type="text" value="" placeholder="Required" id="review">
     </div>
    
     <div class="form-group ">
     <label for="star">Star</label>
-    <input type="radio" name="" id="">
+    
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="star" id="inlineRadio1" value="1">
+    <label class="form-check-label" for="inlineRadio1">1</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="star" id="inlineRadio2" value="2">
+    <label class="form-check-label" for="inlineRadio2">2</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="star" id="inlineRadio3" value="3">
+    <label class="form-check-label" for="inlineRadio3">3</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="star" id="inlineRadio4" value="4">
+    <label class="form-check-label" for="inlineRadio4">4</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="star" id="inlineRadio5" value="5">
+    <label class="form-check-label" for="inlineRadio5">5</label>
+    </div>
+
+    <!-- <input type="radio" name="star" id=""> -->
     <!-- <textarea id="description" class="form-control" name="description" rows="10" cols="50"></textarea> -->
     </div>
 
