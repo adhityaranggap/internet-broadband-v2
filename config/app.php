@@ -232,8 +232,10 @@ return [
         'StringHelper' => App\Helpers\StringHelper::class,
         'ImageUploadHelper' => App\Helpers\ImageUploadHelper::class,
         'MessageHelper' => App\Helpers\MessageHelper::class,
+        'HttpStatus' => App\Enum\HttpStatus::class,
         'EnumTransaksi' => App\Enum\EnumTransaksi::class,
-        'EnumRole' => App\Enum\EnumRole::class
+        'EnumRole' => App\Enum\EnumRole::class,
+        'EnumTicket' => App\Enum\EnumTicket::class
 
     ],
 

@@ -12,6 +12,7 @@ class TicketRespond extends Model
     protected $fillable = [
         'id',         
         'user_id',
+        'ticket_id',
         'respond',
         'created_at',
         'updated_at'

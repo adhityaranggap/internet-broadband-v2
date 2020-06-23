@@ -18,7 +18,8 @@
                     <!-- <th scope="col">No</th> -->
                         <th scope="col">Ticket Number</th>
                         <th scope="col">Subject Ticket</th>
-                        <th scope="col">Last Updated</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Time Created</th>
                         <!-- <th scope="col">Assign</th> -->
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -51,12 +52,15 @@
         serverSide:true,
         ajax: "{{ url()->current().'/datatables' }}",
         columns:[
-            {data: 'DT_RowIndex', name:'ticket_number', searchable: false},
+            {data: 'DT_RowIndex', name:'created_at_sort', searchable: false},
             {data: 'subject', name:'subject'},
-            {data: 'updated_at', name:'updated_at'},
+            {data: 'customer', name:'customer'},
+            {data: 'created_at', name:'created_at'},
             {data: 'status', name:'status'},           
             {data: 'action', name:'action'},           
-        ]
+        ],
+        order: [[0, 'desc']]
+
     });
 </script>
 @endpush

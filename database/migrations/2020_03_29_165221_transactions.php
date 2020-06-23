@@ -15,7 +15,7 @@ class Transactions extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_has_package_id');
+            $table->unsignedInteger('users_has_packages_id');
             $table->text('notes');
             $table->unsignedInteger('transaction_has_modified_id');
             $table->dateTime('expired_date');
@@ -23,7 +23,7 @@ class Transactions extends Migration
             $table->integer('price');
             $table->integer('paid')->nullable();
             $table->string('file')->nullable();
-            $table->string('payment_method')->nullable();
+            $table->string('type_payment')->nullable();
             $table->integer('fee');
             $table->timestamps();
         });

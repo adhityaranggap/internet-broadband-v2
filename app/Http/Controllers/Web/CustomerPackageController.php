@@ -136,7 +136,7 @@ class CustomerPackageController extends Controller
         ->where('users_has_packages.id', $id)->first();
 
         Transaction::create([
-            'user_has_package_id'   =>  $id,
+            'users_has_packages_id'   =>  $id,
             'transaction_has_modified_id'   => 1,
             'notes'                 => '-',
             'expired_date'          => Carbon::now()->addMonths(1),

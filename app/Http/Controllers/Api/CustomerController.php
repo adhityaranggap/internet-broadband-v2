@@ -16,10 +16,10 @@ class CustomerController extends Controller
 
 
         return response()->json([
-            'message'   =>  $users->count(). ' Data user ditemukan',
-            'code'      =>  200,
+            'message'   =>  $users->count(). ' Data user ditemukan pada halaman ini',
+            'code'      =>  \HttpStatus::OK,
             'data'      =>  $users
-        ], 200);
+        ], \HttpStatus::OK);
     }
     public function create (Request $request)
     {
@@ -44,9 +44,9 @@ class CustomerController extends Controller
 
         return response()->json([
             'message'   =>  $request->username. ' Data berhasil masuk',
-            'code'      =>  200,
+            'code'      =>  \HttpStatus::OK,
             'data'      =>  $data
-        ], 200);   
+        ], \HttpStatus::OK);   
     }
     public function update (Request $request, $username)
     {        
@@ -75,13 +75,13 @@ class CustomerController extends Controller
             User::where('username', $username)->update($request->except('username'));
             return response()->json([
                 'message'   =>  $request->username. ' Data berhasil update',
-                'code'      =>  200,
+                'code'      =>  \HttpStatus::OK,
                 'data'      => $data
             ], 200); 
         }else{
             return response()->json([
                 'message'   =>  $request->username. ' Data tidak ditemukan',
-                'code'      =>  404
+                'code'      =>  \HttpStatus::NOT_FOUND
             ], 404); 
         }
 
@@ -93,13 +93,13 @@ class CustomerController extends Controller
             $data->delete();
             return response()->json([
                 'message'   =>  $username. ' Data berhasil dihapus',
-                'code'      =>  200,
+                'code'      =>  \HttpStatus::OK,
                 'data'      => $data       
             ], 200); 
         }else{
             return response()->json([
                 'message'   =>  $username. ' Data tidak ditemukan',
-                'code'      =>  404
+                'code'      =>  \HttpStatus::NOT_FOUND
             ], 404); 
         }
     }

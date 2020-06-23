@@ -200,7 +200,7 @@
               <div class="dropdown-title">Logged as {{ App\Role::generate(auth()->user()->role_id)->role}}            
               
               </div>
-              <a href="features-profile.html" class="dropdown-item has-icon">
+              <a href="{{route ('profile-index') }}" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
               </a>
               <a href="features-activities.html" class="dropdown-item has-icon">

@@ -19,7 +19,8 @@ class Tickets extends Migration
                 $table->unsignedInteger('users_has_packages_id');
                 $table->string('subject');
                 $table->text('description');
-                $table->integer('priority');
+                $table->tinyinteger('priority')->comment = '1 => Low, 2 => Medium, 3 => High';
+                $table->string('departement');
                 $table->text('attachment');
                 $table->tinyInteger('status');
                 $table->string('ticket_number')->unique();

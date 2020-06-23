@@ -16,7 +16,7 @@ class TransactionSeeder extends Seeder
 
   
             DB::table('transactions')->insert([
-            'user_has_package_id'      =>  $i,
+            'users_has_packages_id'      =>  $i,
             'notes'     => $faker->sentence($nbWords = 6, $variableNbWords = true),
             'transaction_has_modified_id' => $i,
             'expired_date' => '2020-06-05 00:00:00',

@@ -255,6 +255,13 @@ $(document).ready(function() {
         form.find('.text-danger').remove();
 
         var form_data = new FormData($('form')[0]);
+
+        if (document.getElementById('ckeditor')) {
+            //fetch to controller
+            form_data.append("ckeditor", CKEDITOR.instances.ckeditor.getData());
+        }
+
+        // console.log(CKEDITOR.instances.ckeditor.getData());
         $.ajax({
             url: url,
             method: method,

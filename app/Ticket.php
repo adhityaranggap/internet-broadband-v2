@@ -20,6 +20,7 @@ class Ticket extends Model
         'subject',
         'description',
         'priority',
+        'departement',
         'attachment',
         'status',
         'ticket_number',

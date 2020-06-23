@@ -30,6 +30,7 @@
   @include('_layout.modal')
   <div id="app">
     <div class="main-wrapper">
+      <!-- <div class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion"></div> -->
       <div class="navbar-bg"></div>
       @include('_layout.navbar')
 

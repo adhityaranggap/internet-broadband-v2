@@ -38,7 +38,7 @@ class UnpaidController extends Controller
         $data = DB::table('users')
         ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
         ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-        ->join('transactions', 'users_has_packages.id', '=', 'transactions.user_has_package_Id')
+        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
         ->where('transactions.status', '!=', \EnumTransaksi::STATUS_LUNAS)
         ->orderBy('transactions.expired_date','desc')
         ->select($arrSelect)
@@ -142,7 +142,7 @@ class UnpaidController extends Controller
         ];
 
         $data = DB::table('transactions')
-        ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->join('users','users_has_packages.user_id','users.id')
         ->select($arrResponse)
@@ -195,7 +195,7 @@ class UnpaidController extends Controller
         }
         
         $transaction = DB::table('transactions')
-        ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
@@ -221,7 +221,7 @@ class UnpaidController extends Controller
                 
                 if($request->status === \EnumTransaksi::STATUS_LUNAS){
                     Transaction::create([
-                        'user_has_package_id'   =>  $transaction->id,
+                        'users_has_packages_id'   =>  $transaction->id,
                         'transaction_has_modified_id'   => 1,
                         'notes'                 => '-',
                         'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),

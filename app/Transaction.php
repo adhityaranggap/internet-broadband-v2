@@ -11,7 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'id',         
-        'user_has_package_id',
+        'users_has_packages_id',
         'notes',
         'transaction_has_modified_id',
         'expired_date',
@@ -19,7 +19,7 @@ class Transaction extends Model
         'price',
         'paid',
         'file',
-        'payment_method',
+        'type_payment',
         'fee',
         'created_at',
         'updated_at'

@@ -34,7 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index');
     Route::get('/logout', 'Web\LoginController@logout')->name('logout');
 
-
+    Route::prefix('profile')->group(function () {
+        Route::get('/index', 'Web\UserController@index')->name('profile-index');
+        Route::get('/update/{id}', 'Web\UserController@update')->name('profile-update');
+ 
+    });
     Route::prefix('transactions')->group(function () {
 
         Route::prefix('all-transaction')->group(function () {//==
@@ -134,6 +138,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'Web\AllTicketController@index')->name('all-ticket-index');
             Route::get('/datatables', 'Web\AllTicketController@datatables')->name('all-ticket-datatables');       
             Route::get('/create', 'Web\AllTicketController@create')->name('all-ticket-create');
+            Route::get('/edit/{id}', 'Web\AllTicketController@edit')->name('all-ticket-edit');
+            Route::post('/update/{id}', 'Web\AllTicketController@update')->name('all-ticket-update');      
             Route::post('/store', 'Web\AllTicketController@store')->name('all-ticket-store');      
             Route::delete('/destroy/{id}', 'Web\AllTicketController@destroy')->name('all-ticket-destroy');  //only admin
         });

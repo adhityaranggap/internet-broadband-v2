@@ -40,7 +40,7 @@ class AllTransactionController extends Controller
         $data = DB::table('users')
         ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
         ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-        ->join('transactions', 'users_has_packages.id', '=', 'transactions.user_has_package_Id')
+        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
         ->orderBy('transactions.created_at','desc')
         ->select($arrSelect)
         ->get();
@@ -141,7 +141,7 @@ class AllTransactionController extends Controller
         ];
 
         $data = DB::table('transactions')
-        ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->join('users','users_has_packages.user_id','users.id')
         ->select($arrResponse)
@@ -168,12 +168,12 @@ class AllTransactionController extends Controller
             'transactions.price as payment_billing', 
             'expired_date',
             'transactions.updated_at',
-            'transactions.payment_method',
+            'transactions.type_payment',
             'transactions.file'
         ];
 
         $data = DB::table('transactions')
-        ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->join('users','users_has_packages.user_id','users.id')
         ->select($arrResponse)
@@ -202,7 +202,7 @@ class AllTransactionController extends Controller
     //payment_proof
         if($request->type_payment === "Transfer"){
             $this->validate($request, [
-                'file' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
+                'payment_proof' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
             ]);
         }
         
@@ -226,7 +226,7 @@ class AllTransactionController extends Controller
         }
         
         $transaction = DB::table('transactions')
-        ->join('users_has_packages','transactions.user_has_package_id','users_has_packages.id')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
@@ -237,36 +237,36 @@ class AllTransactionController extends Controller
             if($transaction->status != \EnumTransaksi::STATUS_LUNAS){
                 if($request->type_payment === "Transfer"){
                 //payment_proof
-                    if($request->file('file')){
+                    if($request->file('payment_proof')){
                         $dir = 'payment_proof/';
                         $size = '360';
                         $format = 'file';
-                        $image = $request->file('file');         
+                        $image = $request->file('payment_proof');         
                         $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
                     }
-                    $request ['payment_method'] = 'Transfer';
+                    // $request ['type_payment'] = 'Transfer';
                     // $request['transaction_id'] = $id;
                     // $request['user_id'] = Auth::id();
                     // TransactionHasModified::create($request->except('_token'));
                     // // $request ['transaction_has_modified_id'] = DB::getPdo()->lastInsertId();
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','payment_method','notes', 'file', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','type_payment','notes', 'file', 'fee', 'status', 'paid'));
                 }else{
-                    $request ['payment_method'] = 'Cash';
+                    // $request ['type_payment'] = 'Cash';
                     // return Auth::id();
                     // $request['transaction_id'] = $id;
                     // $request['user_id'] = Auth::id();
                     // TransactionHasModified::create($request->except('_token'));
                     // $request ['transaction_has_modified_id'] = DB::getPdo()->lastInsertId();
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','notes','payment_method','transaction_has_modified_id', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','notes','type_payment','transaction_has_modified_id', 'fee', 'status', 'paid'));
                    
 
                 }    
                 
                 if($request->status === \EnumTransaksi::STATUS_LUNAS){
                     Transaction::create([
-                        'user_has_package_id'   =>  $transaction->id,
+                        'users_has_packages_id'   =>  $transaction->id,
                         // 'transaction_has_modified_id'   => DB::getPdo()->lastInsertId(),
                         'transaction_has_modified_id'   => '1',
                         'notes'                 => '-',

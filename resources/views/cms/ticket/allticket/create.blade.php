@@ -17,20 +17,20 @@
             <input class="form-control" name="created_at"  type="text" value="{{ now() }}" id="created_at" disabled>
         </div>
         <div class="form-group col-6">
-        <label for="priority">Priority</label>
-        <select name="priority" class=form-control id="priority">
-            <option value="{{ App\Ticket::PRIORITY_LOW }}">LOW</option>
-            <option value="{{ App\Ticket::PRIORITY_MEDIUM }}">MEDIUM</option>
-            <option value="{{ App\Ticket::PRIORITY_HIGH }}">HIGH</option>
+        <label for="departement">Departement</label>
+        <select name="departement" class=form-control id="departement">
+            <option value="SUPPORT">SUPPORT</option>
+            <option value="BILLING">BILLING</option>
+            <option value="SALES">SALES</option>
         </select>
         </div>
     </div>
     
     <div class="form-group ">
-    <label for="Package">Package</label>
-        <select name="package" class=form-control id="package">
+    <label for="users_has_packages_id">Package</label>
+        <select name="users_has_packages_id" class=form-control id="users_has_packages_id">
              @foreach($packages as $package)
-            <option value="{{$package->user_has_package_id}}">{{$package->name}}</option>
+            <option value="{{$package->users_has_packages_id}}">{{$package->name}}</option>
                 @endforeach       
         </select>
     </div>
@@ -41,7 +41,7 @@
    
     <div class="form-group ">
     <label for="description">Deskripsi</label>
-         <textarea id="description" class="form-control" name="description" rows="10" cols="50"></textarea>
+         <textarea id="ckeditor" class="form-control" name="ckeditor" rows="10" cols="50"></textarea>
     </div>
 
     <div class="form-group ">
@@ -56,7 +56,7 @@
 
 <script src="{{asset('assets/vendors/stisla/ckeditor/ckeditor.js')}}"></script>
 <script>
-  var description = document.getElementById("description");
+  var description = document.getElementById("ckeditor");
     CKEDITOR.replace(description,{
     language:'en-gb'
   });

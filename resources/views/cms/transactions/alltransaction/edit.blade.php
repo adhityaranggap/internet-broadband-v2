@@ -47,8 +47,8 @@
         </select>
     </div>   
     <div class="form-group ">
-    <label for="file">Upload Bukti Bayar</label>
-        <input class="form-control-file" name="file" type="file" id="file">
+    <label for="payment_proof">Upload Bukti Bayar</label>
+        <input class="form-control-file" name="payment_proof" type="file" id="payment_proof">
     </div>
     <div class="form-group ">
     <label for="name">Biaya Admin</label>

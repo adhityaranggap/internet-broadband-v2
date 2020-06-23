@@ -16,9 +16,9 @@ class TicketRespond extends Migration
         Schema::create('ticket_respond', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('ticket_id');
             $table->text('respond');
             $table->timestamps(); //generate created_at and update_at
-
         });
     }
 

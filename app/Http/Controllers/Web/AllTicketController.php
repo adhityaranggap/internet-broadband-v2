@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Ticket; use DataTables; use App\Package;
+use App\Ticket, App\TicketRespond; use DataTables; use App\Package;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\DB;
 
 class AllTicketController extends Controller
@@ -22,8 +24,40 @@ class AllTicketController extends Controller
 
     public function datatables()
     {       
-    
-        $data = Ticket::all();
+        $arrSelect = [
+            'users.username as customer',
+            'tickets.ticket_number as ticket_number',
+            'tickets.id',
+            'tickets.subject as subject',
+            'tickets.updated_at as updated_at',
+            'tickets.status as status',
+            'tickets.created_at as created_at'
+        ];
+        $data = DB::table('tickets')    
+        	// $data= Ticket::where('created_at', null)->delete();
+
+        ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
+        ->join('users', 'users_has_packages.user_id', 'users.id')
+        ->orderBy('tickets.created_at','desc')
+        ->select($arrSelect)
+        ->get();
+        // $arrSelect = [
+        //     'users.username as name',
+        //     'transactions.expired_date as expired_date',
+        //     'packages.name as package_name',
+        //     'transactions.price as price',
+        //     'transactions.id as id',
+        //     'transactions.status as status',
+        //     'tickets'
+        // ];
+        // $data = transaction::all();
+        // $data = DB::table('ticket')
+        // ->join('users_has_packages', 'ticket.users_has_packages_id', '=', 'users_has_packages.id')
+        // ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+        // ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+        // ->orderBy('transactions.created_at','desc')
+        // ->select($arrSelect)
+        // ->get();
 
         return Datatables::of($data)         
         ->editColumn('ticket_number',
@@ -34,27 +68,40 @@ class AllTicketController extends Controller
             function ($data){
                 return $data->subject;
         })               
-        ->editColumn('last_updated',
+        ->editColumn('customer',
+            function ($data){
+                return $data->customer;
+        })               
+        ->editColumn('created_at',
     
             function ($data){
-                return $data->last_updated;
+                return  Carbon::parse($data->created_at)->diffForHumans();
+
+        })               
+        ->editColumn('created_at_sort',
+    
+            function ($data){
+                return  $data->created_at;
+
         })               
         ->editColumn('status',
             function ($data){
-                return $data->status;
+                return \EnumTicket::status($data->status);
+
         })   
               
         ->editColumn('action',
             function ($data){                                
-            
-                    // return
-                    // // \Component::btnDetailPaket(route('customer-detail'), 'Detail Customer').
-                    // \Component::btnUpdate(route('all-ticket-edit', $data->id), 'Ubah Ticket '. $data->name);
-                    // \Component::btnDelete(route('all-ticket-destroy', $data->id), 'Hapus Ticket '. $data->name);
+                    if ($data->status ==  \EnumTicket::STATUS_CLOSED){
+                        return \Component::btnDelete(route('all-ticket-destroy', $data->id), 'Hapus Ticket '. $data->customer);
+                    }
+                    return
+                    \Component::btnUpdate(route('all-ticket-edit', $data->id), 'Ubah Ticket '. $data->customer).
+                    \Component::btnDelete(route('all-ticket-destroy', $data->id), 'Hapus Ticket '. $data->customer);
                     
         })
         ->addIndexColumn()
-        // ->rawColumns(['action']) 
+        ->rawColumns(['status', 'action']) 
         ->make(true);          
     }
     /**
@@ -69,7 +116,7 @@ class AllTicketController extends Controller
             ->join('packages', 'users_has_packages.package_id', 'packages.id') 
             ->select([
                 'packages.name as name',
-                'users_has_packages.id as user_has_package_id'
+                'users_has_packages.id as users_has_packages_id'
             ])
             ->get();
             
@@ -89,24 +136,37 @@ class AllTicketController extends Controller
         //     'speed' => 'required|string|max:15',
         // ]);
 
-        $data = DB::table('users_has_packages')
-        ->whereIn('user_id', auth()->user()->id)
-        ->select('id');
+        // $data = DB::table('users_has_packages')
+        // ->whereIn('user_id', auth()->user()->id)
+        // ->select('id');
 
-        $request ['users_has_packages_id'] = $data->id;
-        $request ['ticket_number'] = 1000;
-        $request ['status'] = 1000;
-        
-        vardump ($request);
-        Ticket::create($request->only(
-            'users_has_packages_id',
-            'subject', 
-            'description',
-            'priority',
-            'attachment',
-            'status',
-            'ticket_number'
-        ));
+        // $ticket = new Ticket;
+
+        // $ticket->user_id = Auth()->id();
+        // $latestTicket = App\Ticket::orderBy('created_at','DESC')->first();
+        // $ticket->ticket_nr = '#'.str_pad($latestTicket->id + 1, 8, "0", STR_PAD_LEFT);
+  
+        // $request ['users_has_packages_id'] = 1;
+        $request ['ticket_number'] = Str::random(4);;
+        $request ['status'] = 1;
+        $request ['priority'] = 1;
+        $request ['attachment'] = '-';
+        $request ['description'] = $request->ckeditor;
+        // $request ['description'] = '-';
+
+        Ticket::create($request->except('_token'));
+
+        // vardump ($request);
+        // Ticket::create($request->only(
+        // 'users_has_packages_id',
+        // 'subject',
+        // 'description',
+        // 'priority',
+        // 'departement',
+        // 'attachment',
+        // 'status',
+        // 'ticket_number'
+        // ));
 
     }
 
@@ -129,7 +189,31 @@ class AllTicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $arrSelect = [
+            'users.username as customer',
+            'tickets.id',
+            'tickets.ticket_number as ticket_number',
+            'tickets.subject as subject',
+            'tickets.description',
+            'tickets.updated_at as updated_at',
+            'tickets.status as status',
+            'tickets.updated_at as created_at',
+            'ticket_respond.created_at as respond_at',
+            'ticket_respond.respond'
+        ];
+        $data = DB::table('tickets')    
+        ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
+        ->join('users', 'users_has_packages.user_id', 'users.id')
+        ->join('ticket_respond', 'tickets.id', 'ticket_respond.ticket_id')
+        ->orderBy('tickets.created_at','desc')
+        ->select($arrSelect)
+        ->where('tickets.id', $id)->first();
+        
+        $ticketsResponds = DB::table('ticket_respond')->where('ticket_id', $data->id)->orderBy('created_at', 'asc')->get();
+
+    
+        // return response()->json($data);
+        return view('cms.ticket.allticket.edit', compact ('data', 'ticketsResponds'));   
     }
 
     /**
@@ -141,8 +225,26 @@ class AllTicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $this->validate($request,[
+            'status'  =>  'required|max:10|integer'
+        ]);
+
+        $data = Ticket::where('id', $id)->first();
+        if($data){
+            $request['ticket_id']   = $id;
+            $request['updated_at']  = now();
+            $request['user_id']     = auth()->user()->id;
+            $request ['respond']    = $request->ckeditor;
+
+
+            $data->update($request->only('status', 'updated_at'));
+            
+            TicketRespond::Create($request->only('user_id', 'respond', 'ticket_id'));            
+
+            return true;
+        }
+        
+        return false;    }
 
     /**
      * Remove the specified resource from storage.

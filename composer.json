@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "coraxster/flysystem-aws-s3-v3-minio": "^1.0",
+        "evilfreelancer/routeros-api-php": "^1.2",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "fzaninotto/faker": "^1.9",
