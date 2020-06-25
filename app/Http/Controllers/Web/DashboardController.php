@@ -63,19 +63,9 @@ class DashboardController extends Controller
         $arrSelect = [
             'users.username as name',
             'packages.name as package_name',
-            'users_has_packages.updated_at as updated_as',
-            ''
+            'users_has_packages.updated_at as updated_at'
+          
 
-        ];
-        $arrSelect = [
-            'users.username as name',
-            'transactions.expired_date as expired_date',
-            'packages.name as package_name',
-            'transactions.paid as paid',
-            'transactions.id as id',
-            'transactions.status as status',
-            'transactions.updated_at as updated_at',
-            'users.role_id'
         ];
         $packagerecent = DB::table('users')
         ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
