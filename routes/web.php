@@ -31,7 +31,7 @@ Route::get('/register', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index');
+    Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index')->middleware('AdminOnly');
     Route::get('/logout', 'Web\LoginController@logout')->name('logout');
 
     Route::prefix('profile')->group(function () {
@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/update/{id}', 'Web\UserController@update')->name('profile-update');
  
     });
+    Route::middleware('AdminBillingOnly')->group(function () {
+
     Route::prefix('transactions')->group(function () {
 
         Route::prefix('all-transaction')->group(function () {//==
@@ -51,7 +53,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', 'Web\AllTransactionController@update')->name('all-transaction-update');//done
             Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
         });
-
+    });
         Route::prefix('unpaid')->group(function () {
             Route::get('/', 'Web\UnpaidController@index')->name('unpaid-index');
             Route::get('/datatables', 'Web\UnpaidController@datatables')->name('unpaid-datatables');
