@@ -26,7 +26,7 @@ class LoginController extends Controller
         $auth = Auth::attempt($credential);
 
         if($auth){ //sukses login
-            return redirect()->route('customer-index');
+            return redirect()->route('dashboard-index');
 
         }else{
             return 'gagal login';
