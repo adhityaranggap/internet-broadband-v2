@@ -29,7 +29,7 @@ class LoginController extends Controller
             return redirect()->route('dashboard-index');
 
         }else{
-            return 'gagal login';
+            return redirect()->back();
         }
 
 

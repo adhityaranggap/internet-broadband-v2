@@ -1,4 +1,4 @@
-@extends('_layout.app')
+    @extends('_layout.app')
 @section('title', 'All Transaction')
 @section('page_header', 'Transaction')
 @section('content')

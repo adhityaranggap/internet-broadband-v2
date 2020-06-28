@@ -30,13 +30,13 @@ class UserSeed extends Seeder
 
         $arrUser =[
           [
-            'name'  =>  'Rangga Cust',
+            'name'  =>  'Rangga',
             'username'  =>  'rangga',
             'password'  =>  bcrypt('12345678'),
-            'email'     =>  'rangga@gmail.com',
+            'email'     =>  'atia@rumahinternet.id',
             'contact_person'    =>  '087787878',
             'address'   =>  'Vilmut',
-            'role_id'   =>  1,    
+            'role_id'   =>  Role::ROLE_ADMIN,    
           ]        
         ];
 

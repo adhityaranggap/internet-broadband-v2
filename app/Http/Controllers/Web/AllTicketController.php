@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Ticket, App\TicketRespond; use DataTables; use App\Package;
+use App\Ticket, App\TicketRespond, App\Package, App\Role, App\User;
+use DataTables, Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -23,41 +24,41 @@ class AllTicketController extends Controller
     }
 
     public function datatables()
-    {       
-        $arrSelect = [
-            'users.username as customer',
-            'tickets.ticket_number as ticket_number',
-            'tickets.id',
-            'tickets.subject as subject',
-            'tickets.updated_at as updated_at',
-            'tickets.status as status',
-            'tickets.created_at as created_at'
-        ];
-        $data = DB::table('tickets')    
-        	// $data= Ticket::where('created_at', null)->delete();
-
-        ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
-        ->join('users', 'users_has_packages.user_id', 'users.id')
-        ->orderBy('tickets.created_at','desc')
-        ->select($arrSelect)
-        ->get();
-        // $arrSelect = [
-        //     'users.username as name',
-        //     'transactions.expired_date as expired_date',
-        //     'packages.name as package_name',
-        //     'transactions.price as price',
-        //     'transactions.id as id',
-        //     'transactions.status as status',
-        //     'tickets'
-        // ];
-        // $data = transaction::all();
-        // $data = DB::table('ticket')
-        // ->join('users_has_packages', 'ticket.users_has_packages_id', '=', 'users_has_packages.id')
-        // ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-        // ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
-        // ->orderBy('transactions.created_at','desc')
-        // ->select($arrSelect)
-        // ->get();
+    {   
+        if(Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
+            $arrSelect = [
+                'users.username as customer',
+                'tickets.ticket_number as ticket_number',
+                'tickets.id',
+                'tickets.subject as subject',
+                'tickets.updated_at as updated_at',
+                'tickets.status as status',
+                'tickets.created_at as created_at'
+            ];
+            $data = DB::table('tickets')    
+                ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
+            ->join('users', 'users_has_packages.user_id', 'users.id')
+            ->orderBy('tickets.created_at','desc')
+            ->where('users_has_packages.user_id', auth()->user()->id)
+            ->select($arrSelect)
+            ->get();
+        }else{
+            $arrSelect = [
+                'users.username as customer',
+                'tickets.ticket_number as ticket_number',
+                'tickets.id',
+                'tickets.subject as subject',
+                'tickets.updated_at as updated_at',
+                'tickets.status as status',
+                'tickets.created_at as created_at'
+            ];
+            $data = DB::table('tickets')    
+            ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
+            ->join('users', 'users_has_packages.user_id', 'users.id')
+            ->orderBy('tickets.created_at','desc')
+            ->select($arrSelect)
+            ->get();
+        }
 
         return Datatables::of($data)         
         ->editColumn('ticket_number',
@@ -199,7 +200,8 @@ class AllTicketController extends Controller
             'tickets.status as status',
             'tickets.updated_at as created_at',
             'ticket_respond.created_at as respond_at',
-            'ticket_respond.respond'
+            'ticket_respond.respond',
+            'ticket_respond.ticket_id'
         ];
         $data = DB::table('tickets')    
         ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
@@ -207,12 +209,31 @@ class AllTicketController extends Controller
         ->join('ticket_respond', 'tickets.id', 'ticket_respond.ticket_id')
         ->orderBy('tickets.created_at','desc')
         ->select($arrSelect)
-        ->where('tickets.id', $id)->first();
-        
-        $ticketsResponds = DB::table('ticket_respond')->where('ticket_id', $data->id)->orderBy('created_at', 'asc')->get();
+        ->where('tickets.id', $id)
+        ->first();
 
-    
-        // return response()->json($data);
+        // $ticketsResponds = DB::table('ticket_respond')
+        // ->where('ticket_id', $data->id)
+        // ->orderBy('created_at', 'asc')
+        // ->get();
+
+        // // $ticketsResponds=TicketRespond::findorFail('ticket_id','==',$data->id)->get;
+        // //  $ticketsResponds = TicketRespond::where('ticket_id',$data->id)->firstOrFail($id);
+        // // $user = TicketRespond::where('ticket_id', '=', $data->id)->first();
+        // if (TicketRespond::where('ticket_id', '==', $data->id)->exists()) {
+        // // $ticketsResponds = DB::table('ticket_respond')
+        // // ->where('ticket_id', $data->id)
+        // // ->orderBy('created_at', 'asc')
+        // // ->get();
+        // return 'ada';
+        //  }else{
+        //      return 'kososng';
+        //  };
+        $ticketsResponds = TicketRespond::where('ticket_id', '==', $data->id)->exists();
+        if (is_null($ticketsResponds === null)) {
+           return 'user doesn';
+        }else{return 'ini';};
+        return response()->json($ticketsResponds);
         return view('cms.ticket.allticket.edit', compact ('data', 'ticketsResponds'));   
     }
 

@@ -12,7 +12,7 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();                      
-        for($i=0 ; $i<=100; $i++){   
+        for($i=0 ; $i<=1000; $i++){   
 
   
             DB::table('transactions')->insert([
