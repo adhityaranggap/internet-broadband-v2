@@ -32,6 +32,7 @@ Route::get('/register', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index')->middleware('AdminOnly');
+    Route::get('/dashboard/chart', 'Web\DashboardController@chart')->name('dashboard-chart')->middleware('AdminOnly');
     Route::get('/logout', 'Web\LoginController@logout')->name('logout');
 
     Route::prefix('profile')->group(function () {
@@ -80,6 +81,7 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('customers')->group(function () {
             Route::get('/', 'Web\CustomerController@index')->name('customer-index');//done
+            Route::get('/router', 'Web\CustomerController@router')->name('customer-router');//done
             Route::get('/datatables', 'Web\CustomerController@datatables')->name('customer-datatables');//done
             Route::get('/create', 'Web\CustomerController@create')->name('customer-create');//done
             Route::post('/store', 'Web\CustomerController@store')->name('customer-store');//done
@@ -156,6 +158,17 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    Route::prefix('router')->group(function () {
+            Route::get('/', 'Web\RouterController@index')->name('router-index');
+            Route::get('/datatables', 'Web\RouterController@datatables')->name('router-datatables');
+            Route::get('/create', 'Web\RouterController@create')->name('router-create');
+            Route::get('/detail/{id}', 'Web\RouterController@detail')->name('router-detail');
+            Route::get('/edit/{id}', 'Web\RouterController@edit')->name('router-edit');
+            Route::post('/store', 'Web\RouterController@store')->name('router-store');    
+            Route::delete('/destroy/{id}', 'Web\RouterController@destroy')->name('router-destroy'); 
+    
+       
+    });
 });
 
 Route::prefix('review')->group(function () {

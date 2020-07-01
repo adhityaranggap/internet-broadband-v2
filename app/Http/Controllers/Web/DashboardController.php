@@ -80,4 +80,10 @@ class DashboardController extends Controller
         // return $results;
         return view('cms.dashboard.index', compact ('packagerecent','results','trxrecent','customercount','lunascount','ticketcount','telatcount'));
     }
+    public function chart()
+    {
+        // return phpinfo();
+        // $result = Transaction::all();
+        // return response()->json($result);
+    }
 }

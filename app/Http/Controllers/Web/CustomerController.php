@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DataTables;
 use App\User, App\Role;
+use \RouterOS\Client;
+use \RouterOS\Query;
 use Illuminate\Support\Facades\DB;
 
 
@@ -188,4 +190,28 @@ class CustomerController extends Controller
     }
 
     }
+    public function router()
+    {
+
+        // Initiate client with config object
+        $client = new Client([
+            'host' => 'indonesianet.id',
+            'port' => 38278,
+            'user' => 'rangga',
+            'pass' => 'Botolkecap1!'
+        ]);
+
+        // Create "where" Query object for RouterOS
+        $query =
+            (new Query('/ppp/secret/print'));
+                // ->where('name', 'adit');
+
+        // Send query and read response from RouterOS
+
+        $response = $client->query($query)->read();
+        return response()->json($response);
+
+        // var_dump($response);
+
+            }
 }

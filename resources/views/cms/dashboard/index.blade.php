@@ -199,4 +199,41 @@
         </div>
     </div>
 
+    <script>
+        var url = "{{ url()->current().'/chart' }}";
+        var Week = new Array();
+        var Labels = new Array();
+        var Paid = new Array();
+        $(document).ready(function(){
+          $.get(url, function(response){
+            response.forEach(function(data){
+                Week.push(data.expired_date);
+                Labels.push(data.users_has_packages_id);
+                Paid.push(data.Paid);
+            });
+            var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                      labels:Week,
+                      datasets: [{
+                          label: 'Infosys Price',
+                          data: Paid,
+                          borderWidth: 1
+                      }]
+                  },
+                  options: {
+                      scales: {
+                          yAxes: [{
+                              ticks: {
+                                  beginAtZero:true
+                              }
+                          }]
+                      }
+                  }
+              });
+          });
+        });
+        </script>
+
     @endsection

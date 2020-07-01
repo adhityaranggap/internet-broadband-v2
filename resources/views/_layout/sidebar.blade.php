@@ -52,6 +52,13 @@
                 
               </li>
               <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-server"></i> <span>Routers</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="{{ route('router-index') }}">All Router</a></li>
+                
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-plug"></i> <span>Review</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('review-index') }}">All Review</a></li>

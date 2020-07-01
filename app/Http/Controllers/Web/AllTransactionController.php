@@ -41,7 +41,7 @@ class AllTransactionController extends Controller
         ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
         ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
         ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
-        ->orderBy('transactions.created_at','desc')
+        ->orderBy('transactions.expired_date','desc')
         ->select($arrSelect)
         ->get();
  
@@ -64,7 +64,7 @@ class AllTransactionController extends Controller
         })   
         ->editColumn('expired_date',
             function ($data){
-                return $data->expired_date;
+                return Carbon::parse($data->expired_date)->format('d M Y');
         })              
         ->editColumn('status',
             function ($data){

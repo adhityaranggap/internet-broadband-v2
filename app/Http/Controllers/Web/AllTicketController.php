@@ -212,10 +212,10 @@ class AllTicketController extends Controller
         ->where('tickets.id', $id)
         ->first();
 
-        // $ticketsResponds = DB::table('ticket_respond')
-        // ->where('ticket_id', $data->id)
-        // ->orderBy('created_at', 'asc')
-        // ->get();
+        $ticketsResponds = DB::table('ticket_respond')
+        ->where('ticket_id', $data->id)
+        ->orderBy('created_at', 'asc')
+        ->get();
 
         // // $ticketsResponds=TicketRespond::findorFail('ticket_id','==',$data->id)->get;
         // //  $ticketsResponds = TicketRespond::where('ticket_id',$data->id)->firstOrFail($id);
@@ -229,11 +229,11 @@ class AllTicketController extends Controller
         //  }else{
         //      return 'kososng';
         //  };
-        $ticketsResponds = TicketRespond::where('ticket_id', '==', $data->id)->exists();
-        if (is_null($ticketsResponds === null)) {
-           return 'user doesn';
-        }else{return 'ini';};
-        return response()->json($ticketsResponds);
+        // $ticketsResponds = TicketRespond::where('ticket_id', '==', $data->id)->exists();
+        // if (is_null($ticketsResponds === null)) {
+        //    return 'user doesn';
+        // }else{return 'ini';};
+        // return response()->json($ticketsResponds);
         return view('cms.ticket.allticket.edit', compact ('data', 'ticketsResponds'));   
     }
 
