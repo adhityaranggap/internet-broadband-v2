@@ -109,9 +109,9 @@ class RouterController extends Controller
      */
     public function edit($id)
     {
-        $data = Router::all();
+        $data = Router::where('id', $id)->first();
 
-        return view ('cms.router.allrouter.allrouter.edit', compact ('data'));
+        return view ('cms.router.allrouter.edit', compact ('data'));
     }
 
     /**
@@ -123,7 +123,18 @@ class RouterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+    		'router_name'       => 'required|max:50',
+            'host'        => 'required|max:100',
+            'port'           => 'required|integer', 
+            'user'           => 'required|max:50', 
+            'password'       => 'required|min:8', 
+            'address'          => 'required|max:100', 
+            'coordinate'          => 'max:100', 
+        ]);
+        // $request['role_id'] = Role::ROLE_CUSTOMER;
+        $request['password'] = Crypt::encryptString(request('password'));
+        Router::where('id', $id)->update($request->except('_token'));
     }
 
     /**
@@ -136,7 +147,7 @@ class RouterController extends Controller
     public function detail($id)
     {
         $data = Router::all()->where('id', $id)->first();
-        return view ('cms.router.allrouter.allrouter.detail', compact ('data'));
+        return view ('cms.router.allrouter.detail', compact ('data'));
     }
 
     

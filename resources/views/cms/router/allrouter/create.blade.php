@@ -11,7 +11,7 @@
     </div>
     <div class="form-group ">
     <label for="port">Port</label>
-        <input class="form-control" name="port" type="integer" value="" id="port">
+        <input class="form-control" name="port" type="number" value="" id="port">
     </div>
     <div class="form-group ">
     <label for="user">User</label>

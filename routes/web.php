@@ -172,6 +172,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/create', 'Web\RouterController@create')->name('all-router-create');
             Route::get('/detail/{id}', 'Web\RouterController@detail')->name('all-router-detail');
             Route::get('/edit/{id}', 'Web\RouterController@edit')->name('all-router-edit');
+            Route::post('/update/{id}', 'Web\RouterController@update')->name('all-router-update');
             Route::post('/store', 'Web\RouterController@store')->name('all-router-store');    
             Route::delete('/destroy/{id}', 'Web\RouterController@destroy')->name('all-router-destroy'); 
         });
