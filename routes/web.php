@@ -101,6 +101,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/destroy/{id}', 'Web\BillingController@destroy')->name('billing-destroy'); //done
         });
 
+        Route::prefix('active-user')->group(function () {
+            Route::get('/', 'Web\ActiveUserController@index')->name('active-user-index');
+            Route::get('/datatables', 'Web\ActiveUserController@datatables')->name('active-user-datatables');
+            Route::get('/detail/{id}', 'Web\ActiveUserController@detail')->name('active-user-detail');
+            Route::delete('/destroy/{id}', 'Web\ActiveUserController@destroy')->name('active-user-destroy'); 
+        });
+
     });
 
     Route::prefix('packages')->group(function () {
@@ -159,14 +166,16 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('router')->group(function () {
-            Route::get('/', 'Web\RouterController@index')->name('router-index');
-            Route::get('/datatables', 'Web\RouterController@datatables')->name('router-datatables');
-            Route::get('/create', 'Web\RouterController@create')->name('router-create');
-            Route::get('/detail/{id}', 'Web\RouterController@detail')->name('router-detail');
-            Route::get('/edit/{id}', 'Web\RouterController@edit')->name('router-edit');
-            Route::post('/store', 'Web\RouterController@store')->name('router-store');    
-            Route::delete('/destroy/{id}', 'Web\RouterController@destroy')->name('router-destroy'); 
-    
+        Route::prefix('all-router')->group(function () {
+            Route::get('/', 'Web\RouterController@index')->name('all-router-index');
+            Route::get('/datatables', 'Web\RouterController@datatables')->name('all-router-datatables');
+            Route::get('/create', 'Web\RouterController@create')->name('all-router-create');
+            Route::get('/detail/{id}', 'Web\RouterController@detail')->name('all-router-detail');
+            Route::get('/edit/{id}', 'Web\RouterController@edit')->name('all-router-edit');
+            Route::post('/store', 'Web\RouterController@store')->name('all-router-store');    
+            Route::delete('/destroy/{id}', 'Web\RouterController@destroy')->name('all-router-destroy'); 
+        });
+        
        
     });
 });

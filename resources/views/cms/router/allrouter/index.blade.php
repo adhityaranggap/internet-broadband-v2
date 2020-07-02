@@ -7,7 +7,7 @@
         <div class="card-header">
             <h4>Data Router</h4>
             <div class="card-header-action">
-                <a href="{{ route('router-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Router Baru ">(+) Tambah Baru</a>                
+                <a href="{{ route('all-router-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Router Baru ">(+) Tambah Baru</a>                
             </div>
         </div>
         <div class="card-body ">

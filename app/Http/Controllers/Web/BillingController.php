@@ -23,7 +23,6 @@ class BillingController extends Controller
     {       
     
         $data = User::where('role_id', Role::ROLE_BILLING)->get();
-
         return Datatables::of($data)  
         ->editColumn('name',
             function ($data){

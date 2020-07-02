@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Router;
 use DataTables;
+use Illuminate\Support\Facades\Crypt;
 
 
 class RouterController extends Controller
@@ -17,7 +18,7 @@ class RouterController extends Controller
      */
     public function index()
     {
-        return view ('cms.router.index');
+        return view ('cms.router.allrouter.index');
     }
 
     /**
@@ -51,9 +52,9 @@ class RouterController extends Controller
             function ($data){                                
             
                     return
-                    \Component::btnRead(route('router-detail', $data->id), 'Detail Router '. $data->name).
-                    \Component::btnUpdate(route('router-edit', $data->id), 'Ubah router '. $data->router_name).
-                    \Component::btnDelete(route('router-destroy', $data->id), 'Hapus router '. $data->router_name);
+                    \Component::btnRead(route('all-router-detail', $data->id), 'Detail Router '. $data->name).
+                    \Component::btnUpdate(route('all-router-edit', $data->id), 'Ubah router '. $data->router_name).
+                    \Component::btnDelete(route('all-router-destroy', $data->id), 'Hapus router '. $data->router_name);
                     
         })
         ->addIndexColumn()
@@ -64,7 +65,7 @@ class RouterController extends Controller
 
     public function create()
     {
-        return view('cms.router.create');
+        return view('cms.router.allrouter.create');
     }
 
     /**
@@ -85,8 +86,7 @@ class RouterController extends Controller
             'coordinate'          => 'max:100', 
         ]);
         // $request['role_id'] = Role::ROLE_CUSTOMER;
-        $request['password'] = bcrypt(request('password'));
-
+        $request['password'] = Crypt::encryptString(request('password'));
         Router::create($request->except('_token'));
      }
 
@@ -111,7 +111,7 @@ class RouterController extends Controller
     {
         $data = Router::all();
 
-        return view ('cms.router.edit', compact ('data'));
+        return view ('cms.router.allrouter.allrouter.edit', compact ('data'));
     }
 
     /**
@@ -136,12 +136,19 @@ class RouterController extends Controller
     public function detail($id)
     {
         $data = Router::all()->where('id', $id)->first();
-        return view ('cms.router.detail', compact ('data'));
+        return view ('cms.router.allrouter.allrouter.detail', compact ('data'));
     }
 
     
     public function destroy($id)
     {
-        //
+        $data= Router::where('id', $id)->first();
+        
+        if (is_null($data)){
+            return 'tidak ditemukan';
+        }else{
+            $data->delete();
+           
+        }
     }
 }

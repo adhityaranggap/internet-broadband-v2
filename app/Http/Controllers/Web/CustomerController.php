@@ -27,7 +27,8 @@ class CustomerController extends Controller
     {       
     
         $data = User::all();
-
+        
+        return $data->address;
         return Datatables::of($data)  
         ->editColumn('name',
             function ($data){

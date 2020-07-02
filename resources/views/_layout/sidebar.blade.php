@@ -28,6 +28,8 @@
                 <ul class="dropdown-menu">
                   <li class="{{ Str::startsWith(Request::path(),'users/customers') ? 'active' : ''}}"><a class="nav-link" href="{{ route('customer-index') }}">Customers</a></li>
                   <li><a class="nav-link" href="{{ route('billing-index') }}">Billing</a></li>
+                  <li><a class="nav-link" href="{{ route('active-user-index') }}">Active User</a></li>
+
                 </ul>
               </li>
              
@@ -54,7 +56,7 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-server"></i> <span>Routers</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="{{ route('router-index') }}">All Router</a></li>
+                  <li><a class="nav-link" href="{{ route('all-router-index') }}">All Router</a></li>
                 
                 </ul>
               </li>

@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('router-store') }}">
+<form method="post" action="{{ route('all-router-store') }}">
 @csrf
     <div class="form-group ">
     <label for="router_name">Router Name</label>
