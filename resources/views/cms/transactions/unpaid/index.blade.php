@@ -61,7 +61,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script>
  $('#appTable').DataTable({
-        //responsive:true, 
+        responsive:true, 
         dom: '<"top"fB>rt<"bottom"lp><"clear">',
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],    
         processing:true,

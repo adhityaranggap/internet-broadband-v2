@@ -45,7 +45,7 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
  $('#appTable').DataTable({
-        //responsive:true,
+        responsive:true,
         processing:true,
         serverSide:true,
         ajax: "{{ url()->current().'/datatables' }}",
