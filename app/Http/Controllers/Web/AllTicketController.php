@@ -192,31 +192,28 @@ class AllTicketController extends Controller
     {
         $arrSelect = [
             'users.username as customer',
-            'tickets.id',
+            'tickets.id as id',
             'tickets.ticket_number as ticket_number',
             'tickets.subject as subject',
             'tickets.description',
             'tickets.updated_at as updated_at',
             'tickets.status as status',
             'tickets.updated_at as created_at',
-            'ticket_respond.created_at as respond_at',
-            'ticket_respond.respond',
-            'ticket_respond.ticket_id'
+
         ];
         $data = DB::table('tickets')    
         ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
         ->join('users', 'users_has_packages.user_id', 'users.id')
-        ->join('ticket_respond', 'tickets.id', 'ticket_respond.ticket_id')
         ->orderBy('tickets.created_at','desc')
         ->select($arrSelect)
         ->where('tickets.id', $id)
         ->first();
-
+   
         $ticketsResponds = DB::table('ticket_respond')
         ->where('ticket_id', $data->id)
         ->orderBy('created_at', 'asc')
         ->get();
-
+        
         // // $ticketsResponds=TicketRespond::findorFail('ticket_id','==',$data->id)->get;
         // //  $ticketsResponds = TicketRespond::where('ticket_id',$data->id)->firstOrFail($id);
         // // $user = TicketRespond::where('ticket_id', '=', $data->id)->first();
