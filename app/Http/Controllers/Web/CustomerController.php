@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DataTables;
-use App\User, App\Role;
+use App\User, App\Role, App\UserHasPackage, App\Package, App\EnumUserPackage;
 use \RouterOS\Client;
 use \RouterOS\Query;
+
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 
 
@@ -28,7 +31,6 @@ class CustomerController extends Controller
     
         $data = User::all();
         
-        return $data->address;
         return Datatables::of($data)  
         ->editColumn('name',
             function ($data){
@@ -70,6 +72,11 @@ class CustomerController extends Controller
     {
         return view('cms.users.customer.create');
     }
+    public function import()
+    {
+        $package = Package::all('name', 'id');
+        return view('cms.users.customer.import', compact('package'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -92,6 +99,84 @@ class CustomerController extends Controller
 
         User::create($request->except('_token'));
  
+        
+    }
+    public function storeImport(Request $request)
+    {
+        // return 'sukses';
+
+        // validasi
+		$this->validate($request, [
+			'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+        
+
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+            $users = Excel::toArray(new UsersImport, $request->file('file'));
+            // $users[0][0]; //heder
+            if(count($users[0]) > 1)
+            {               
+                foreach ($users[0] as $key => $user) {            
+                  $users[0] > [$key+1];
+                    if($key > $key+1 ){  
+                        $data = $users[0][$key+1];
+                    }else{
+                        $data = $users[0][$key]; 
+                    }
+                    $userCheckUsername = User::where('username', $data[1])->first();
+                    $package = $request['package_id'];
+
+                    if($userCheckUsername != null){
+                        User::where('username', $data[1])->update([
+                            'name' =>$data[2] ,
+                            'password'=>$data[3],
+                            'email'=>$data[4],
+                            'contact_person'=>$data[5],
+                            'address'=>$data[6],
+                            'role_id'=> Role::ROLE_CUSTOMER
+                        ]);
+                        $userCheckPackage = UserHasPackage::where('user_id', $userCheckUsername->id)->first();
+                            if($userCheckPackage != null){
+                                UserHasPackage::where('user_id', $userCheckUsername->id)->update([
+                                    'package_id'    => $package,
+                                    'verification'  => 'First Month',
+                                    'status'        => 'active',
+                                    'notes'         => '-'
+                                ]);
+                            }else{
+                                $id = DB::getPdo()->lastInsertId();;
+                            UserHasPackage::create([
+                                'user_id'       => $id,
+                                'package_id'    => $package,
+                                'verification'  => 'First Month',
+                                'status'        => 'active',
+                                'notes'         => '-'
+                            ]);
+                            };
+                    }else{
+                        User::create([
+                            'username'=>$data[1],
+                            'name' =>$data[2] ,
+                            'password'=>$data[3],
+                            'email'=>$data[4],
+                            'contact_person'=>$data[5],
+                            'address'=>$data[6],
+                            'role_id'=> Role::ROLE_CUSTOMER
+                        ]);
+                        $id = DB::getPdo()->lastInsertId();;
+                           UserHasPackage::create([
+                            'user_id'       => $id,
+                            'package_id'    => $package,
+                            'verification'  => 'First Month',
+                            'status'        => 'active',
+                            'notes'         => '-'
+                        ]);  
+                    };
+                   
+                  }
+            }
+        };
         
     }
 
