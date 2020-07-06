@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Router;
 use DataTables;
+use \RouterOS\Client;
+use \RouterOS\Query;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 
 class RouterController extends Controller
@@ -78,16 +81,49 @@ class RouterController extends Controller
     {
         $this->validate($request,[
     		'router_name'       => 'required|max:50',
-            'host'        => 'required|max:100',
-            'port'           => 'required|integer', 
-            'user'           => 'required|max:50', 
-            'password'       => 'required|min:8', 
-            'address'          => 'required|max:100', 
-            'coordinate'          => 'max:100', 
+            'host'              => 'required|max:100',
+            'port'              => 'required|integer', 
+            'user'              => 'required|max:50', 
+            'password'          => 'required|min:8', 
+            'address'           => 'required|max:100', 
+            'coordinate'        => 'max:100', 
         ]);
-        // $request['role_id'] = Role::ROLE_CUSTOMER;
         $request['password'] = Crypt::encryptString(request('password'));
         Router::create($request->except('_token'));
+        
+       $client = new Client([
+            'host' => 'indonesianet.id',
+            'port' => 8721,
+            'user' => 'admin',
+            'pass' => 'hendra123'
+        ]);
+
+        $password = $request->password;
+        $router_name = $request->router_name;
+        
+        // Create "where" Query object for RouterOS
+        $query = new Query('/ppp/secret/add');
+        $query->equal('name', $router_name);
+        $query->equal('password', $password);
+        $query->equal('profile', 'Routers');
+        // $client->query('/ppp/secret/add',[
+        //     ['name', 'name' ],
+        //     ['password', 'pass' ]
+
+        // ]);    
+
+        $response = $client->query($query)->read();
+        return $response;
+
+
+        return $response;
+                // ->where('name', 'adit');
+
+        // Send query and read response from RouterOS
+
+        $response = $client->query($query)->read();
+
+
      }
 
     /**
@@ -125,12 +161,12 @@ class RouterController extends Controller
     {
         $this->validate($request,[
     		'router_name'       => 'required|max:50',
-            'host'        => 'required|max:100',
-            'port'           => 'required|integer', 
-            'user'           => 'required|max:50', 
-            'password'       => 'required|min:8', 
-            'address'          => 'required|max:100', 
-            'coordinate'          => 'max:100', 
+            'host'              => 'required|max:100',
+            'port'              => 'required|integer', 
+            'user'              => 'required|max:50', 
+            'password'          => 'required|min:8', 
+            'address'           => 'required|max:100', 
+            'coordinate'        => 'max:100', 
         ]);
         // $request['role_id'] = Role::ROLE_CUSTOMER;
         $request['password'] = Crypt::encryptString(request('password'));
@@ -147,7 +183,28 @@ class RouterController extends Controller
     public function detail($id)
     {
         $data = Router::all()->where('id', $id)->first();
-        return view ('cms.router.allrouter.detail', compact ('data'));
+
+        $client = new Client([
+            'host' => 'indonesianet.id',
+            'port' => 8721,
+            'user' => 'admin',
+            'pass' => 'hendra123'
+        ]);
+
+    
+        
+        // Create "where" Query object for RouterOS
+        $query = new Query('/ppp/active/print');
+        $query->where('name', $data->router_name);
+        // $client->query('/ppp/secret/add',[
+        //     ['name', 'name' ],
+        //     ['password', 'pass' ]
+
+        // ]);    
+
+        $response = $client->query($query)->read();
+        return view ('cms.router.allrouter.detail', compact ('data','response'));
+
     }
 
     

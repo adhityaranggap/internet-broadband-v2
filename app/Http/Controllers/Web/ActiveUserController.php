@@ -35,7 +35,7 @@ class ActiveUserController extends Controller
     {       
     
         $data = Router::all()
-        ->where('router_name', 'Villa Core')
+        ->where('router_name', 'VPN-Server')
         ->first();
         
         $encryptedValue = $data->password;

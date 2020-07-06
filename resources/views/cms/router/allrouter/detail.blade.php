@@ -26,6 +26,15 @@
       <th scope="col"><b>Coordinate Router</b></th>
       <th>{{ $data->coordinate}}</th>    
     </tr>
+    @endforlse
+    <tr>
+    @forelse($response as $response)
+      <th scope="col"><b>IP VPN </b></th>
+      <th>{{ $response['address'] }}</th>    
+      @empty
+      <th>Belum terhubung</th>    
+    @endforelse
+    </tr>
    
   </thead> 
 </table>

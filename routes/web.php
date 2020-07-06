@@ -84,7 +84,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/router', 'Web\CustomerController@router')->name('customer-router');//done
             Route::get('/datatables', 'Web\CustomerController@datatables')->name('customer-datatables');//done
             Route::get('/create', 'Web\CustomerController@create')->name('customer-create');//done
+            Route::get('/import', 'Web\CustomerController@import')->name('customer-import');//done
             Route::post('/store', 'Web\CustomerController@store')->name('customer-store');//done
+            Route::post('/store/import', 'Web\CustomerController@storeImport')->name('customer-store-import');//done
             Route::get('/load', 'Web\CustomerController@loadData')->name('customer-load');//done
             Route::get('/edit/{id}', 'Web\CustomerController@edit')->name('customer-edit');//done
             Route::post('/update/{id}', 'Web\CustomerController@update')->name('customer-update');//done

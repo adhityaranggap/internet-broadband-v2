@@ -24,6 +24,11 @@ class PackageSeeder extends Seeder
             'price'  =>  '200000'
           ],
           [
+            'name'  =>  '250K 8M',
+            'speed'  =>  '8Mbps',
+            'price'  =>  '250000'
+          ],
+          [
             'name'  =>  '300K 10M',
             'speed'  =>  '10Mbps',
             'price'  =>  '300000'

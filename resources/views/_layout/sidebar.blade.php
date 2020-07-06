@@ -54,7 +54,7 @@
                 
               </li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-server"></i> <span>Routers</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-server"></i> <span>Servers</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('all-router-index') }}">All Router</a></li>
                 

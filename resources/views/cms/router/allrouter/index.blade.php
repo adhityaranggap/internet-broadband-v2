@@ -10,6 +10,7 @@
                 <a href="{{ route('all-router-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Router Baru ">(+) Tambah Baru</a>                
             </div>
         </div>
+
         <div class="card-body ">
             <div class="table-responsive">
                 <table id="appTable" class="table table-bordered table-hover dataTable table-striped" >

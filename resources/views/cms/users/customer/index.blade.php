@@ -5,11 +5,18 @@
 
     <div class="card card-primary">
         <div class="card-header">
-            <h4>Data Customer</h4>            
+            <h4>Data Customer</h4>
+            <div class="card-header-action">
+                <a href="{{ route('customer-import') }}" class="btn btn-outline-primary modal-show" title="Import User Baru ">(+) Import Data</a>                
+            </div>
             <div class="card-header-action">
                 <a href="{{ route('customer-create') }}" class="btn btn-outline-primary modal-show" title="Tambah User Baru ">(+) Tambah Baru</a>                
             </div>
+            
         </div>
+        <!-- Start Import  -->
+        
+        <!-- End Import -->
         <div class="card-body ">
             <div class="table-responsive">
                 <table id="appTable" class="table table-bordered table-hover dataTable table-striped" >

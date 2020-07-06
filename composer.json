@@ -18,6 +18,7 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.27",
         "sopamo/laravel-filepond": "^0.4.0",
         "syamsoul/laravel-datatable-ssp": "^2.3",
