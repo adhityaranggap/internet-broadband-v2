@@ -59,6 +59,20 @@
                                 <a href="#" class="float-left mt-3">
                   Forgot Password?
                 </a>
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                        <th scope="col"><b>Email</b></th>
+                        <th>rangga@rumahinternet.id</th>    
+                        </tr>
+                        <tr>
+                        <th scope="col"><b>Password</b></th>
+                        <th>12345678</th>    
+                        </tr>
+                    
+                        </tr>
+                    </thead> 
+                    </table>
                                 <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right" tabindex="4">
                   Login
                 </button>

@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DataTables;
-use App\User, App\Role, App\UserHasPackage, App\Package, App\EnumUserPackage;
+use App\User, App\Role, App\UserHasPackage, App\Transaction, App\Package, App\EnumUserPackage;
 use \RouterOS\Client;
 use \RouterOS\Query;
+use Carbon\Carbon;
 
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -153,26 +154,60 @@ class CustomerController extends Controller
                                 'status'        => 'active',
                                 'notes'         => '-'
                             ]);
+                            $id = DB::getPdo()->lastInsertId();;
+                            $data = DB::table('users_has_packages')
+                            ->join('packages','users_has_packages.package_id','packages.id')
+                            ->select('packages.price')
+                            ->where('users_has_packages.id', $id)->first();
+
+                            Transaction::create([
+                                'users_has_packages_id'         =>  $id,
+                                'transaction_has_modified_id'   => 1,
+                                'notes'                         => '-',
+                                'expired_date'                  => Carbon::now()->addMonths(1),
+                                'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                                'price'                         =>  $data->price,
+                                'fee'                           =>  0,
+                                'paid'                          =>  0,
+                                'created_at'                    =>  now(),                   
+                            ]);
                             };
                     }else{
-                        User::create([
-                            'username'=>$data[1],
-                            'name' =>$data[2] ,
-                            'password'=>$data[3],
-                            'email'=>$data[4],
-                            'contact_person'=>$data[5],
-                            'address'=>$data[6],
-                            'role_id'=> Role::ROLE_CUSTOMER
-                        ]);
-                        $id = DB::getPdo()->lastInsertId();;
-                           UserHasPackage::create([
-                            'user_id'       => $id,
-                            'package_id'    => $package,
-                            'verification'  => 'First Month',
-                            'status'        => 'active',
-                            'notes'         => '-'
-                        ]);  
-                    };
+                            User::create([
+                                'username'=>$data[1],
+                                'name' =>$data[2] ,
+                                'password'=>$data[3],
+                                'email'=>$data[4],
+                                'contact_person'=>$data[5],
+                                'address'=>$data[6],
+                                'role_id'=> Role::ROLE_CUSTOMER
+                            ]);
+                            $id = DB::getPdo()->lastInsertId();;
+                            UserHasPackage::create([
+                                'user_id'       => $id,
+                                'package_id'    => $package,
+                                'verification'  => 'First Month',
+                                'status'        => 'active',
+                                'notes'         => '-'
+                            ]);
+                            $id = DB::getPdo()->lastInsertId();;
+                            $data = DB::table('users_has_packages')
+                            ->join('packages','users_has_packages.package_id','packages.id')
+                            ->select('packages.price')
+                            ->where('users_has_packages.id', $id)->first();
+                            
+                                Transaction::create([
+                                    'users_has_packages_id'         =>  $id,
+                                    'transaction_has_modified_id'   => 1,
+                                    'notes'                         => '-',
+                                    'expired_date'                  => Carbon::now()->addMonths(1),
+                                    'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                                    'price'                         =>  $data->price,
+                                    'fee'                           =>  0,
+                                    'paid'                          =>  0,
+                                    'created_at'                    =>  now(),
+                            ]);       
+                            };
                    
                   }
             }
@@ -280,22 +315,22 @@ class CustomerController extends Controller
     {
 
         // Initiate client with config object
-        $client = new Client([
-            'host' => 'indonesianet.id',
-            'port' => 38278,
-            'user' => 'rangga',
-            'pass' => 'Botolkecap1!'
-        ]);
+        // $client = new Client([
+        //     'host' => 'indonesianet.id',
+        //     'port' => 38278,
+        //     'user' => 'rangga',
+        //     'pass' => 'Botolkecap1!'
+        // ]);
 
-        // Create "where" Query object for RouterOS
-        $query =
-            (new Query('/ppp/secret/print'));
-                // ->where('name', 'adit');
+        // // Create "where" Query object for RouterOS
+        // $query =
+        //     (new Query('/ppp/secret/print'));
+        //         // ->where('name', 'adit');
 
-        // Send query and read response from RouterOS
+        // // Send query and read response from RouterOS
 
-        $response = $client->query($query)->read();
-        return response()->json($response);
+        // $response = $client->query($query)->read();
+        // return response()->json($response);
 
         // var_dump($response);
 

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Enum;
+use \RouterOS\Client;
+use \RouterOS\Query;
 /**
  * @author Achmad Munandar
  */
@@ -26,6 +28,29 @@ class EnumTransaksi
             return \Component::badgetLinkSuccess("Lunas");
         }else if($status == 4){
             return \Component::badgetLinkWarning("Belum Lunas");
+        }
+    }
+    public static function router ($status)
+    {
+        if($status == 0){
+            
+        }else if($status == 1){
+            $client = new Client([
+                'host' => 'indonesianet.id',
+                'port' =>  8721,
+                'user' => 'rangga',
+                'pass' => 'Botolkecap1!'
+            ]);
+    
+            // Create "where" Query object for RouterOS
+            $query =
+                (new Query('/ppp/secret/set/',$data->name,'/profile=Block'));
+                    // ->where('name', 'adit');
+    
+            // Send query and read response from RouterOS
+    
+            $response = $client->query($query)->read();
+            return response()->json($response);            
         }
     }
 
