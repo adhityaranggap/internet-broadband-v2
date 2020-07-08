@@ -63,7 +63,7 @@
                     <thead>
                         <tr>
                         <th scope="col"><b>Email</b></th>
-                        <th>rangga@rumahinternet.id</th>    
+                        <th>me@adhityrp.com</th>    
                         </tr>
                         <tr>
                         <th scope="col"><b>Password</b></th>

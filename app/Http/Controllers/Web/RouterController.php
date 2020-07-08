@@ -91,38 +91,7 @@ class RouterController extends Controller
         $request['password'] = Crypt::encryptString(request('password'));
         Router::create($request->except('_token'));
         
-       $client = new Client([
-            'host' => 'indonesianet.id',
-            'port' => 8721,
-            'user' => 'admin',
-            'pass' => 'hendra123'
-        ]);
-
-        $password = $request->password;
-        $router_name = $request->router_name;
-        
-        // Create "where" Query object for RouterOS
-        $query = new Query('/ppp/secret/add');
-        $query->equal('name', $router_name);
-        $query->equal('password', $password);
-        $query->equal('profile', 'Routers');
-        // $client->query('/ppp/secret/add',[
-        //     ['name', 'name' ],
-        //     ['password', 'pass' ]
-
-        // ]);    
-
-        $response = $client->query($query)->read();
-        return $response;
-
-
-        return $response;
-                // ->where('name', 'adit');
-
-        // Send query and read response from RouterOS
-
-        $response = $client->query($query)->read();
-
+       
 
      }
 
@@ -185,10 +154,10 @@ class RouterController extends Controller
         $data = Router::all()->where('id', $id)->first();
 
         $client = new Client([
-            'host' => 'indonesianet.id',
+            'host' => '',
             'port' => 8721,
-            'user' => 'admin',
-            'pass' => 'hendra123'
+            'user' => '',
+            'pass' => ''
         ]);
 
     

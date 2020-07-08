@@ -34,35 +34,103 @@ class ActiveUserController extends Controller
     public function datatables()
     {       
     
-        $data = Router::all()
-        ->where('router_name', 'VPN-Server')
-        ->first();
+        // // // $data = Router::all()
+        // // // ->where('router_name', 'VPN-Server')
+        // // // ->first();
         
-        $encryptedValue = $data->password;
-        $decrypted = Crypt::decryptString($encryptedValue);
+        // // // $encryptedValue = $data->password;
+        // // // $decrypted = Crypt::decryptString($encryptedValue);
 
 
        
-        $client = new Client([
-            'host' => $data->host,
-            'port' => $data->port,
-            'user' => $data->user,
-            'pass' => $decrypted
-        ]);
+        // // // $client = new Client([
+        // // //     'host' => $data->host,
+        // // //     'port' => $data->port,
+        // // //     'user' => $data->user,
+        // // //     'pass' => $decrypted
+        // // // ]);
 
-        // Create "where" Query object for RouterOS
-        $query =
-            (new Query('/ppp/active/print'));
-                // ->where('name', 'adit');
+        // // // // Create "where" Query object for RouterOS
+        // // // // $query =
+        // // // //     (new Query('/ppp/active/print'));
+        // // // $query = new Query('/ppp/secret/print');
+        // // // $query->where('name', 'ari-rt05');
+        // // // $secrets = $client->query($query)->read();
 
-        // Send query and read response from RouterOS
+        // // // // Parse secrets and set password
+        // // // foreach ($secrets as $secret) {
 
-        $response = $client->query($query)->read();
+        // // //     // Change password
+        // // //     $query = (new Query('/ppp/secret/set'))
+        // // //         ->equal('.id', $secret['.id'])
+        // // //         ->equal('profile', 'Block');
+
+        // // // // Update query ordinary have no return
+        // // // $client->query($query)->read();
+        // // }
+        //         // ->where('name', 'adit');
+
+        // // Send query and read response from RouterOS
+
+        // $response = $client->query($query)->read();
         //  $response = [
         //     $api->name,
         // ];
         // if (empty(!$response)) { 
         // return $response;
+        // ===========================
+         $arrSelect = [
+            'users.username as name',
+            'transactions.expired_date as expired_date',
+            'packages.name as package_name',
+            'transactions.price as price',
+            'transactions.id as id',
+            'transactions.status as status',
+            'users.role_id'
+        ];
+        // $data = transaction::all();
+        $data = DB::table('users')
+        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+        ->where('transactions.status', 1)
+        ->get();
+       
+        $router = Router::all()
+        ->where('router_name', 'VPN-Server')
+        ->first();
+        
+        $encryptedValue = $router->password;
+        $decrypted = Crypt::decryptString($encryptedValue);
+       
+        $client = new Client([
+            'host' => $router->host,
+            'port' => $router->port,
+            'user' => $router->user,
+            'pass' => $decrypted
+        ]);
+
+        $status = $data['status'];
+        if($status == \EnumTransaksi::STATUS_BELUM_BAYAR){
+            
+        }else if($status == \EnumTransaksi::STATUS_TENGGANG){
+            $query = new Query('/ppp/secret/print');
+            $query->where('name', $data->name);
+            $secrets = $client->query($query)->read();
+    
+            // Parse secrets and set password
+            foreach ($secrets as $secret) {
+    
+                // Change password
+                $query = (new Query('/ppp/secret/set'))
+                    ->equal('.id', $secret['.id'])
+                    ->equal('profile', 'Block');
+    
+            // Update query ordinary have no return
+            $client->query($query)->read();
+            }
+        }
+        // ===========================
         return Datatables::of($response) 
         ->editColumn('name',
             function ($response){

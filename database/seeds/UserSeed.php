@@ -11,29 +11,29 @@ class UserSeed extends Seeder
      */
     public function run()
     {
-      //faker
-        // $faker = Faker\Factory::create();                      
-        // for($i=0 ; $i<=1000; $i++){   
-        //     $username = $faker->unique()->username;
+      // faker
+      //   $faker = Faker\Factory::create();                      
+      //   for($i=0 ; $i<=1000; $i++){   
+      //       $username = $faker->unique()->username;
 
-        //     User::create([
-        //         'name'      =>  $faker->name,
-        //         'username'  =>  $faker->unique()->username,
-        //         'password'  =>  bcrypt('12345678'),
-        //         'email'     =>  $faker->unique()->email,
-        //         'contact_person'    =>  $faker->unique()->e164PhoneNumber,
-        //         'address'   =>  $faker->address,
-        //         'role_id'   =>  Role::ROLE_CUSTOMER,   
-        //     ]);
+      //       User::create([
+      //           'name'      =>  $faker->name,
+      //           'username'  =>  $faker->unique()->username,
+      //           'password'  =>  bcrypt('12345678'),
+      //           'email'     =>  $faker->unique()->email,
+      //           'contact_person'    =>  $faker->unique()->e164PhoneNumber,
+      //           'address'   =>  $faker->address,
+      //           'role_id'   =>  Role::ROLE_CUSTOMER,   
+      //       ]);
 
-        // }    
+      //   }    
 
         $arrUser =[
           [
-            'name'  =>  'Rangga',
-            'username'  =>  'rangga',
+            'name'  =>  'Temp',
+            'username'  =>  'temporary',
             'password'  =>  bcrypt('12345678'),
-            'email'     =>  'atia@rumahinternet.id',
+            'email'     =>  'me@adhityarp.com',
             'contact_person'    =>  '087787878',
             'address'   =>  'Vilmut',
             'role_id'   =>  Role::ROLE_ADMIN,    
