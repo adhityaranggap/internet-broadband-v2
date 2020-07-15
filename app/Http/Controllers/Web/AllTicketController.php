@@ -36,7 +36,7 @@ class AllTicketController extends Controller
                 'tickets.created_at as created_at'
             ];
             $data = DB::table('tickets')    
-                ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
+            ->join('users_has_packages', 'tickets.users_has_packages_id', 'users_has_packages.id')
             ->join('users', 'users_has_packages.user_id', 'users.id')
             ->orderBy('tickets.created_at','desc')
             ->where('users_has_packages.user_id', auth()->user()->id)

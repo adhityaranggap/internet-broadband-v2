@@ -6,6 +6,10 @@
     <div class="card card-primary">
         <div class="card-header">
             <h4>All Transaction</h4>
+            
+            <div class="card-header-action">
+                <a href="{{ route('all-transaction-sync') }}" class="btn btn-outline-primary title="Sync Data App\Component::btnDelete><i class="fas fa-sync"> Sync Data </i></a>                
+            </div>
             <div class="card-header-action">
                 <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>                
             </div>

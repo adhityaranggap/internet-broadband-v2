@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
+use App\User;
 
 class UserController extends Controller
 {
@@ -14,7 +16,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('cms.profile.index');
+        $id = auth()->user()->id;
+        $user = User::all()
+        ->where('id', $id);
+        
+        return view('cms.profile.index', compact ('user'));
     }
 
     /**

@@ -7,9 +7,14 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
-use App\User, App\UserHasPackage, App\Package, App\Transaction, App\TransactionHasModified;
+use App\User, App\Router, App\UserHasPackage, App\Package, App\Transaction, App\TransactionHasModified;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use \RouterOS\Client;
+use \RouterOS\Query;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
  
 class AllTransactionController extends Controller
 {
@@ -291,6 +296,83 @@ class AllTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function sync()
+    {
+        
+       
+        $arrSelect = [
+            'transactions.id as id',
+            'users.username as name',
+            'transactions.expired_date as expired_date',
+            'packages.name as package_name',
+            'transactions.price as price',
+            'transactions.status as status',
+            'users.role_id'
+        ];
+        $users = DB::table('users')
+        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+        ->orderBy('transactions.expired_date','desc')
+        ->select($arrSelect)
+        ->get();
+        
+        $results = array();
+        $routers = Router::all();
+        
+        foreach($routers as $key => $router){
+            $encryptedValue = $router->password;
+            $decrypted = Crypt::decryptString($encryptedValue);
+           
+            $client = new Client([
+                'host' => $router->host,
+                'port' => $router->port,
+                'user' => $router->user,
+                'pass' => $decrypted
+            ]);
+            foreach ($users as $key => $user)
+            {
+    
+                if($user->status == \EnumTransaksi::STATUS_TENGGANG )
+                {
+                    // Get list of all available profiles with name Block
+                    $query = new Query('/ppp/secret/print');
+                    $query->where('name', $user->name);
+                    $secrets = $client->query($query)->read();
+    
+                    // Parse secrets and set password
+                    foreach ($secrets as $secret) {
+    
+                        // Change profile
+                        $query = (new Query('/ppp/secret/set'))
+                            ->equal('.id', $secret['.id'])
+                            ->equal('profile', 'Block');
+    
+                        // Update query ordinary have no return
+                        $client->query($query)->read();
+                    }
+                } else {
+                    $query = new Query('/ppp/secret/print');
+                    $query->where('name', $user->name);
+                    $secrets = $client->query($query)->read();
+    
+                    // Parse secrets and set password
+                    foreach ($secrets as $secret) {
+    
+                        // Change password
+                        $query = (new Query('/ppp/secret/set'))
+                            ->equal('.id', $secret['.id'])
+                            ->equal('profile', $user->package_name);
+    
+                        // Update query ordinary have no return
+                        $client->query($query)->read();
+                     };
+                 }
+            }    
+        }
+       
+        return back();
+    }
     public function destroy($id)
     {
         //

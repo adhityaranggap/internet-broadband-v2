@@ -4,8 +4,12 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use \RouterOS\Client;
-use App\Router;
+use App\Router, App\Transaction;
 use \RouterOS\Query;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -30,60 +34,77 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function() {
 
-        $arrSelect = [
-            'users.username as name',
-            'transactions.expired_date as expired_date',
-            'packages.name as package_name',
-            'transactions.price as price',
-            'transactions.id as id',
-            'transactions.status as status',
-            'users.role_id'
-        ];
-        // $data = transaction::all();
-        $data = DB::table('users')
-        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
-        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
-        ->orderBy('transactions.expired_date','desc')
-        ->select($arrSelect)
-        ->get();
-
-        $router = Router::all()
-        ->where('router_name', 'VPN-Server')
-        ->first();
-        
-        $encryptedValue = $router->password;
-        $decrypted = Crypt::decryptString($encryptedValue);
        
-        $client = new Client([
-            'host' => $router->host,
-            'port' => $router->port,
-            'user' => $router->user,
-            'pass' => $decrypted
-        ]);
-
-        $status = $data->status;
-        if($status == \EnumTransaksi::STATUS_BELUM_BAYAR){
+            $arrSelect = [
+                'transactions.id as id',
+                'users.username as name',
+                'transactions.expired_date as expired_date',
+                'packages.name as package_name',
+                'transactions.price as price',
+                'transactions.status as status',
+                'users.role_id'
+            ];
+            $users = DB::table('users')
+            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+            ->orderBy('transactions.expired_date','desc')
+            ->select($arrSelect)
+            ->get();
+            $results = array();
+            $router = Router::all()
+            ->where('router_name', 'VPN-Server')
+            ->first();
             
-        }else if($status == \EnumTransaksi::STATUS_TENGGANG){
-            $query = new Query('/ppp/secret/print');
-            $query->where('name', $data->name);
-            $secrets = $client->query($query)->read();
+            $encryptedValue = $router->password;
+            $decrypted = Crypt::decryptString($encryptedValue);
+           
+            $client = new Client([
+                'host' => $router->host,
+                'port' => $router->port,
+                'user' => $router->user,
+                'pass' => $decrypted
+            ]);
+            foreach ($users as $key => $user)
+            {
+  
+                if($user->status == \EnumTransaksi::STATUS_TENGGANG )
+                {
+                    // Get list of all available profiles with name Block
+                    $query = new Query('/ppp/secret/print');
+                    $query->where('name', $user->name);
+                    $secrets = $client->query($query)->read();
     
-            // Parse secrets and set password
-            foreach ($secrets as $secret) {
+                    // Parse secrets and set password
+                    foreach ($secrets as $secret) {
     
-                // Change password
-                $query = (new Query('/ppp/secret/set'))
-                    ->equal('.id', $secret['.id'])
-                    ->equal('profile', 'Block');
+                        // Change password
+                        $query = (new Query('/ppp/secret/set'))
+                            ->equal('.id', $secret['.id'])
+                            ->equal('profile', 'Block');
     
-            // Update query ordinary have no return
-            $client->query($query)->read();
-            }
-        }
-                
-        })->everyMinute();
+                        // Update query ordinary have no return
+                        $client->query($query)->read();
+                    }
+                } else {
+                    $query = new Query('/ppp/secret/print');
+                    $query->where('name', $user->name);
+                    $secrets = $client->query($query)->read();
+    
+                    // Parse secrets and set password
+                    foreach ($secrets as $secret) {
+    
+                        // Change password
+                        $query = (new Query('/ppp/secret/set'))
+                            ->equal('.id', $secret['.id'])
+                            ->equal('profile', 'default');
+    
+                        // Update query ordinary have no return
+                        $client->query($query)->read();
+                     };
+                 }
+            }    
+        })->everyYear();
     }
 
     /**

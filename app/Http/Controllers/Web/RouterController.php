@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Router;
+use App\Router, App\Package;
 use DataTables;
 use \RouterOS\Client;
 use \RouterOS\Query;
@@ -84,16 +84,70 @@ class RouterController extends Controller
             'host'              => 'required|max:100',
             'port'              => 'required|integer', 
             'user'              => 'required|max:50', 
-            'password'          => 'required|min:8', 
+            'password'          => 'required', 
             'address'           => 'required|max:100', 
             'coordinate'        => 'max:100', 
         ]);
         $request['password'] = Crypt::encryptString(request('password'));
         Router::create($request->except('_token'));
         
-       
+        $arrSelect = [
+            'users.id as id',
+            'users.username as name',
+            'packages.name as package_name',
+            'transactions.status as status',
+           
+        ];
+        $users = DB::table('users')
+        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+        ->select($arrSelect)
+        ->get();
 
-     }
+        $router = Router::all()
+        ->where('router_name', $request['router_name'])
+        ->first();
+        $packages = Package::all();
+        $encryptedValue = $router->password;
+        $decrypted = Crypt::decryptString($encryptedValue);
+        $client = new Client([
+            'host' => $router->host,
+            'port' => $router->port,
+            'user' => $router->user,
+            'pass' => $decrypted
+        ]);       
+        foreach ($packages as $key => $package)
+        {
+            $query = (new Query('/ppp/profile/add'))
+            ->equal('name', $package->name);
+
+            // Update query ordinary have no return
+            $client->query($query)->read();
+        }
+       
+        foreach ($users as $key => $user)
+        {
+            if($user->status == \EnumTransaksi::STATUS_TENGGANG )
+            {
+                $query = (new Query('/ppp/secret/add'))
+                ->equal('name', $user->name)
+                ->equal('password', $user->name)
+                ->equal('profile', 'Block');
+    
+                // Update query ordinary have no return
+                $client->query($query)->read();
+            }else{
+                $query = (new Query('/ppp/secret/add'))
+                ->equal('name', $user->name)
+                ->equal('password', $user->name)
+                ->equal('profile', $user->package_name);
+    
+                // Update query ordinary have no return
+                $client->query($query)->read();
+            }
+        }
+    }
 
     /**
      * Display the specified resource.

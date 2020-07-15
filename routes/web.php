@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'Web\AllTransactionController@index')->name('all-transaction-index');//done
             Route::get('/datatables', 'Web\AllTransactionController@datatables')->name('all-transaction-datatables');//done
             Route::get('/create', 'Web\AllTransactionController@create')->name('all-transaction-create');//done
+            Route::get('/sync', 'Web\AllTransactionController@sync')->name('all-transaction-sync');//done
             Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');//done
             Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');//done
             Route::get('/detail/{id}', 'Web\AllTransactionController@detail')->name('all-transaction-detail');//done
