@@ -132,6 +132,7 @@ class CustomerController extends Controller
                         User::where('username', $data[1])->update([
                             'name' =>$data[2] ,
                             'password'=>$data[3],
+                            'password_router'=>$data[1],
                             'email'=>$data[4],
                             'contact_person'=>$data[5],
                             'address'=>$data[6],
@@ -177,6 +178,7 @@ class CustomerController extends Controller
                                 'username'=>$data[1],
                                 'name' =>$data[2] ,
                                 'password'=>$data[3],
+                                'password_router'=>$data[1],
                                 'email'=>$data[4],
                                 'contact_person'=>$data[5],
                                 'address'=>$data[6],
