@@ -17,9 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $id = auth()->user()->id;
-        $user = User::all()
-        ->where('id', $id);
-        
+        $user = User::where('id', $id)->first();
         return view('cms.profile.index', compact ('user'));
     }
 

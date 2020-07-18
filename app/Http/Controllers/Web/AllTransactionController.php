@@ -81,8 +81,8 @@ class AllTransactionController extends Controller
             
                     return
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
-                    \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name);
-                    // \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Package '. $data->name);
+                    \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name).
+                    \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Package '. $data->name);
                     
         })
         ->addIndexColumn()
@@ -235,7 +235,21 @@ class AllTransactionController extends Controller
         ->join('packages','users_has_packages.package_id','packages.id')
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
-        
+    
+        if($request->status === \EnumTransaksi::STATUS_LUNAS){
+            Transaction::create([
+                'users_has_packages_id'   =>  $transaction->id,
+                // 'transaction_has_modified_id'   => DB::getPdo()->lastInsertId(),
+                'transaction_has_modified_id'   => '1',
+                'notes'                 => '-',
+                'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),
+                'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                'price'                 =>  $transaction->price,
+                'fee'                   =>  $transaction->fee,
+                'paid'                  =>  $transaction->fee,
+                'created_at'            =>  now(),                   
+            ]);
+        }
 
         if($transaction){
 
@@ -247,43 +261,21 @@ class AllTransactionController extends Controller
                         $size = '360';
                         $format = 'file';
                         $image = $request->file('payment_proof');         
+                        // $request['file'] = Storage::disk('minio')->put($image);
                         $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
+                        
                     }
-                    // $request ['type_payment'] = 'Transfer';
-                    // $request['transaction_id'] = $id;
-                    // $request['user_id'] = Auth::id();
-                    // TransactionHasModified::create($request->except('_token'));
-                    // // $request ['transaction_has_modified_id'] = DB::getPdo()->lastInsertId();
+                 
 
                     Transaction::where('id', $id)->update($request->only('updated_at','type_payment','notes', 'file', 'fee', 'status', 'paid'));
                 }else{
-                    // $request ['type_payment'] = 'Cash';
-                    // return Auth::id();
-                    // $request['transaction_id'] = $id;
-                    // $request['user_id'] = Auth::id();
-                    // TransactionHasModified::create($request->except('_token'));
-                    // $request ['transaction_has_modified_id'] = DB::getPdo()->lastInsertId();
+                   
 
                     Transaction::where('id', $id)->update($request->only('updated_at','notes','type_payment','transaction_has_modified_id', 'fee', 'status', 'paid'));
                    
 
                 }    
                 
-                if($request->status === \EnumTransaksi::STATUS_LUNAS){
-                    Transaction::create([
-                        'users_has_packages_id'   =>  $transaction->id,
-                        // 'transaction_has_modified_id'   => DB::getPdo()->lastInsertId(),
-                        'transaction_has_modified_id'   => '1',
-                        'notes'                 => '-',
-                        'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),
-                        'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                        'price'                 =>  $transaction->price,
-                        'fee'                   =>  $transaction->fee,
-                        'paid'                   =>  $transaction->fee,
-                        'created_at'            =>  now(),                   
-                    ]);
-                }
-
             }
           
         }
@@ -316,7 +308,7 @@ class AllTransactionController extends Controller
         ->orderBy('transactions.expired_date','desc')
         ->select($arrSelect)
         ->get();
-        
+
         $results = array();
         $routers = Router::all();
         
@@ -375,6 +367,19 @@ class AllTransactionController extends Controller
     }
     public function destroy($id)
     {
-        //
+          // menghapus data trx berdasarkan id yang dipilih
+    $trx= Transaction::where('id', $id)->first();
+    if (is_null($trx)){
+        return 'tidak ditemukan';
+    }
+    elseif($trx->status == \EnumTransaksi::STATUS_LUNAS){
+        Transaction::where('id', $id)->update([
+            'status' => \EnumTransaksi::STATUS_BELUM_LUNAS
+            ]);
+    }else{
+        $trx->delete();
+       
+    }
+
     }
 }
