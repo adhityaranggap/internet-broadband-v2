@@ -129,12 +129,14 @@ class CustomerController extends Controller
                     }
                     $userCheckUsername = User::where('username', $data[1])->first();
                     $package = $request['package_id'];
+                    $password = bcrypt($data[3]);
+                    $password_router = encrypt($data[1]);
 
                     if($userCheckUsername != null){
                         User::where('username', $data[1])->update([
                             'name' =>$data[2] ,
-                            'password'=>$data[3],
-                            'password_router'=>$data[1],
+                            'password'=>$password,
+                            'password_router'=>$password_router,
                             'email'=>$data[4],
                             'contact_person'=>$data[5],
                             'address'=>$data[6],

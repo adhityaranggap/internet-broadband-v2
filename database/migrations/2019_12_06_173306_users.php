@@ -20,6 +20,7 @@ class Users extends Migration
             $table->string('email');
             $table->string('contact_person');
             $table->text('password');
+            $table->text('password_router')->nullable();
             $table->string('address');
             $table->unsignedInteger('role_id');
             $table->timestamps(); //generate created_at and update_at
