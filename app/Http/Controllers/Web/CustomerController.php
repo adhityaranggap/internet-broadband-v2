@@ -35,10 +35,10 @@ class CustomerController extends Controller
         $data = User::all();
         
         return Datatables::of($data)  
-        ->editColumn('name',
-            function ($data){
-                return $data->name;
-        })     
+        // ->editColumn('name',
+        //     function ($data){
+        //         return $data->name;
+        // })     
         ->editColumn('username',
             function ($data){
                 return $data->username;
@@ -99,6 +99,7 @@ class CustomerController extends Controller
         ]);
         $request['role_id'] = Role::ROLE_CUSTOMER;
         $request['password'] = bcrypt(request('password'));
+        $request['password_router'] = encrypt($request['username']);
 
         User::create($request->except('_token'));
  

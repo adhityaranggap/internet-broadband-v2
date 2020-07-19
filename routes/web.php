@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('profile')->group(function () {
         Route::get('/index', 'Web\UserController@index')->name('profile-index');
-        Route::get('/update/{id}', 'Web\UserController@update')->name('profile-update');
+        Route::post('/update/{id}', 'Web\UserController@update')->name('profile-update');
  
     });
     Route::middleware('AdminBillingOnly')->group(function () {

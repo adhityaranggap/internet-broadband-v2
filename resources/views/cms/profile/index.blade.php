@@ -20,7 +20,9 @@
                 </div>
               </div>
               <div class="col-md-8">
-                <form id="setting-form">
+                <form id="setting-form" class="form-validate" method="post" action="{{ route('profile-update', auth()->user()->id) }}">
+                @csrf
+
                   <div class="card" id="settings-card">
                     <div class="card-header">
                       <h4>General Settings</h4>
@@ -34,13 +36,42 @@
                         </div>
                       </div>
                       <div class="form-group row align-items-center">
-                        <label for="name" class="form-control-label col-sm-3 text-md-right">name</label>
+                        <label for="name" class="form-control-label col-sm-3 text-md-right">Name</label>
                         <div class="col-sm-6 col-md-9">
                           <input type="text" value="{{ $user->name }}" name="name" class="form-control" id="name">
                         </div>
                       </div>
                       <div class="form-group row align-items-center">
-                        <label for="email" class="form-control-label col-sm-3 text-md-right">email</label>
+                        <label for="oldPassword" class="form-control-label col-sm-3 text-md-right">Current Password</label>
+                        <div class="col-sm-6 col-md-9">
+                        <input id="password-field" type="password" class="form-control" name="oldPassword" value="">
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label for="password" class="form-control-label col-sm-3 text-md-right">Password</label>
+                        <div class="col-sm-6 col-md-9">
+                          <!-- asdsad -->
+                          <div class="input-group mb-3">                  
+                          <input id="newPassword" type="password" class="form-control password" name="password" value="">
+                        <div class="input-group-append">
+                          <span class="input-group-text">                        
+                          <i class="far fa-eye" onclick="myFunction()"></i>
+                          
+                        </span>
+                        </div>
+                      </div>
+                          <!-- asds -->
+                          <!-- <input type="password" value="" name="password" class="form-control" id="password"> -->
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label for="passwordConfirmation" class="form-control-label col-sm-3 text-md-right">Confirmation Password</label>
+                        <div class="col-sm-6 col-md-9">
+                          <input type="password" value="" name="passwordConfirmation" class="form-control" id="passwordConfirmation">
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label for="email" class="form-control-label col-sm-3 text-md-right">Email</label>
                         <div class="col-sm-6 col-md-9">
                           <input type="email" value="{{ $user->email }}" name="email" class="form-control" id="email">
                         </div>
@@ -72,4 +103,17 @@
         </div>
     </div>
 
+  <script src="{{ asset('js/form-validate.js') }}"></script>
+  @push('js')
+  <script>
+ function myFunction() {
+  var pw_ele = document.getElementById("newPassword");
+  if (pw_ele.type === "password") {
+    pw_ele.type = "text";
+  } else {
+    pw_ele.type = "password";
+  }
+}
+</script>
+@endpush
 @endsection

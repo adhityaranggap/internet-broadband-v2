@@ -24,10 +24,6 @@
     <div class="form-group ">
     <label for="name">Address</label>
         <textarea class="form-control" name="address" placeholder="Required"></textarea>
-
     </div>
-    <div class="form-group ">
-        <label for="name">Status</label>
-        <input type="text" class="form-control">
-    </div>
+   
 </form>

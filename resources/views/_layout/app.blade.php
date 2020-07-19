@@ -72,9 +72,9 @@
   <script src="{{ asset('js/modal.js') }}"></script>
   @stack('script')
 
-<script type="text/javascript" src="{{ asset('js/chat.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/chat.js') }}"></script>
 
-<script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
+  <script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
 
 
   <!-- CHoose -->
@@ -90,6 +90,6 @@
   <script src="{{ asset('assets/vendors/stisla/js/custom.js') }}"></script>
 
   <!-- Page Specific JS File -->
-  <!-- @stack('js') -->
+  @stack('js')
 </body>
 </html>

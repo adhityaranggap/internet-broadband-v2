@@ -23,7 +23,7 @@
                     <thead>
                     <tr>
                     <th scope="col">No</th>
-                        <th scope="col">Name</th>
+                        <!-- <th scope="col">Name</th> -->
                         <th scope="col">Username</th>
                         <th scope="col">Contact Person</th>
                         <th scope="col">Address</th>
@@ -80,8 +80,8 @@
         
         ajax: "{{ url()->current().'/datatables' }}",
         columns:[
-            {data: 'DT_RowIndex', name:'name', searchable: false},
-            {data: 'name', name:'name'},
+            {data: 'DT_RowIndex', name:'username', searchable: false},
+            // {data: 'name', name:'name'},
             {data: 'username', name:'username'},
             {data: 'contact_person', name:'contact_person'},
             {data: 'address', name:'address'}, 
