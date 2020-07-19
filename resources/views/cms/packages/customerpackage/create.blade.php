@@ -4,7 +4,7 @@
     <div class="form-group ">
         <label for="name">Username</label>
         <div class="form-group" style="margin-top:5px; ">
-            <select class="form-control cari" id="user_id" name="user_id">
+            <select class="form-control cari" id="user_id" name="user_id" style="width:100%;">
             
             </select>
         </div>

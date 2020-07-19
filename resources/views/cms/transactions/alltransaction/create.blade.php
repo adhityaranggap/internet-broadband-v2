@@ -3,8 +3,8 @@
 
     <div class="form-group ">
         <label for="name">Username</label>
-        <div class="form-group" style="margin-top:5px; ">
-            <select class="form-control cari" id="type" name="type">
+        <div class="form-group" style="margin-top:5px;">
+            <select class="form-control cari" id="type" name="type" style="width:100%;">
             
             </select>
         </div>

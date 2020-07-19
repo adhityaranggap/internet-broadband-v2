@@ -11,8 +11,8 @@
             </div>
         </div>
         <div class="card-body ">
-            <div class="table-responsive">
-                <table id="appTable" class="table table-bordered table-hover dataTable table-striped" >
+            <div class="table">
+                <table id="appTable" class="table nowrap table-bordered table-hover dataTable table-striped" style="width:100%">
                     <thead>
                     <tr>
                     <th scope="col">No</th>

@@ -11,8 +11,8 @@
             </div>
         </div>
         <div class="card-body ">
-            <div class="table-responsive">
-                <table id="appTable" class="table table-bordered table-hover dataTable table-striped" >
+            <div class="table">
+                <table id="appTable" class="table nowrap table-bordered table-hover dataTable table-striped" style="width:100%" >
                     <thead>
                     <tr>
                     <th scope="col">No</th>
@@ -45,6 +45,9 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
  $('#appTable').DataTable({
+    rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
         responsive:true,
         processing:true,
         serverSide:true,

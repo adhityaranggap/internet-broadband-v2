@@ -6,7 +6,7 @@ $(document).ready(function() {
     $('.modal-show').show();
     $('.btn-show').show();
 
-    $('body').on('click', '.modal-show', function(event) {
+    $('#app').on('click', '.modal-show', function(event) {
         event.preventDefault();
 
         var me = $(this),
@@ -55,7 +55,7 @@ $(document).ready(function() {
         $('#modal').modal('show');
     });
 
-    $('body').on('click', '.btn-show', function(event) { //tanpa tombol create
+    $('#app').on('click', '.btn-show', function(event) { //tanpa tombol create
         event.preventDefault();
 
         var me = $(this),
@@ -85,7 +85,7 @@ $(document).ready(function() {
         $('#modal').modal('show');
     })
 
-    $('body').on('click', '.btn-update', function(event) {
+    $('#app').on('click', '.btn-update', function(event) {
         event.preventDefault();
 
         var me = $(this),
@@ -135,7 +135,7 @@ $(document).ready(function() {
         });
     });
 
-    $('body').on('click', '.btn-reject', function(event) {
+    $('#app').on('click', '.btn-reject', function(event) {
         event.preventDefault();
 
         var me = $(this),
@@ -186,7 +186,7 @@ $(document).ready(function() {
         });
     });
 
-    $('body').on('click', '.btn-delete', function(event) {
+    $('#app').on('click', '.btn-delete', function(event) {
         event.preventDefault();
 
         var me = $(this),
@@ -320,7 +320,7 @@ $(document).ready(function() {
         })
     });
 
-    $('body').on('click', '.pop', function(event) {
+    $('#app').on('click', '.pop', function(event) {
         event.preventDefault();
 
         var me = $(this),
