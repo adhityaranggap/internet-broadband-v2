@@ -306,10 +306,14 @@ class AllTransactionController extends Controller
                         $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
                         
                     }
-                 
-                    
+                    TransactionHasModified::create([
+                        'user_id'               => Auth::user()->id,
+                        'transaction_id'        => $id,
+                        'action'                => \EnumTransaksiHasModified::UPDATE
+                    ]);
+                    $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','type_payment','notes', 'file', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
                     TransactionHasModified::create([
                         'user_id'               => Auth::user()->id,
                         'transaction_id'        => $id,
@@ -319,18 +323,18 @@ class AllTransactionController extends Controller
 
                 }else{
                    
-
-                    Transaction::where('id', $id)->update($request->only('updated_at','notes','type_payment', 'fee', 'status', 'paid'));
-                    // $transaction->notify(new InvoicePaid($invoice));
-                    // $transaction->notify(new InvoicePaid("Payment Received!"));
-
-
                     TransactionHasModified::create([
                         'user_id'               => Auth::user()->id,
                         'transaction_id'        => $id,
                         'action'                => \EnumTransaksiHasModified::UPDATE
                     ]);
+                    $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
+                    Transaction::where('id', $id)->update($request->only('updated_at','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
+                    // $transaction->notify(new InvoicePaid($invoice));
+                    // $transaction->notify(new InvoicePaid("Payment Received!"));
 
+
+                    
                 }    
                 
             }
