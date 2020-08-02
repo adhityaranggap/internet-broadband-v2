@@ -139,46 +139,7 @@ class AllTransactionController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->type_payment === "Transfer"){
-            $this->validate($request, [
-                'payment_proof' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
-            ]);
-        }
-        if($request->type_payment === "Transfer"){
-            //payment_proof
-                if($request->file('payment_proof')){
-                    $dir = 'payment_proof/';
-                    $size = '360';
-                    $format = 'file';
-                    $image = $request->file('payment_proof');         
-                    // $request['file'] = Storage::disk('minio')->put($image);
-                    $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
-                    
-                    Transaction::create([
-                        'users_has_packages_id'         => $transaction->id,
-                        'transaction_has_modified_id'   => 1,
-                        'notes'                         => '-',
-                        'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
-                        'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                        'price'                         => $transaction->price,
-                        'price'                         => $request->file,
-                        'fee'                           => $transaction->fee,
-                        'paid'                          => $transaction->fee,
-                        'created_at'                    => now(),                   
-                    ]);
-                }else{
-                    Transaction::create([
-                        'users_has_packages_id'         => $transaction->id,
-                        'transaction_has_modified_id'   => 1,
-                        'notes'                         => '-',
-                        'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
-                        'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                        'price'                         => $transaction->price,
-                        'fee'                           => $transaction->fee,
-                        'paid'                          => $transaction->fee,
-                        'created_at'                    => now(),                   
-                    ]);
-                }
+       
     }
 
     /**
