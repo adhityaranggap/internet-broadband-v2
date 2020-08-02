@@ -243,7 +243,8 @@ class AllTransactionController extends Controller
                 'payment_proof' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
             ]);
         }
-        
+        $request['transaction_has_modified_id'] = 1;
+
         $request['updated_at'] = now();
         $request['paid'] = $UserPay;
 
@@ -276,6 +277,7 @@ class AllTransactionController extends Controller
            
             Transaction::create([
                 'users_has_packages_id'         => $transaction->id,
+                'transaction_has_modified_id'   => 1,
                 'notes'                         => '-',
                 'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
                 'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
@@ -284,11 +286,11 @@ class AllTransactionController extends Controller
                 'paid'                          => $transaction->fee,
                 'created_at'                    => now(),                   
             ]);
-            TransactionHasModified::create([
-                'user_id'               => Auth::user()->id,
-                'transaction_id'        => DB::getPdo()->lastInsertId(),
-                'action'                => \EnumTransaksiHasModified::CREATE
-            ]);
+            // TransactionHasModified::create([
+            //     'user_id'               => Auth::user()->id,
+            //     'transaction_id'        => DB::getPdo()->lastInsertId(),
+            //     'action'                => \EnumTransaksiHasModified::CREATE
+            // ]);
         }
 
         if($transaction){
@@ -306,29 +308,29 @@ class AllTransactionController extends Controller
                         $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
                         
                     }
-                    TransactionHasModified::create([
-                        'user_id'               => Auth::user()->id,
-                        'transaction_id'        => $id,
-                        'action'                => \EnumTransaksiHasModified::UPDATE
-                    ]);
-                    $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
+                    // TransactionHasModified::create([
+                    //     'user_id'               => Auth::user()->id,
+                    //     'transaction_id'        => $id,
+                    //     'action'                => \EnumTransaksiHasModified::UPDATE
+                    // ]);
+                    // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
 
                     Transaction::where('id', $id)->update($request->only('updated_at','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
-                    TransactionHasModified::create([
-                        'user_id'               => Auth::user()->id,
-                        'transaction_id'        => $id,
-                        'action'                => \EnumTransaksiHasModified::UPDATE
-                    ]);
+                    // TransactionHasModified::create([
+                    //     'user_id'               => Auth::user()->id,
+                    //     'transaction_id'        => $id,
+                    //     'action'                => \EnumTransaksiHasModified::UPDATE
+                    // ]);
                     // $transaction->notify(new InvoicePaid($invoice));
 
                 }else{
                    
-                    TransactionHasModified::create([
-                        'user_id'               => Auth::user()->id,
-                        'transaction_id'        => $id,
-                        'action'                => \EnumTransaksiHasModified::UPDATE
-                    ]);
-                    $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
+                    // TransactionHasModified::create([
+                    //     'user_id'               => Auth::user()->id,
+                    //     'transaction_id'        => $id,
+                    //     'action'                => \EnumTransaksiHasModified::UPDATE
+                    // ]);
+                    // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
                     Transaction::where('id', $id)->update($request->only('updated_at','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
                     // $transaction->notify(new InvoicePaid($invoice));
                     // $transaction->notify(new InvoicePaid("Payment Received!"));
@@ -421,11 +423,11 @@ class AllTransactionController extends Controller
                         $client->query($query)->read();
                      };
                  }
-                TransactionHasModified::create([
-                    'user_id'               => Auth::user()->id,
-                    'transaction_id'        => $id,
-                    'action'                => \EnumTransaksiHasModified::SYNC_DATA
-                ]);
+                // TransactionHasModified::create([
+                //     'user_id'               => Auth::user()->id,
+                //     'transaction_id'        => $id,
+                //     'action'                => \EnumTransaksiHasModified::SYNC_DATA
+                // ]);
             }    
         }
        
@@ -456,11 +458,11 @@ class AllTransactionController extends Controller
                     'paid' => 0
                     ]);
                 }
-        TransactionHasModified::create([
-            'user_id'               => Auth::user()->id,
-            'transaction_id'        => $id,
-            'action'                => \EnumTransaksiHasModified::SYNC_DATA
-        ]);
+        // TransactionHasModified::create([
+        //     'user_id'               => Auth::user()->id,
+        //     'transaction_id'        => $id,
+        //     'action'                => \EnumTransaksiHasModified::SYNC_DATA
+        // ]);
 
     }else{
         $trx->delete();
