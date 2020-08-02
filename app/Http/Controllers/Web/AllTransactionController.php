@@ -139,11 +139,46 @@ class AllTransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'file'                    =>  'required|mimes:jpeg,bmp,png|max:10000',
-            'notes'                   =>  'nullable',
-        ]);
-
+        if($request->type_payment === "Transfer"){
+            $this->validate($request, [
+                'payment_proof' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
+            ]);
+        }
+        if($request->type_payment === "Transfer"){
+            //payment_proof
+                if($request->file('payment_proof')){
+                    $dir = 'payment_proof/';
+                    $size = '360';
+                    $format = 'file';
+                    $image = $request->file('payment_proof');         
+                    // $request['file'] = Storage::disk('minio')->put($image);
+                    $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
+                    
+                    Transaction::create([
+                        'users_has_packages_id'         => $transaction->id,
+                        'transaction_has_modified_id'   => 1,
+                        'notes'                         => '-',
+                        'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                        'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                        'price'                         => $transaction->price,
+                        'price'                         => $request->file,
+                        'fee'                           => $transaction->fee,
+                        'paid'                          => $transaction->fee,
+                        'created_at'                    => now(),                   
+                    ]);
+                }else{
+                    Transaction::create([
+                        'users_has_packages_id'         => $transaction->id,
+                        'transaction_has_modified_id'   => 1,
+                        'notes'                         => '-',
+                        'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                        'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                        'price'                         => $transaction->price,
+                        'fee'                           => $transaction->fee,
+                        'paid'                          => $transaction->fee,
+                        'created_at'                    => now(),                   
+                    ]);
+                }
     }
 
     /**
@@ -315,7 +350,7 @@ class AllTransactionController extends Controller
                     // ]);
                     // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','expired_date','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
                     // TransactionHasModified::create([
                     //     'user_id'               => Auth::user()->id,
                     //     'transaction_id'        => $id,
@@ -331,7 +366,7 @@ class AllTransactionController extends Controller
                     //     'action'                => \EnumTransaksiHasModified::UPDATE
                     // ]);
                     // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
-                    Transaction::where('id', $id)->update($request->only('updated_at','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','expired_date','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
                     // $transaction->notify(new InvoicePaid($invoice));
                     // $transaction->notify(new InvoicePaid("Payment Received!"));
 
