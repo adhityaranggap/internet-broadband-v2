@@ -32,7 +32,7 @@ class CustomerController extends Controller
     public function datatables()
     {       
     
-        $data = User::all();
+        $data = User::where('role_id', ROLE::ROLE_CUSTOMER);
         
         return Datatables::of($data)  
         // ->editColumn('name',
