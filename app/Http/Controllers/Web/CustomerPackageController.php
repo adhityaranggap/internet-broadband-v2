@@ -61,7 +61,7 @@ class CustomerPackageController extends Controller
             
                     return
                     //\Component::btnRead('#', 'Detail Customer').
-                    \Component::btnUpdate(route('customer-package-edit', $data->id), 'Ubah Package '. $data->package_name).
+                    \Component::btnUpdate(route('customer-package-edit', $data->id), 'Ubah Package '. $data->username).
                     \Component::btnDelete(route('customer-package-destroy', $data->id), 'Hapus Package '. $data->package_name);
                     
         })
