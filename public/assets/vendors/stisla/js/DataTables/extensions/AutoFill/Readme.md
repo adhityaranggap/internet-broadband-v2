@@ -15,7 +15,7 @@ AutoFill is initialised using the `autoFill` option in the DataTables constructo
 ```js
 $(document).ready( function () {
     $('#example').DataTable( {
-    	autoFill: true
+   autoFill: true
     } );
 } );
 ```

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Transaction extends Model
 {
@@ -13,7 +14,6 @@ class Transaction extends Model
         'id',         
         'users_has_packages_id',
         'notes',
-        'transaction_has_modified_id',
         'expired_date',
         'status',
         'price',
@@ -21,6 +21,7 @@ class Transaction extends Model
         'file',
         'type_payment',
         'fee',
+        'transaction_has_modified_id',
         'created_at',
         'updated_at'
         ];

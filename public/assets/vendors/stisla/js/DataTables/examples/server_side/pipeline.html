@@ -31,7 +31,7 @@ $.fn.dataTable.pipeline = function ( opts ) {
 		pages: 5,     // number of pages to cache
 		url: '',      // script url
 		data: null,   // function or object with parameters to send to the server
-		              // matching how `ajax.data` works in DataTables
+	              // matching how `ajax.data` works in DataTables
 		method: 'GET' // Ajax HTTP method
 	}, opts );
 
@@ -58,8 +58,8 @@ $.fn.dataTable.pipeline = function ( opts ) {
 			ajax = true;
 		}
 		else if ( JSON.stringify( request.order )   !== JSON.stringify( cacheLastRequest.order ) ||
-		          JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
-		          JSON.stringify( request.search )  !== JSON.stringify( cacheLastRequest.search )
+	          JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
+	          JSON.stringify( request.search )  !== JSON.stringify( cacheLastRequest.search )
 		) {
 			// properties changed (ordering, columns, searching)
 			ajax = true;
@@ -209,7 +209,7 @@ $.fn.dataTable.pipeline = function ( opts ) {
 		pages: 5,     // number of pages to cache
 		url: '',      // script url
 		data: null,   // function or object with parameters to send to the server
-		              // matching how `ajax.data` works in DataTables
+	              // matching how `ajax.data` works in DataTables
 		method: 'GET' // Ajax HTTP method
 	}, opts );
 
@@ -236,8 +236,8 @@ $.fn.dataTable.pipeline = function ( opts ) {
 			ajax = true;
 		}
 		else if ( JSON.stringify( request.order )   !== JSON.stringify( cacheLastRequest.order ) ||
-		          JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
-		          JSON.stringify( request.search )  !== JSON.stringify( cacheLastRequest.search )
+	          JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
+	          JSON.stringify( request.search )  !== JSON.stringify( cacheLastRequest.search )
 		) {
 			// properties changed (ordering, columns, searching)
 			ajax = true;

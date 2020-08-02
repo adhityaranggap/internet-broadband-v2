@@ -52,8 +52,8 @@ var _saveAs = (function(view) {
 		return;
 	}
 	var
-		  doc = view.document
-		  // only get URL when necessary in case Blob.js hasn't overridden it yet
+	  doc = view.document
+	  // only get URL when necessary in case Blob.js hasn't overridden it yet
 		, get_URL = function() {
 			return view.URL || view.webkitURL || view;
 		}
@@ -119,7 +119,7 @@ var _saveAs = (function(view) {
 			blob = auto_bom(blob);
 			// First try a.download, then web filesystem, then object URLs
 			var
-				  filesaver = this
+			  filesaver = this
 				, type = blob.type
 				, blob_changed = false
 				, object_url

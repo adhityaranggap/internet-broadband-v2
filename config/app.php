@@ -236,6 +236,7 @@ return [
         'MessageHelper' => App\Helpers\MessageHelper::class,
         'HttpStatus' => App\Enum\HttpStatus::class,
         'EnumTransaksi' => App\Enum\EnumTransaksi::class,
+        'EnumTransaksiHasModified' => App\Enum\EnumTransaksiHasModified::class,
         'EnumRole' => App\Enum\EnumRole::class,
         'EnumTicket' => App\Enum\EnumTicket::class
 

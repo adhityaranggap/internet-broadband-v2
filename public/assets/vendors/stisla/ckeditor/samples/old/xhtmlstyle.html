@@ -60,25 +60,25 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 
 				CKEDITOR.replace( 'editor1', {
 					/*
-					 * Style sheet for the contents
-					 */
+				 * Style sheet for the contents
+				 */
 					contentsCss: 'assets/outputxhtml/outputxhtml.css',
 
 					/*
-					 * Special allowed content rules for spans used by
-					 * font face, size, and color buttons.
-					 *
-					 * Note: all rules have been written separately so
-					 * it was possible to specify required classes.
-					 */
+				 * Special allowed content rules for spans used by
+				 * font face, size, and color buttons.
+				 *
+				 * Note: all rules have been written separately so
+				 * it was possible to specify required classes.
+				 */
 					extraAllowedContent: 'span(!FontColor1);span(!FontColor2);span(!FontColor3);' +
 						'span(!FontColor1BG);span(!FontColor2BG);span(!FontColor3BG);' +
 						'span(!FontComic);span(!FontCourier);span(!FontTimes);' +
 						'span(!FontSmaller);span(!FontLarger);span(!FontSmall);span(!FontBig);span(!FontDouble)',
 
 					/*
-					 * Core styles.
-					 */
+				 * Core styles.
+				 */
 					coreStyles_bold: {
 						element: 'span',
 						attributes: { 'class': 'Bold' }
@@ -108,8 +108,8 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 					},
 
 					/*
-					 * Font face.
-					 */
+				 * Font face.
+				 */
 
 					// List of fonts available in the toolbar combo. Each font definition is
 					// separated by a semi-colon (;). We are using class names here, so each font
@@ -136,8 +136,8 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 					},
 
 					/*
-					 * Font sizes.
-					 */
+				 * Font sizes.
+				 */
 					fontSize_sizes: 'Smaller/FontSmaller;Larger/FontLarger;8pt/FontSmall;14pt/FontBig;Double Size/FontDouble',
 					fontSize_style: {
 						element: 'span',
@@ -153,8 +153,8 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 					} ,
 
 					/*
-					 * Font colors.
-					 */
+				 * Font colors.
+				 */
 					colorButton_enableMore: false,
 
 					colorButton_colors: 'FontColor1/FF9900,FontColor2/0066CC,FontColor3/F00',
@@ -185,18 +185,18 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 					},
 
 					/*
-					 * Indentation.
-					 */
+				 * Indentation.
+				 */
 					indentClasses: [ 'Indent1', 'Indent2', 'Indent3' ],
 
 					/*
-					 * Paragraph justification.
-					 */
+				 * Paragraph justification.
+				 */
 					justifyClasses: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyFull' ],
 
 					/*
-					 * Styles combo.
-					 */
+				 * Styles combo.
+				 */
 					stylesSet: [
 						{ name: 'Strong Emphasis', element: 'strong' },
 						{ name: 'Emphasis', element: 'em' },

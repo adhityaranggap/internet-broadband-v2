@@ -65,8 +65,8 @@ class BillingController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'username' => 'required',
-    		'name' => 'required',
+   	'username' => 'required',
+   	'name' => 'required',
         ]);
         $request['role_id'] = Role::ROLE_BILLING;
         $request['password'] = bcrypt(request('password'));

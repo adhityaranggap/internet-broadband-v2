@@ -15,7 +15,7 @@ Buttons is initialised using the `buttons` option in the DataTables constructor,
 ```js
 $(document).ready( function () {
     $('#example').DataTable( {
-    	buttons: [ 'csv', 'excel', 'pdf', 'print' ]
+   buttons: [ 'csv', 'excel', 'pdf', 'print' ]
     } );
 } );
 ```

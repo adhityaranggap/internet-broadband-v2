@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
-use DataTables;
-use Auth;
-use App\User, App\Router, App\UserHasPackage, App\Package, App\Transaction, App\TransactionHasModified;
+use DataTables, Auth;
+use App\Notifications\InvoicePaid;
+use Illuminate\Notifications\Notifiable;
+use App\User, App\Router, App\UserHasPackage, App\Role, App\Package, App\Transaction, App\TransactionHasModified;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use \RouterOS\Client;
@@ -18,6 +19,10 @@ use Illuminate\Support\Str;
  
 class AllTransactionController extends Controller
 {
+    use Notifiable;
+    use \Illuminate\Notifications\Notifiable;
+
+
     /**
      * Display a listing of the resource.
      *
@@ -31,26 +36,52 @@ class AllTransactionController extends Controller
 
     public function datatables()
     {       
-    
-        $arrSelect = [
-            'users.username as name',
-            'transactions.expired_date as expired_date',
-            'packages.name as package_name',
-            'transactions.price as price',
-            'transactions.id as id',
-            'transactions.status as status',
-            'users.role_id'
-        ];
-        // $data = transaction::all();
-        $data = DB::table('users')
-        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
-        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
-        ->orderBy('transactions.expired_date','desc')
-        ->select($arrSelect)
-        ->get();
+        // $modified = DB::table('transaction_has_modified')
+        // ->join('transactions', 'transaction_has_modified.transaction_id', 'transactions.id')
+        // ->get();
+        // return $modified;
+
+            $arrSelect = [
+                'users.username as name',
+                'transactions.expired_date as expired_date',
+                'packages.name as package_name',
+                'transactions.price as price',
+                'transactions.id as id',
+                'transactions.status as status',
+                'users.role_id',
+                // 'trasanction_has_modified.transaction_id as transaction_modified'
+            ];
+            // $data = transaction::all();
+            if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
+            $data = DB::table('users')
+            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+            // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
+            ->where('users_has_packages.user_id', auth()->user()->id)
+            ->orderBy('transactions.expired_date','desc')
+            ->select($arrSelect)
+            ->get();
  
+            }else{
+            $data = DB::table('users')
+            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+            // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
+       
+            ->orderBy('transactions.expired_date','desc')
+            ->select($arrSelect)
+            ->get();
+ 
+            }
+            
         return Datatables::of($data)  
+
+        ->editColumn('id',
+            function ($data){
+                return $data->id;
+        })     
         ->editColumn('name',
             function ($data){
                 return $data->name;
@@ -110,7 +141,7 @@ class AllTransactionController extends Controller
     {
         $this->validate($request, [
             'file'                    =>  'required|mimes:jpeg,bmp,png|max:10000',
-            'notes'                     =>  'nullable',
+            'notes'                   =>  'nullable',
         ]);
 
     }
@@ -178,6 +209,7 @@ class AllTransactionController extends Controller
         ];
 
         $data = DB::table('transactions')
+      
         ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
         ->join('packages','users_has_packages.package_id','packages.id')
         ->join('users','users_has_packages.user_id','users.id')
@@ -185,7 +217,8 @@ class AllTransactionController extends Controller
         ->where('transactions.id', $id)->first();
         
         
-        return view('cms.transactions.alltransaction.detail', compact ('data'));    }
+        return view('cms.transactions.alltransaction.detail', compact ('data'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -220,7 +253,16 @@ class AllTransactionController extends Controller
             'transactions.fee',
             'transactions.status',
             'packages.price',
+            'users.email',
         ];
+
+       
+        $transaction = DB::table('transactions')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
+        ->join('users','users_has_packages.user_id','users.id')
+        ->join('packages','users_has_packages.package_id','packages.id')
+        ->select($arrResponse)
+        ->where('transactions.id', $id)->first();
 
         $sisa = $transaction->price - $request->paid;
 
@@ -230,30 +272,29 @@ class AllTransactionController extends Controller
             $request['status'] = \EnumTransaksi::STATUS_BELUM_LUNAS;
         }
         
-        $transaction = DB::table('transactions')
-        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
-        ->join('packages','users_has_packages.package_id','packages.id')
-        ->select($arrResponse)
-        ->where('transactions.id', $id)->first();
-    
         if($request->status === \EnumTransaksi::STATUS_LUNAS){
+           
             Transaction::create([
-                'users_has_packages_id'   =>  $transaction->id,
-                // 'transaction_has_modified_id'   => DB::getPdo()->lastInsertId(),
-                'transaction_has_modified_id'   => '1',
-                'notes'                 => '-',
-                'expired_date'          => Carbon::parse($transaction->expired_date)->addMonths(1),
-                'status'                => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                'price'                 =>  $transaction->price,
-                'fee'                   =>  $transaction->fee,
-                'paid'                  =>  $transaction->fee,
-                'created_at'            =>  now(),                   
+                'users_has_packages_id'         => $transaction->id,
+                'notes'                         => '-',
+                'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                'price'                         => $transaction->price,
+                'fee'                           => $transaction->fee,
+                'paid'                          => $transaction->fee,
+                'created_at'                    => now(),                   
+            ]);
+            TransactionHasModified::create([
+                'user_id'               => Auth::user()->id,
+                'transaction_id'        => DB::getPdo()->lastInsertId(),
+                'action'                => \EnumTransaksiHasModified::CREATE
             ]);
         }
 
         if($transaction){
 
             if($transaction->status != \EnumTransaksi::STATUS_LUNAS){
+                
                 if($request->type_payment === "Transfer"){
                 //payment_proof
                     if($request->file('payment_proof')){
@@ -266,13 +307,29 @@ class AllTransactionController extends Controller
                         
                     }
                  
+                    
 
                     Transaction::where('id', $id)->update($request->only('updated_at','type_payment','notes', 'file', 'fee', 'status', 'paid'));
+                    TransactionHasModified::create([
+                        'user_id'               => Auth::user()->id,
+                        'transaction_id'        => $id,
+                        'action'                => \EnumTransaksiHasModified::UPDATE
+                    ]);
+                    // $transaction->notify(new InvoicePaid($invoice));
+
                 }else{
                    
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','notes','type_payment','transaction_has_modified_id', 'fee', 'status', 'paid'));
-                   
+                    Transaction::where('id', $id)->update($request->only('updated_at','notes','type_payment', 'fee', 'status', 'paid'));
+                    // $transaction->notify(new InvoicePaid($invoice));
+                    // $transaction->notify(new InvoicePaid("Payment Received!"));
+
+
+                    TransactionHasModified::create([
+                        'user_id'               => Auth::user()->id,
+                        'transaction_id'        => $id,
+                        'action'                => \EnumTransaksiHasModified::UPDATE
+                    ]);
 
                 }    
                 
@@ -360,6 +417,11 @@ class AllTransactionController extends Controller
                         $client->query($query)->read();
                      };
                  }
+                TransactionHasModified::create([
+                    'user_id'               => Auth::user()->id,
+                    'transaction_id'        => $id,
+                    'action'                => \EnumTransaksiHasModified::SYNC_DATA
+                ]);
             }    
         }
        
@@ -390,6 +452,12 @@ class AllTransactionController extends Controller
                     'paid' => 0
                     ]);
                 }
+        TransactionHasModified::create([
+            'user_id'               => Auth::user()->id,
+            'transaction_id'        => $id,
+            'action'                => \EnumTransaksiHasModified::SYNC_DATA
+        ]);
+
     }else{
         $trx->delete();
        

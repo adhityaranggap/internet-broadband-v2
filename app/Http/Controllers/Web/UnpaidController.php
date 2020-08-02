@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
-use DataTables;
-use App\User, App\UserHasPackage, App\Package, App\Transaction;
+use DataTables, Auth;
+use App\User, App\Router, App\UserHasPackage, App\Role, App\Package, App\Transaction, App\TransactionHasModified;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
  

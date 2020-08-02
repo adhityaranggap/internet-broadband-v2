@@ -164,8 +164,8 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop )
 	}
 
 	/*
-	 * Calculate the new column array index, so we have a mapping between the old and new
-	 */
+ * Calculate the new column array index, so we have a mapping between the old and new
+ */
 	var aiMapping = [];
 	for ( i=0, iLen=iCols ; i<iLen ; i++ )
 	{
@@ -176,8 +176,8 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop )
 
 
 	/*
-	 * Convert all internal indexing to the new column order indexes
-	 */
+ * Convert all internal indexing to the new column order indexes
+ */
 	/* Sorting */
 	for ( i=0, iLen=oSettings.aaSorting.length ; i<iLen ; i++ )
 	{
@@ -236,14 +236,14 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop )
 
 
 	/*
-	 * Move the DOM elements
-	 */
+ * Move the DOM elements
+ */
 	if ( oSettings.aoColumns[iFrom].bVisible )
 	{
 		/* Calculate the current visible index and the point to insert the node before. The insert
-		 * before needs to take into account that there might not be an element to insert before,
-		 * in which case it will be null, and an appendChild should be used
-		 */
+	 * before needs to take into account that there might not be an element to insert before,
+	 * in which case it will be null, and an appendChild should be used
+	 */
 		var iVisibleIndex = this.oApi._fnColumnIndexToVisible( oSettings, iFrom );
 		var iInsertBeforeIndex = null;
 
@@ -282,8 +282,8 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop )
 	}
 
 	/*
-	 * Move the internal array elements
-	 */
+ * Move the internal array elements
+ */
 	/* Columns */
 	fnArraySwitch( oSettings.aoColumns, iFrom, iTo );
 
@@ -326,8 +326,8 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop )
 	api.rows().invalidate();
 
 	/*
-	 * Update DataTables' event handlers
-	 */
+ * Update DataTables' event handlers
+ */
 
 	/* Sort listener */
 	for ( i=0, iLen=iCols ; i<iLen ; i++ )
@@ -382,56 +382,56 @@ var ColReorder = function( dt, opts )
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public class variables
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Public class variables
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * @namespace Settings object which contains customisable information for ColReorder instance
-	 */
+ * @namespace Settings object which contains customisable information for ColReorder instance
+ */
 	this.s = {
 		/**
-		 * DataTables settings object
-		 *  @property dt
-		 *  @type     Object
-		 *  @default  null
-		 */
+	 * DataTables settings object
+	 *  @property dt
+	 *  @type     Object
+	 *  @default  null
+	 */
 		"dt": null,
 
 		/**
-		 * Initialisation object used for this instance
-		 *  @property init
-		 *  @type     object
-		 *  @default  {}
-		 */
+	 * Initialisation object used for this instance
+	 *  @property init
+	 *  @type     object
+	 *  @default  {}
+	 */
 		"init": $.extend( true, {}, ColReorder.defaults, opts ),
 
 		/**
-		 * Number of columns to fix (not allow to be reordered)
-		 *  @property fixed
-		 *  @type     int
-		 *  @default  0
-		 */
+	 * Number of columns to fix (not allow to be reordered)
+	 *  @property fixed
+	 *  @type     int
+	 *  @default  0
+	 */
 		"fixed": 0,
 
 		/**
-		 * Number of columns to fix counting from right (not allow to be reordered)
-		 *  @property fixedRight
-		 *  @type     int
-		 *  @default  0
-		 */
+	 * Number of columns to fix counting from right (not allow to be reordered)
+	 *  @property fixedRight
+	 *  @type     int
+	 *  @default  0
+	 */
 		"fixedRight": 0,
 
 		/**
-		 * Callback function for once the reorder has been done
-		 *  @property reorderCallback
-		 *  @type     function
-		 *  @default  null
-		 */
+	 * Callback function for once the reorder has been done
+	 *  @property reorderCallback
+	 *  @type     function
+	 *  @default  null
+	 */
 		"reorderCallback": null,
 
 		/**
-		 * @namespace Information used for the mouse drag
-		 */
+	 * @namespace Information used for the mouse drag
+	 */
 		"mouse": {
 			"startX": -1,
 			"startY": -1,
@@ -443,36 +443,36 @@ var ColReorder = function( dt, opts )
 		},
 
 		/**
-		 * Information which is used for positioning the insert cusor and knowing where to do the
-		 * insert. Array of objects with the properties:
-		 *   x: x-axis position
-		 *   to: insert point
-		 *  @property aoTargets
-		 *  @type     array
-		 *  @default  []
-		 */
+	 * Information which is used for positioning the insert cusor and knowing where to do the
+	 * insert. Array of objects with the properties:
+	 *   x: x-axis position
+	 *   to: insert point
+	 *  @property aoTargets
+	 *  @type     array
+	 *  @default  []
+	 */
 		"aoTargets": []
 	};
 
 
 	/**
-	 * @namespace Common and useful DOM elements for the class instance
-	 */
+ * @namespace Common and useful DOM elements for the class instance
+ */
 	this.dom = {
 		/**
-		 * Dragging element (the one the mouse is moving)
-		 *  @property drag
-		 *  @type     element
-		 *  @default  null
-		 */
+	 * Dragging element (the one the mouse is moving)
+	 *  @property drag
+	 *  @type     element
+	 *  @default  null
+	 */
 		"drag": null,
 
 		/**
-		 * The insert cursor
-		 *  @property pointer
-		 *  @type     element
-		 *  @default  null
-		 */
+	 * The insert cursor
+	 *  @property pointer
+	 *  @type     element
+	 *  @default  null
+	 */
 		"pointer": null
 	};
 
@@ -489,26 +489,26 @@ var ColReorder = function( dt, opts )
 
 $.extend( ColReorder.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Public methods
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Reset the column ordering to the original ordering that was detected on
-	 * start up.
-	 *  @return {this} Returns `this` for chaining.
-	 *
-	 *  @example
-	 *    // DataTables initialisation with ColReorder
-	 *    var table = $('#example').dataTable( {
-	 *        "sDom": 'Rlfrtip'
-	 *    } );
-	 *
-	 *    // Add click event to a button to reset the ordering
-	 *    $('#resetOrdering').click( function (e) {
-	 *        e.preventDefault();
-	 *        $.fn.dataTable.ColReorder( table ).fnReset();
-	 *    } );
-	 */
+ * Reset the column ordering to the original ordering that was detected on
+ * start up.
+ *  @return {this} Returns `this` for chaining.
+ *
+ *  @example
+ *    // DataTables initialisation with ColReorder
+ *    var table = $('#example').dataTable( {
+ *        "sDom": 'Rlfrtip'
+ *    } );
+ *
+ *    // Add click event to a button to reset the ordering
+ *    $('#resetOrdering').click( function (e) {
+ *        e.preventDefault();
+ *        $.fn.dataTable.ColReorder( table ).fnReset();
+ *    } );
+ */
 	"fnReset": function ()
 	{
 		this._fnOrderColumns( this.fnOrder() );
@@ -517,52 +517,52 @@ $.extend( ColReorder.prototype, {
 	},
 
 	/**
-	 * `Deprecated` - Get the current order of the columns, as an array.
-	 *  @return {array} Array of column identifiers
-	 *  @deprecated `fnOrder` should be used in preference to this method.
-	 *      `fnOrder` acts as a getter/setter.
-	 */
+ * `Deprecated` - Get the current order of the columns, as an array.
+ *  @return {array} Array of column identifiers
+ *  @deprecated `fnOrder` should be used in preference to this method.
+ *      `fnOrder` acts as a getter/setter.
+ */
 	"fnGetCurrentOrder": function ()
 	{
 		return this.fnOrder();
 	},
 
 	/**
-	 * Get the current order of the columns, as an array. Note that the values
-	 * given in the array are unique identifiers for each column. Currently
-	 * these are the original ordering of the columns that was detected on
-	 * start up, but this could potentially change in future.
-	 *  @return {array} Array of column identifiers
-	 *
-	 *  @example
-	 *    // Get column ordering for the table
-	 *    var order = $.fn.dataTable.ColReorder( dataTable ).fnOrder();
-	 *//**
-	 * Set the order of the columns, from the positions identified in the
-	 * ordering array given. Note that ColReorder takes a brute force approach
-	 * to reordering, so it is possible multiple reordering events will occur
-	 * before the final order is settled upon.
-	 *  @param {array} [set] Array of column identifiers in the new order. Note
-	 *    that every column must be included, uniquely, in this array.
-	 *  @return {this} Returns `this` for chaining.
-	 *
-	 *  @example
-	 *    // Swap the first and second columns
-	 *    $.fn.dataTable.ColReorder( dataTable ).fnOrder( [1, 0, 2, 3, 4] );
-	 *
-	 *  @example
-	 *    // Move the first column to the end for the table `#example`
-	 *    var curr = $.fn.dataTable.ColReorder( '#example' ).fnOrder();
-	 *    var first = curr.shift();
-	 *    curr.push( first );
-	 *    $.fn.dataTable.ColReorder( '#example' ).fnOrder( curr );
-	 *
-	 *  @example
-	 *    // Reverse the table's order
-	 *    $.fn.dataTable.ColReorder( '#example' ).fnOrder(
-	 *      $.fn.dataTable.ColReorder( '#example' ).fnOrder().reverse()
-	 *    );
-	 */
+ * Get the current order of the columns, as an array. Note that the values
+ * given in the array are unique identifiers for each column. Currently
+ * these are the original ordering of the columns that was detected on
+ * start up, but this could potentially change in future.
+ *  @return {array} Array of column identifiers
+ *
+ *  @example
+ *    // Get column ordering for the table
+ *    var order = $.fn.dataTable.ColReorder( dataTable ).fnOrder();
+ *//**
+ * Set the order of the columns, from the positions identified in the
+ * ordering array given. Note that ColReorder takes a brute force approach
+ * to reordering, so it is possible multiple reordering events will occur
+ * before the final order is settled upon.
+ *  @param {array} [set] Array of column identifiers in the new order. Note
+ *    that every column must be included, uniquely, in this array.
+ *  @return {this} Returns `this` for chaining.
+ *
+ *  @example
+ *    // Swap the first and second columns
+ *    $.fn.dataTable.ColReorder( dataTable ).fnOrder( [1, 0, 2, 3, 4] );
+ *
+ *  @example
+ *    // Move the first column to the end for the table `#example`
+ *    var curr = $.fn.dataTable.ColReorder( '#example' ).fnOrder();
+ *    var first = curr.shift();
+ *    curr.push( first );
+ *    $.fn.dataTable.ColReorder( '#example' ).fnOrder( curr );
+ *
+ *  @example
+ *    // Reverse the table's order
+ *    $.fn.dataTable.ColReorder( '#example' ).fnOrder(
+ *      $.fn.dataTable.ColReorder( '#example' ).fnOrder().reverse()
+ *    );
+ */
 	"fnOrder": function ( set, original )
 	{
 		var a = [], i, ien, j, jen;
@@ -596,13 +596,13 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Convert from the original column index, to the original
-	 *
-	 * @param  {int|array} idx Index(es) to convert
-	 * @param  {string} dir Transpose direction - `fromOriginal` / `toCurrent`
-	 *   or `'toOriginal` / `fromCurrent`
-	 * @return {int|array}     Converted values
-	 */
+ * Convert from the original column index, to the original
+ *
+ * @param  {int|array} idx Index(es) to convert
+ * @param  {string} dir Transpose direction - `fromOriginal` / `toCurrent`
+ *   or `'toOriginal` / `fromCurrent`
+ * @return {int|array}     Converted values
+ */
 	fnTranspose: function ( idx, dir )
 	{
 		if ( ! dir ) {
@@ -632,15 +632,15 @@ $.extend( ColReorder.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods (they are of course public in JS, but recommended as private)
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Private methods (they are of course public in JS, but recommended as private)
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
-	 * Constructor logic
-	 *  @method  _fnConstruct
-	 *  @returns void
-	 *  @private
-	 */
+ * Constructor logic
+ *  @method  _fnConstruct
+ *  @returns void
+ *  @private
+ */
 	"_fnConstruct": function ()
 	{
 		var that = this;
@@ -696,7 +696,7 @@ $.extend( ColReorder.prototype, {
 
 		/* State loading, overrides the column order given */
 		if ( this.s.dt.oLoadedState && typeof this.s.dt.oLoadedState.ColReorder != 'undefined' &&
-		  this.s.dt.oLoadedState.ColReorder.length == this.s.dt.aoColumns.length )
+	  this.s.dt.oLoadedState.ColReorder.length == this.s.dt.aoColumns.length )
 		{
 			aiOrder = this.s.dt.oLoadedState.ColReorder;
 		}
@@ -705,8 +705,8 @@ $.extend( ColReorder.prototype, {
 		if ( aiOrder )
 		{
 			/* We might be called during or after the DataTables initialisation. If before, then we need
-			 * to wait until the draw is done, if after, then do what we need to do right away
-			 */
+		 * to wait until the draw is done, if after, then do what we need to do right away
+		 */
 			if ( !that.s.dt._bInitComplete )
 			{
 				var bDone = false;
@@ -745,12 +745,12 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Set the column order from an array
-	 *  @method  _fnOrderColumns
-	 *  @param   array a An array of integers which dictate the column order that should be applied
-	 *  @returns void
-	 *  @private
-	 */
+ * Set the column order from an array
+ *  @method  _fnOrderColumns
+ *  @param   array a An array of integers which dictate the column order that should be applied
+ *  @returns void
+ *  @private
+ */
 	"_fnOrderColumns": function ( a )
 	{
 		var changed = false;
@@ -801,14 +801,14 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Because we change the indexes of columns in the table, relative to their starting point
-	 * we need to reorder the state columns to what they are at the starting point so we can
-	 * then rearrange them again on state load!
-	 *  @method  _fnStateSave
-	 *  @param   object oState DataTables state
-	 *  @returns string JSON encoded cookie string for DataTables
-	 *  @private
-	 */
+ * Because we change the indexes of columns in the table, relative to their starting point
+ * we need to reorder the state columns to what they are at the starting point so we can
+ * then rearrange them again on state load!
+ *  @method  _fnStateSave
+ *  @param   object oState DataTables state
+ *  @returns string JSON encoded cookie string for DataTables
+ *  @private
+ */
 	"_fnStateSave": function ( oState )
 	{
 		var i, iLen, aCopy, iOrigColumn;
@@ -863,17 +863,17 @@ $.extend( ColReorder.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Mouse drop and drag
-	 */
+ * Mouse drop and drag
+ */
 
 	/**
-	 * Add a mouse down listener to a particluar TH element
-	 *  @method  _fnMouseListener
-	 *  @param   int i Column index
-	 *  @param   element nTh TH element clicked on
-	 *  @returns void
-	 *  @private
-	 */
+ * Add a mouse down listener to a particluar TH element
+ *  @method  _fnMouseListener
+ *  @param   int i Column index
+ *  @param   element nTh TH element clicked on
+ *  @returns void
+ *  @private
+ */
 	"_fnMouseListener": function ( i, nTh )
 	{
 		var that = this;
@@ -885,13 +885,13 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Mouse down on a TH element in the table header
-	 *  @method  _fnMouseDown
-	 *  @param   event e Mouse event
-	 *  @param   element nTh TH element to be dragged
-	 *  @returns void
-	 *  @private
-	 */
+ * Mouse down on a TH element in the table header
+ *  @method  _fnMouseDown
+ *  @param   event e Mouse event
+ *  @param   element nTh TH element to be dragged
+ *  @returns void
+ *  @private
+ */
 	"_fnMouseDown": function ( e, nTh )
 	{
 		var that = this;
@@ -927,12 +927,12 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Deal with a mouse move event while dragging a node
-	 *  @method  _fnMouseMove
-	 *  @param   event e Mouse event
-	 *  @returns void
-	 *  @private
-	 */
+ * Deal with a mouse move event while dragging a node
+ *  @method  _fnMouseMove
+ *  @param   event e Mouse event
+ *  @returns void
+ *  @private
+ */
 	"_fnMouseMove": function ( e )
 	{
 		var that = this;
@@ -940,9 +940,9 @@ $.extend( ColReorder.prototype, {
 		if ( this.dom.drag === null )
 		{
 			/* Only create the drag element if the mouse has moved a specific distance from the start
-			 * point - this allows the user to make small mouse movements when sorting and not have a
-			 * possibly confusing drag element showing up
-			 */
+		 * point - this allows the user to make small mouse movements when sorting and not have a
+		 * possibly confusing drag element showing up
+		 */
 			if ( Math.pow(
 				Math.pow(e.pageX - this.s.mouse.startX, 2) +
 				Math.pow(e.pageY - this.s.mouse.startY, 2), 0.5 ) < 5 )
@@ -991,12 +991,12 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Finish off the mouse drag and insert the column where needed
-	 *  @method  _fnMouseUp
-	 *  @param   event e Mouse event
-	 *  @returns void
-	 *  @private
-	 */
+ * Finish off the mouse drag and insert the column where needed
+ *  @method  _fnMouseUp
+ *  @param   event e Mouse event
+ *  @returns void
+ *  @private
+ */
 	"_fnMouseUp": function ( e )
 	{
 		var that = this;
@@ -1033,12 +1033,12 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Calculate a cached array with the points of the column inserts, and the
-	 * 'to' points
-	 *  @method  _fnRegions
-	 *  @returns void
-	 *  @private
-	 */
+ * Calculate a cached array with the points of the column inserts, and the
+ * 'to' points
+ *  @method  _fnRegions
+ *  @returns void
+ *  @private
+ */
 	"_fnRegions": function ()
 	{
 		var aoColumns = this.s.dt.aoColumns;
@@ -1056,9 +1056,9 @@ $.extend( ColReorder.prototype, {
 		for ( var i=0, iLen=aoColumns.length ; i<iLen ; i++ )
 		{
 			/* For the column / header in question, we want it's position to remain the same if the
-			 * position is just to it's immediate left or right, so we only increment the counter for
-			 * other columns
-			 */
+		 * position is just to it's immediate left or right, so we only increment the counter for
+		 * other columns
+		 */
 			if ( i != this.s.mouse.fromIndex )
 			{
 				iToPoint++;
@@ -1090,12 +1090,12 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Copy the TH element that is being drags so the user has the idea that they are actually
-	 * moving it around the page.
-	 *  @method  _fnCreateDragNode
-	 *  @returns void
-	 *  @private
-	 */
+ * Copy the TH element that is being drags so the user has the idea that they are actually
+ * moving it around the page.
+ *  @method  _fnCreateDragNode
+ *  @returns void
+ *  @private
+ */
 	"_fnCreateDragNode": function ()
 	{
 		var scrolling = this.s.dt.oScroll.sX !== "" || this.s.dt.oScroll.sY !== "";
@@ -1143,11 +1143,11 @@ $.extend( ColReorder.prototype, {
 
 
 	/**
-	 * Add a data attribute to the column headers, so we know the index of
-	 * the row to be reordered. This allows fast detection of the index, and
-	 * for this plug-in to work with FixedHeader which clones the nodes.
-	 *  @private
-	 */
+ * Add a data attribute to the column headers, so we know the index of
+ * the row to be reordered. This allows fast detection of the index, and
+ * for this plug-in to work with FixedHeader which clones the nodes.
+ *  @private
+ */
 	"_fnSetColumnIndexes": function ()
 	{
 		$.each( this.s.dt.aoColumns, function (i, column) {
@@ -1172,51 +1172,51 @@ $.extend( ColReorder.prototype, {
  */
 ColReorder.defaults = {
 	/**
-	 * Predefined ordering for the columns that will be applied automatically
-	 * on initialisation. If not specified then the order that the columns are
-	 * found to be in the HTML is the order used.
-	 *  @type array
-	 *  @default null
-	 *  @static
-	 */
+ * Predefined ordering for the columns that will be applied automatically
+ * on initialisation. If not specified then the order that the columns are
+ * found to be in the HTML is the order used.
+ *  @type array
+ *  @default null
+ *  @static
+ */
 	aiOrder: null,
 
 	/**
-	 * Redraw the table's column ordering as the end user draws the column
-	 * (`true`) or wait until the mouse is released (`false` - default). Note
-	 * that this will perform a redraw on each reordering, which involves an
-	 * Ajax request each time if you are using server-side processing in
-	 * DataTables.
-	 *  @type boolean
-	 *  @default false
-	 *  @static
-	 */
+ * Redraw the table's column ordering as the end user draws the column
+ * (`true`) or wait until the mouse is released (`false` - default). Note
+ * that this will perform a redraw on each reordering, which involves an
+ * Ajax request each time if you are using server-side processing in
+ * DataTables.
+ *  @type boolean
+ *  @default false
+ *  @static
+ */
 	bRealtime: true,
 
 	/**
-	 * Indicate how many columns should be fixed in position (counting from the
-	 * left). This will typically be 1 if used, but can be as high as you like.
-	 *  @type int
-	 *  @default 0
-	 *  @static
-	 */
+ * Indicate how many columns should be fixed in position (counting from the
+ * left). This will typically be 1 if used, but can be as high as you like.
+ *  @type int
+ *  @default 0
+ *  @static
+ */
 	iFixedColumnsLeft: 0,
 
 	/**
-	 * As `iFixedColumnsRight` but counting from the right.
-	 *  @type int
-	 *  @default 0
-	 *  @static
-	 */
+ * As `iFixedColumnsRight` but counting from the right.
+ *  @type int
+ *  @default 0
+ *  @static
+ */
 	iFixedColumnsRight: 0,
 
 	/**
-	 * Callback function that is fired when columns are reordered. The `column-
-	 * reorder` event is preferred over this callback
-	 *  @type function():void
-	 *  @default null
-	 *  @static
-	 */
+ * Callback function that is fired when columns are reordered. The `column-
+ * reorder` event is preferred over this callback
+ *  @type function():void
+ *  @default null
+ *  @static
+ */
 	fnReorderCallback: null
 };
 

@@ -94,14 +94,14 @@ The `_select` object contains the following properties:
 ```
 {
 	items:string     - Can be `rows`, `columns` or `cells`. Defines what item 
-	                   will be selected if the user is allowed to activate row
-	                   selection using the mouse.
+                   will be selected if the user is allowed to activate row
+                   selection using the mouse.
 	style:string     - Can be `none`, `single`, `multi` or `os`. Defines the
-	                   interaction style when selecting items
+                   interaction style when selecting items
 	blurable:boolean - If row selection can be cleared by clicking outside of
-	                   the table
+                   the table
 	info:boolean     - If the selection summary should be shown in the table
-	                   information elements
+                   information elements
 }
 ```
 
@@ -601,7 +601,7 @@ $.each( [
 			data = settings[ o.prop ][ indexes[i] ];
 
 			if ( (selected === true && data._select_selected === true) ||
-				 (selected === false && ! data._select_selected )
+			 (selected === false && ! data._select_selected )
 			) {
 				out.push( indexes[i] );
 			}
@@ -624,7 +624,7 @@ DataTable.ext.selector.cell.push( function ( settings, opts, cells ) {
 		rowData = settings.aoData[ cells[i].row ];
 
 		if ( (selected === true && rowData._selected_cells && rowData._selected_cells[ cells[i].column ] === true) ||
-			 (selected === false && ( ! rowData._selected_cells || ! rowData._selected_cells[ cells[i].column ] ) )
+		 (selected === false && ( ! rowData._selected_cells || ! rowData._selected_cells[ cells[i].column ] ) )
 		) {
 			out.push( cells[i] );
 		}
@@ -896,8 +896,8 @@ $.extend( DataTable.ext.buttons, {
 			// on table destroy
 			dt.on( 'draw.dt.DT select.dt.DT deselect.dt.DT', function () {
 				var enable = that.rows( { selected: true } ).any() ||
-				             that.columns( { selected: true } ).any() ||
-				             that.cells( { selected: true } ).any();
+			             that.columns( { selected: true } ).any() ||
+			             that.cells( { selected: true } ).any();
 
 				that.enable( enable );
 			} );
@@ -913,8 +913,8 @@ $.extend( DataTable.ext.buttons, {
 
 			dt.on( 'draw.dt.DT select.dt.DT deselect.dt.DT', function () {
 				var count = dt.rows( { selected: true } ).flatten().length +
-				            dt.columns( { selected: true } ).flatten().length +
-				            dt.cells( { selected: true } ).flatten().length;
+			            dt.columns( { selected: true } ).flatten().length +
+			            dt.cells( { selected: true } ).flatten().length;
 
 				that.enable( count === 1 );
 			} );

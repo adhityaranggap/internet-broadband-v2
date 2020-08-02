@@ -91,42 +91,42 @@ var KeyTable = function ( dt, opts ) {
 
 $.extend( KeyTable.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * API methods for DataTables API interface
-	 */
+ * API methods for DataTables API interface
+ */
 	
 	/**
-	 * Blur the table's cell focus
-	 */
+ * Blur the table's cell focus
+ */
 	blur: function ()
 	{
 		this._blur();
 	},
 
 	/**
-	 * Enable cell focus for the table
-	 *
-	 * @param  {string} state Can be `true`, `false` or `-string navigation-only`
-	 */
+ * Enable cell focus for the table
+ *
+ * @param  {string} state Can be `true`, `false` or `-string navigation-only`
+ */
 	enable: function ( state )
 	{
 		this.s.enable = state;
 	},
 
 	/**
-	 * Focus on a cell
-	 * @param  {integer} row    Row index
-	 * @param  {integer} column Column index
-	 */
+ * Focus on a cell
+ * @param  {integer} row    Row index
+ * @param  {integer} column Column index
+ */
 	focus: function ( row, column )
 	{
 		this._focus( this.s.dt.cell( row, column ) );
 	},
 
 	/**
-	 * Is the cell focused
-	 * @param  {object} cell Cell index to check
-	 * @returns {boolean} true if focused, false otherwise
-	 */
+ * Is the cell focused
+ * @param  {object} cell Cell index to check
+ * @returns {boolean} true if focused, false otherwise
+ */
 	focused: function ( cell )
 	{
 		var lastFocus = this.s.lastFocus;
@@ -141,14 +141,14 @@ $.extend( KeyTable.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+ * Constructor
+ */
 
 	/**
-	 * Initialise the KeyTable instance
-	 *
-	 * @private
-	 */
+ * Initialise the KeyTable instance
+ *
+ * @private
+ */
 	_constructor: function ()
 	{
 		this._tabInput();
@@ -242,14 +242,14 @@ $.extend( KeyTable.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
+ * Private methods
+ */
 
 	/**
-	 * Blur the control
-	 *
-	 * @private
-	 */
+ * Blur the control
+ *
+ * @private
+ */
 	_blur: function ()
 	{
 		if ( ! this.s.enable || ! this.s.lastFocus ) {
@@ -266,11 +266,11 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Get an array of the column indexes that KeyTable can operate on. This
-	 * is a merge of the user supplied columns and the visible columns.
-	 *
-	 * @private
-	 */
+ * Get an array of the column indexes that KeyTable can operate on. This
+ * is a merge of the user supplied columns and the visible columns.
+ *
+ * @private
+ */
 	_columns: function ()
 	{
 		var dt = this.s.dt;
@@ -288,13 +288,13 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Perform excel like navigation for Editor by triggering an edit on key
-	 * press
-	 *
-	 * @param  {integer} key Key code for the pressed key
-	 * @param  {object} orig Original event
-	 * @private
-	 */
+ * Perform excel like navigation for Editor by triggering an edit on key
+ * press
+ *
+ * @param  {integer} key Key code for the pressed key
+ * @param  {object} orig Original event
+ * @private
+ */
 	_editor: function ( key, orig )
 	{
 		var dt = this.s.dt;
@@ -329,12 +329,12 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Emit an event on the DataTable for listeners
-	 *
-	 * @param  {string} name Event name
-	 * @param  {array} args Event arguments
-	 * @private
-	 */
+ * Emit an event on the DataTable for listeners
+ *
+ * @param  {string} name Event name
+ * @param  {array} args Event arguments
+ * @private
+ */
 	_emitEvent: function ( name, args )
 	{
 		this.s.dt.iterator( 'table', function ( ctx, i ) {
@@ -344,16 +344,16 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Focus on a particular cell, shifting the table's paging if required
-	 *
-	 * @param  {DataTables.Api|integer} row Can be given as an API instance that
-	 *   contains the cell to focus or as an integer. As the latter it is the
-	 *   visible row index - NOT the data index
-	 * @param  {integer} [column] Not required if a cell is given as the first
-	 *   parameter. Otherwise this is the column data index for the cell to
-	 *   focus on
-	 * @private
-	 */
+ * Focus on a particular cell, shifting the table's paging if required
+ *
+ * @param  {DataTables.Api|integer} row Can be given as an API instance that
+ *   contains the cell to focus or as an integer. As the latter it is the
+ *   visible row index - NOT the data index
+ * @param  {integer} [column] Not required if a cell is given as the first
+ *   parameter. Otherwise this is the column data index for the cell to
+ *   focus on
+ * @private
+ */
 	_focus: function ( row, column )
 	{
 		var that = this;
@@ -440,11 +440,11 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Handle key press
-	 *
-	 * @param  {object} e Event
-	 * @private
-	 */
+ * Handle key press
+ *
+ * @param  {object} e Event
+ * @private
+ */
 	_key: function ( e )
 	{
 		if ( ! this.s.enable ) {
@@ -535,16 +535,16 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Scroll a container to make a cell visible in it. This can be used for
-	 * both DataTables scrolling and native window scrolling.
-	 *
-	 * @param  {jQuery} container Scrolling container
-	 * @param  {jQuery} scroller  Item being scrolled
-	 * @param  {jQuery} cell      Cell in the scroller
-	 * @param  {string} posOff    `position` or `offset` - which to use for the
-	 *   calculation. `offset` for the document, otherwise `position`
-	 * @private
-	 */
+ * Scroll a container to make a cell visible in it. This can be used for
+ * both DataTables scrolling and native window scrolling.
+ *
+ * @param  {jQuery} container Scrolling container
+ * @param  {jQuery} scroller  Item being scrolled
+ * @param  {jQuery} cell      Cell in the scroller
+ * @param  {string} posOff    `position` or `offset` - which to use for the
+ *   calculation. `offset` for the document, otherwise `position`
+ * @private
+ */
 	_scroll: function ( container, scroller, cell, posOff )
 	{
 		var offset = cell[posOff]();
@@ -579,16 +579,16 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Calculate a single offset movement in the table - up, down, left and
-	 * right and then perform the focus if possible
-	 *
-	 * @param  {object}  e           Event object
-	 * @param  {string}  direction   Movement direction
-	 * @param  {boolean} keyBlurable `true` if the key press can result in the
-	 *   table being blurred. This is so arrow keys won't blur the table, but
-	 *   tab will.
-	 * @private
-	 */
+ * Calculate a single offset movement in the table - up, down, left and
+ * right and then perform the focus if possible
+ *
+ * @param  {object}  e           Event object
+ * @param  {string}  direction   Movement direction
+ * @param  {boolean} keyBlurable `true` if the key press can result in the
+ *   table being blurred. This is so arrow keys won't blur the table, but
+ *   tab will.
+ * @private
+ */
 	_shift: function ( e, direction, keyBlurable )
 	{
 		var that         = this;
@@ -666,11 +666,11 @@ $.extend( KeyTable.prototype, {
 
 
 	/**
-	 * Create a hidden input element that can receive focus on behalf of the
-	 * table
-	 *
-	 * @private
-	 */
+ * Create a hidden input element that can receive focus on behalf of the
+ * table
+ *
+ * @private
+ */
 	_tabInput: function ()
 	{
 		var that = this;
@@ -708,47 +708,47 @@ $.extend( KeyTable.prototype, {
  */
 KeyTable.defaults = {
 	/**
-	 * Can focus be removed from the table
-	 * @type {Boolean}
-	 */
+ * Can focus be removed from the table
+ * @type {Boolean}
+ */
 	blurable: true,
 
 	/**
-	 * Class to give to the focused cell
-	 * @type {String}
-	 */
+ * Class to give to the focused cell
+ * @type {String}
+ */
 	className: 'focus',
 
 	/**
-	 * Columns that can be focused. This is automatically merged with the
-	 * visible columns as only visible columns can gain focus.
-	 * @type {String}
-	 */
+ * Columns that can be focused. This is automatically merged with the
+ * visible columns as only visible columns can gain focus.
+ * @type {String}
+ */
 	columns: '', // all
 
 	/**
-	 * Editor instance to automatically perform Excel like navigation
-	 * @type {Editor}
-	 */
+ * Editor instance to automatically perform Excel like navigation
+ * @type {Editor}
+ */
 	editor: null,
 
 	/**
-	 * Select a cell to automatically select on start up. `null` for no
-	 * automatic selection
-	 * @type {cell-selector}
-	 */
+ * Select a cell to automatically select on start up. `null` for no
+ * automatic selection
+ * @type {cell-selector}
+ */
 	focus: null,
 
 	/**
-	 * Array of keys to listen for
-	 * @type {null|array}
-	 */
+ * Array of keys to listen for
+ * @type {null|array}
+ */
 	keys: null,
 
 	/**
-	 * Tab index for where the table should sit in the document's tab flow
-	 * @type {integer|null}
-	 */
+ * Tab index for where the table should sit in the document's tab flow
+ * @type {integer|null}
+ */
 	tabIndex: null
 };
 
@@ -805,7 +805,7 @@ DataTable.ext.selector.cell.push( function ( settings, opts, cells ) {
 
 	for ( var i=0, ien=cells.length ; i<ien ; i++ ) {
 		if ( (focused === true &&  kt.focused( cells[i] ) ) ||
-			 (focused === false && ! kt.focused( cells[i] ) )
+		 (focused === false && ! kt.focused( cells[i] ) )
 		) {
 			out.push( cells[i] );
 		}

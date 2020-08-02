@@ -39,9 +39,9 @@ function sendData2Master()
 }
 
 function OnMessage (event) {
-	        var message = event.data;
-	        var destination = window.parent.parent;
-	        destination.XDTMaster.read( [ 'end', message, 'fpm' ] ) ;
+        var message = event.data;
+        var destination = window.parent.parent;
+        destination.XDTMaster.read( [ 'end', message, 'fpm' ] ) ;
 }
 
 function listenPostMessage() {

@@ -11,8 +11,9 @@ class TransactionHasModified extends Model
 
     protected $fillable = [
         'id',         
+        'user_id',
         'transaction_id',
-        'modified_by',
+        'action',
         'created_at',
         'updated_at'
         ];

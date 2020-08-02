@@ -15,8 +15,9 @@ class TransactionHasModified extends Migration
     {
         Schema::create('transaction_has_modified', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('user_id');
             $table->unsignedInteger('transaction_id');
-            $table->unsignedInteger('modified_by');
+            $table->integer('action');
             $table->timestamps();
 
 

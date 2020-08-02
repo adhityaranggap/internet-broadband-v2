@@ -17,7 +17,7 @@ Example:
 ```js
 $(document).ready( function () {
     $('#myTable').DataTable( {
-    	select: true
+   select: true
     } );
 } );
 ```

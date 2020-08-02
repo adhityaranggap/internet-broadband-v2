@@ -12,7 +12,7 @@ Example:
 ```js
 $(document).ready( function () {
     $('#myTable').DataTable( {
-    	colReorder: true
+   colReorder: true
     } );
 } );
 ```

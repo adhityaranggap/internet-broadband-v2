@@ -50,6 +50,12 @@
     <label for="payment_proof">Upload Bukti Bayar</label>
         <input class="form-control-file" name="payment_proof" type="file" id="payment_proof">
     </div>
+
+    <div class="form_group"></div>
+    <label for="expired_date">Expired Date</label>
+    <input type="text" class="form-control datepicker" name="expired_date" id="expired_date" value="{{ $data->expired_date }}">
+    </div>
+    
     <div class="form-group ">
     <label for="name">Biaya Admin</label>
         <input class="form-control" name="fee" type="number" value="0" id="fee" readonly>
@@ -59,6 +65,29 @@
         <input class="form-control" name="paid" type="number" value="{{ $data->payment_billing - $data->paid}}" id="paid">
     </div>
 
+
+    <script>
+
+$('.datepicker').daterangepicker({
+        locale: {format: 'YYYY-MM-DD hh:mm'},
+        singleDatePicker: true,
+        timePicker: true,
+        timePicker24Hour: true,
+      });
+    // $('.datepicker').daterangepicker({
+    //       locale: {format: 'YYYY-MM-DD hh:mm:ss'},
+    //       singleDatePicker: true,
+    //     });
+
+    // Timepicker
+      $(".timepicker").timepicker({
+        icons: {
+          up: 'fas fa-chevron-up',
+          down: 'fas fa-chevron-down'
+        }
+      });
+
+    </script>
 </form>
 
 

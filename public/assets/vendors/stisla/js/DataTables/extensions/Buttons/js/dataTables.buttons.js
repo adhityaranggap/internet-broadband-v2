@@ -84,19 +84,19 @@ var Buttons = function( dt, config )
 
 $.extend( Buttons.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 */
+ * Public methods
+ */
 
 	/**
-	 * Get the action of a button
-	 * @param  {int|string} Button index
-	 * @return {function}
-	 *//**
-	 * Set the action of a button
-	 * @param  {int|string} Button index
-	 * @param  {function} Function to set
-	 * @return {Buttons} Self for chaining
-	 */
+ * Get the action of a button
+ * @param  {int|string} Button index
+ * @return {function}
+ *//**
+ * Set the action of a button
+ * @param  {int|string} Button index
+ * @param  {function} Function to set
+ * @return {Buttons} Self for chaining
+ */
 	action: function ( idx, action )
 	{
 		var button = this._indexToButton( idx ).conf;
@@ -111,11 +111,11 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Add an active class to the button to make to look active
-	 * @param  {int|string} Button index
-	 * @param  {boolean} [flag=true] Enable / disable flag
-	 * @return {Buttons} Self for chaining
-	 */
+ * Add an active class to the button to make to look active
+ * @param  {int|string} Button index
+ * @param  {boolean} [flag=true] Enable / disable flag
+ * @return {Buttons} Self for chaining
+ */
 	active: function ( idx, flag ) {
 		var button = this._indexToButton( idx );
 		button.node.toggleClass(
@@ -127,11 +127,11 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Add a new button
-	 * @param {int|string} Button index for where to insert the button
-	 * @param {object} Button configuration object, base string name or function
-	 * @return {Buttons} Self for chaining
-	 */
+ * Add a new button
+ * @param {int|string} Button index for where to insert the button
+ * @param {object} Button configuration object, base string name or function
+ * @return {Buttons} Self for chaining
+ */
 	add: function ( idx, config )
 	{
 		if ( typeof idx === 'string' && idx.indexOf('-') !== -1 ) {
@@ -149,19 +149,19 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Get the container node for the buttons
-	 * @return {jQuery} Buttons node
-	 */
+ * Get the container node for the buttons
+ * @return {jQuery} Buttons node
+ */
 	container: function ()
 	{
 		return this.dom.container;
 	},
 
 	/**
-	 * Disable a button
-	 * @param  {int|string} Button index
-	 * @return {Buttons} Self for chaining
-	 */
+ * Disable a button
+ * @param  {int|string} Button index
+ * @return {Buttons} Self for chaining
+ */
 	disable: function ( idx ) {
 		var button = this._indexToButton( idx );
 		button.node.addClass( this.c.dom.button.disabled );
@@ -170,10 +170,10 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Destroy the instance, cleaning up event handlers and removing DOM
-	 * elements
-	 * @return {Buttons} Self for chaining
-	 */
+ * Destroy the instance, cleaning up event handlers and removing DOM
+ * elements
+ * @return {Buttons} Self for chaining
+ */
 	destroy: function ()
 	{
 		// Key event listener
@@ -212,11 +212,11 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Enable / disable a button
-	 * @param  {int|string} Button index
-	 * @param  {boolean} [flag=true] Enable / disable flag
-	 * @return {Buttons} Self for chaining
-	 */
+ * Enable / disable a button
+ * @param  {int|string} Button index
+ * @param  {boolean} [flag=true] Enable / disable flag
+ * @return {Buttons} Self for chaining
+ */
 	enable: function ( idx, flag )
 	{
 		if ( flag === false ) {
@@ -230,19 +230,19 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Get the instance name for the button set selector
-	 * @return {string} Instance name
-	 */
+ * Get the instance name for the button set selector
+ * @return {string} Instance name
+ */
 	name: function ()
 	{
 		return this.c.name;
 	},
 
 	/**
-	 * Get a button's node
-	 * @param  {int|string} Button index
-	 * @return {jQuery} Button element
-	 */
+ * Get a button's node
+ * @param  {int|string} Button index
+ * @return {jQuery} Button element
+ */
 	node: function ( idx )
 	{
 		var button = this._indexToButton( idx );
@@ -250,12 +250,12 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Tidy up any buttons that have been scheduled for removal. This is
-	 * required so multiple buttons can be removed without upsetting the button
-	 * indexes while removing them.
-	 * @param  {int|string} Button index
-	 * @return {Buttons} Self for chaining
-	 */
+ * Tidy up any buttons that have been scheduled for removal. This is
+ * required so multiple buttons can be removed without upsetting the button
+ * indexes while removing them.
+ * @param  {int|string} Button index
+ * @return {Buttons} Self for chaining
+ */
 	removeCommit: function ()
 	{
 		var buttons = this.s.buttons;
@@ -283,10 +283,10 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Scheduled a button for removal. This is required so multiple buttons can
-	 * be removed without upsetting the button indexes while removing them.
-	 * @return {Buttons} Self for chaining
-	 */
+ * Scheduled a button for removal. This is required so multiple buttons can
+ * be removed without upsetting the button indexes while removing them.
+ * @return {Buttons} Self for chaining
+ */
 	removePrep: function ( idx )
 	{
 		var button;
@@ -322,15 +322,15 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Get the text for a button
-	 * @param  {int|string} Button index
-	 * @return {string} Button text
-	 *//**
-	 * Set the text for a button
-	 * @param  {int|string|function} Button index
-	 * @param  {string} Text
-	 * @return {Buttons} Self for chaining
-	 */
+ * Get the text for a button
+ * @param  {int|string} Button index
+ * @return {string} Button text
+ *//**
+ * Set the text for a button
+ * @param  {int|string|function} Button index
+ * @param  {string} Text
+ * @return {Buttons} Self for chaining
+ */
 	text: function ( idx, label )
 	{
 		var button = this._indexToButton( idx );
@@ -362,10 +362,10 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Calculate button index from a node
-	 * @param  {node} Button node (_not_ a jQuery object)
-	 * @return {string} Index. Undefined if not found
-	 */
+ * Calculate button index from a node
+ * @param  {node} Button node (_not_ a jQuery object)
+ * @return {string} Index. Undefined if not found
+ */
 	toIndex: function ( node )
 	{
 		var i, ien, j, jen;
@@ -391,13 +391,13 @@ $.extend( Buttons.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+ * Constructor
+ */
 
 	/**
-	 * Buttons constructor
-	 * @private
-	 */
+ * Buttons constructor
+ * @private
+ */
 	_constructor: function ()
 	{
 		var that = this;
@@ -435,14 +435,14 @@ $.extend( Buttons.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
+ * Private methods
+ */
 
 	/**
-	 * Add a new button to the key press listener
-	 * @param {object} Resolved button configuration object
-	 * @private
-	 */
+ * Add a new button to the key press listener
+ * @param {object} Resolved button configuration object
+ * @private
+ */
 	_addKey: function ( conf )
 	{
 		if ( conf.key ) {
@@ -453,13 +453,13 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Create buttons from an array of buttons
-	 * @param  {array} Buttons to create
-	 * @param  {jQuery} Container node into which the created button should be
-	 *   inserted.
-	 * @param  {int} Counter for sub-buttons to be stored in a collection
-	 * @private
-	 */
+ * Create buttons from an array of buttons
+ * @param  {array} Buttons to create
+ * @param  {jQuery} Container node into which the created button should be
+ *   inserted.
+ * @param  {int} Counter for sub-buttons to be stored in a collection
+ * @private
+ */
 	_buildButtons: function ( buttons, container, collectionCounter )
 	{
 		var dt = this.s.dt;
@@ -529,12 +529,12 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Create an individual button
-	 * @param  {object} config            Resolved button configuration
-	 * @param  {boolean} collectionButton `true` if a collection button
-	 * @return {jQuery} Created button node (jQuery)
-	 * @private
-	 */
+ * Create an individual button
+ * @param  {object} config            Resolved button configuration
+ * @param  {boolean} collectionButton `true` if a collection button
+ * @return {jQuery} Created button node (jQuery)
+ * @private
+ */
 	_buildButton: function ( config, collectionButton )
 	{
 		var that = this;
@@ -630,12 +630,12 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Get a button's host information from a button index
-	 * @param  {int|string} Button index
-	 * @return {object} Button information - object contains `node` and `conf`
-	 *   properties
-	 * @private
-	 */
+ * Get a button's host information from a button index
+ * @param  {int|string} Button index
+ * @return {object} Button information - object contains `node` and `conf`
+ *   properties
+ * @private
+ */
 	_indexToButton: function ( idx )
 	{
 		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
@@ -647,12 +647,12 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Handle a key press - determine if any button's key configured matches
-	 * what was typed and trigger the action if so.
-	 * @param  {string} The character pressed
-	 * @param  {object} Key event that triggered this call
-	 * @private
-	 */
+ * Handle a key press - determine if any button's key configured matches
+ * what was typed and trigger the action if so.
+ * @param  {string} The character pressed
+ * @param  {object} Key event that triggered this call
+ * @private
+ */
 	_keypress: function ( character, e )
 	{
 		var i, ien, j, jen;
@@ -706,10 +706,10 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Remove a key from the key listener for this instance (to be used when a
-	 * button is removed)
-	 * @param  {object} Button configuration
-	 */
+ * Remove a key from the key listener for this instance (to be used when a
+ * button is removed)
+ * @param  {object} Button configuration
+ */
 	_removeKey: function ( conf )
 	{
 		if ( conf.key ) {
@@ -727,10 +727,10 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Resolve a button configuration
-	 * @param  {string|function|object} Button config to resolve
-	 * @return {object} Button configuration
-	 */
+ * Resolve a button configuration
+ * @param  {string|function|object} Button config to resolve
+ * @return {object} Button configuration
+ */
 	_resolveExtends: function ( conf )
 	{
 		var dt = this.s.dt;
@@ -1321,7 +1321,7 @@ DataTable.Api.register( ['buttons().active()', 'button().active()'], function ( 
 DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', function ( action ) {
 	if ( action === undefined ) {
 		return this.map( function ( set ) {
-			 return set.inst.action( set.idx );
+		 return set.inst.action( set.idx );
 		} );
 	}
 
@@ -1360,7 +1360,7 @@ DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function (
 DataTable.Api.registerPlural( 'buttons().text()', 'button().text()', function ( label ) {
 	if ( label === undefined ) {
 		return this.map( function ( set ) {
-			 return set.inst.text( set.idx );
+		 return set.inst.text( set.idx );
 		} );
 	}
 

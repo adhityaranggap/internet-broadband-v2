@@ -70,8 +70,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 					var editor = CKEDITOR.replace( 'editor1', {
 						/*
-						 * Ensure that htmlwriter plugin, which is required for this sample, is loaded.
-						 */
+					 * Ensure that htmlwriter plugin, which is required for this sample, is loaded.
+					 */
 						extraPlugins: 'htmlwriter',
 
 						height: 290,
@@ -85,25 +85,25 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 						],
 
 						/*
-						 * Style sheet for the contents
-						 */
+					 * Style sheet for the contents
+					 */
 						contentsCss: 'body {color:#000; background-color#FFF; font-family: Arial; font-size:80%;} p, ol, ul {margin-top: 0px; margin-bottom: 0px;}',
 
 						/*
-						 * Quirks doctype
-						 */
+					 * Quirks doctype
+					 */
 						docType: '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
 
 						/*
-						 * Core styles.
-						 */
+					 * Core styles.
+					 */
 						coreStyles_bold: { element: 'b' },
 						coreStyles_italic: { element: 'i' },
 						coreStyles_underline: { element: 'u' },
 
 						/*
-						 * Font face.
-						 */
+					 * Font face.
+					 */
 
 						// Define the way font elements will be applied to the document. The "font"
 						// element will be used.
@@ -113,8 +113,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 						},
 
 						/*
-						 * Font sizes.
-						 */
+					 * Font sizes.
+					 */
 
 						// The CSS part of the font sizes isn't used by Flash, it is there to get the
 						// font rendered correctly in CKEditor.
@@ -126,8 +126,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 						} ,
 
 						/*
-						 * Font colors.
-						 */
+					 * Font colors.
+					 */
 						colorButton_enableMore: true,
 
 						colorButton_foreStyle: {
@@ -144,9 +144,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 					});
 
 					/*
-					 * Adjust the behavior of the dataProcessor to match the
-					 * requirements of Flash
-					 */
+				 * Adjust the behavior of the dataProcessor to match the
+				 * requirements of Flash
+				 */
 					function configureFlashOutput( ev ) {
 						var editor = ev.editor,
 							dataProcessor = editor.dataProcessor,

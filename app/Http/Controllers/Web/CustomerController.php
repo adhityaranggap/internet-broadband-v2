@@ -90,7 +90,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'username'       => 'required|max:50',
+   	'username'       => 'required|max:50',
             'address'        => 'required|max:100',
             'name'           => 'required|max:50', 
             'password'       => 'required|min:8', 
@@ -152,7 +152,7 @@ class CustomerController extends Controller
                                     'notes'         => '-'
                                 ]);
                             }else{
-                                $id = DB::getPdo()->lastInsertId();;
+                                $id = DB::getPdo()->lastInsertId();
                             UserHasPackage::create([
                                 'user_id'       => $id,
                                 'package_id'    => $package,
@@ -160,7 +160,7 @@ class CustomerController extends Controller
                                 'status'        => 'active',
                                 'notes'         => '-'
                             ]);
-                            $id = DB::getPdo()->lastInsertId();;
+                            $id = DB::getPdo()->lastInsertId();
                             $data = DB::table('users_has_packages')
                             ->join('packages','users_has_packages.package_id','packages.id')
                             ->select('packages.price')
@@ -284,17 +284,17 @@ class CustomerController extends Controller
 
         $data = User::where('id', $id)->first();
         $this->validate($request,[
-            'username'   =>  'required|max:255|string|unique:users,username,'.$data->id,
-            'name'        =>  'required|max:255|string',
-            'address'      =>  'required|max:255|string'
+            'username'      =>  'required|max:255|string|unique:users,username,'.$data->id,
+            'name'          =>  'required|max:255|string',
+            'address'       =>  'required|max:255|string'
         ]);
 
         
-
+        $request['password'] = bcrypt(request('password'));
         
         if($data)
         {
-            User::where('id', $id)->update($request->only('username','name','address'));
+            User::where('id', $id)->update($request->only('username','password','name','address'));
             return "Data Berhasil di Update";
 
         }else{

@@ -17,7 +17,7 @@ Example:
 ```js
 $(document).ready( function () {
     $('#myTable').DataTable( {
-    	rowReorder: true
+   rowReorder: true
     } );
 } );
 ```

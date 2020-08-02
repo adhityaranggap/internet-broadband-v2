@@ -25,6 +25,7 @@ class Transactions extends Migration
             $table->string('file')->nullable();
             $table->string('type_payment')->nullable();
             $table->integer('fee');
+            $table->unsignedInteger('transaction_has_modified')->nullable();
             $table->timestamps();
         });
     }

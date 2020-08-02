@@ -15,7 +15,7 @@ KeyTable is initialised using the `keys` option in the DataTables constructor - 
 ```js
 $(document).ready( function () {
     $('#myTable').DataTable( {
-    	keys: true
+   keys: true
     } );
 } );
 ```

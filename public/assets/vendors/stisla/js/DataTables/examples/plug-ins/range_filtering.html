@@ -30,9 +30,9 @@ $.fn.dataTable.ext.search.push(
 		var age = parseFloat( data[3] ) || 0; // use data for the age column
 
 		if ( ( isNaN( min ) && isNaN( max ) ) ||
-			 ( isNaN( min ) && age <= max ) ||
-			 ( min <= age   && isNaN( max ) ) ||
-			 ( min <= age   && age <= max ) )
+		 ( isNaN( min ) && age <= max ) ||
+		 ( min <= age   && isNaN( max ) ) ||
+		 ( min <= age   && age <= max ) )
 		{
 			return true;
 		}
@@ -569,9 +569,9 @@ $.fn.dataTable.ext.search.push(
 		var age = parseFloat( data[3] ) || 0; // use data for the age column
 
 		if ( ( isNaN( min ) &amp;&amp; isNaN( max ) ) ||
-			 ( isNaN( min ) &amp;&amp; age &lt;= max ) ||
-			 ( min &lt;= age   &amp;&amp; isNaN( max ) ) ||
-			 ( min &lt;= age   &amp;&amp; age &lt;= max ) )
+		 ( isNaN( min ) &amp;&amp; age &lt;= max ) ||
+		 ( min &lt;= age   &amp;&amp; isNaN( max ) ) ||
+		 ( min &lt;= age   &amp;&amp; age &lt;= max ) )
 		{
 			return true;
 		}

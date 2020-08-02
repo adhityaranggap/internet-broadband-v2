@@ -89,16 +89,16 @@ div.info {
 	margin-bottom: 2em;
 
 	-webkit-column-count: 2;
-	   -moz-column-count: 2;
-	    -ms-column-count: 2;
-	     -o-column-count: 2;
+   -moz-column-count: 2;
+    -ms-column-count: 2;
+     -o-column-count: 2;
 	column-count: 2;
 
 
 	-webkit-column-rule: 1px solid #F3F3F3;
-	   -moz-column-rule: 1px solid #F3F3F3;
-	    -ms-column-rule: 1px solid #F3F3F3;
-	     -o-column-rule: 1px solid #F3F3F3;
+   -moz-column-rule: 1px solid #F3F3F3;
+    -ms-column-rule: 1px solid #F3F3F3;
+     -o-column-rule: 1px solid #F3F3F3;
 	column-rule: 1px solid #F3F3F3;
 }
 
@@ -145,9 +145,9 @@ div.footer > div.gradient {
 
 div.toc {
 	-webkit-column-count: 2;
-	   -moz-column-count: 2;
-	    -ms-column-count: 2;
-	     -o-column-count: 2;
+   -moz-column-count: 2;
+    -ms-column-count: 2;
+     -o-column-count: 2;
 	column-count: 2;
 }
 
@@ -177,8 +177,8 @@ code {
 
 	border: 1px solid #e0e0e0;
 	-webkit-border-radius: 3px;
-	   -moz-border-radius: 3px;
-	        border-radius: 3px;
+   -moz-border-radius: 3px;
+        border-radius: 3px;
 }
 
 code:after {
@@ -355,17 +355,17 @@ div.column_half {
 	screen and (max-width : 768px) and (orientation: portrait) {
 	div.info {
 		-webkit-column-count: 1;
-		   -moz-column-count: 1;
-		    -ms-column-count: 1;
-		     -o-column-count: 1;
+	   -moz-column-count: 1;
+	    -ms-column-count: 1;
+	     -o-column-count: 1;
 		column-count: 1;
 	}
 
 	div.toc {
 		-webkit-column-count: 1;
-		   -moz-column-count: 1;
-		    -ms-column-count: 1;
-		     -o-column-count: 1;
+	   -moz-column-count: 1;
+	    -ms-column-count: 1;
+	     -o-column-count: 1;
 		column-count: 1;
 	}
 

@@ -80,7 +80,7 @@ class RouterController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-    		'router_name'       => 'required|max:50',
+   	'router_name'       => 'required|max:50',
             'host'              => 'required|max:100',
             'port'              => 'required|integer', 
             'user'              => 'required|max:50', 
@@ -183,7 +183,7 @@ class RouterController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-    		'router_name'       => 'required|max:50',
+   	'router_name'       => 'required|max:50',
             'host'              => 'required|max:100',
             'port'              => 'required|integer', 
             'user'              => 'required|max:50', 

@@ -135,14 +135,14 @@ var RowReorder = function ( dt, opts ) {
 
 $.extend( RowReorder.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+ * Constructor
+ */
 
 	/**
-	 * Initialise the RowReorder instance
-	 *
-	 * @private
-	 */
+ * Initialise the RowReorder instance
+ *
+ * @private
+ */
 	_constructor: function ()
 	{
 		var that = this;
@@ -178,15 +178,15 @@ $.extend( RowReorder.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
+ * Private methods
+ */
 	
 	/**
-	 * Cache the measurements that RowReorder needs in the mouse move handler
-	 * to attempt to speed things up, rather than reading from the DOM.
-	 *
-	 * @private
-	 */
+ * Cache the measurements that RowReorder needs in the mouse move handler
+ * to attempt to speed things up, rather than reading from the DOM.
+ *
+ * @private
+ */
 	_cachePositions: function ()
 	{
 		var dt = this.s.dt;
@@ -217,11 +217,11 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Clone a row so it can be floated around the screen
-	 *
-	 * @param  {jQuery} target Node to be cloned
-	 * @private
-	 */
+ * Clone a row so it can be floated around the screen
+ *
+ * @param  {jQuery} target Node to be cloned
+ * @private
+ */
 	_clone: function ( target )
 	{
 		var dt = this.s.dt;
@@ -253,11 +253,11 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Update the cloned item's position in the document
-	 *
-	 * @param  {object} e Event giving the mouse's position
-	 * @private
-	 */
+ * Update the cloned item's position in the document
+ *
+ * @param  {object} e Event giving the mouse's position
+ * @private
+ */
 	_clonePosition: function ( e )
 	{
 		var start = this.s.start;
@@ -284,12 +284,12 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Emit an event on the DataTable for listeners
-	 *
-	 * @param  {string} name Event name
-	 * @param  {array} args Event arguments
-	 * @private
-	 */
+ * Emit an event on the DataTable for listeners
+ *
+ * @param  {string} name Event name
+ * @param  {array} args Event arguments
+ * @private
+ */
 	_emitEvent: function ( name, args )
 	{
 		this.s.dt.iterator( 'table', function ( ctx, i ) {
@@ -299,13 +299,13 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Get pageX/Y position from an event, regardless of if it is a mouse or
-	 * touch event.
-	 *
-	 * @param  {object} e Event
-	 * @param  {string} pos X or Y (must be a capital)
-	 * @private
-	 */
+ * Get pageX/Y position from an event, regardless of if it is a mouse or
+ * touch event.
+ *
+ * @param  {object} e Event
+ * @param  {string} pos X or Y (must be a capital)
+ * @private
+ */
 	_eventToPage: function ( e, pos )
 	{
 		if ( e.type.indexOf( 'touch' ) !== -1 ) {
@@ -317,13 +317,13 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Mouse down event handler. Read initial positions and add event handlers
-	 * for the move.
-	 *
-	 * @param  {object} e      Mouse event
-	 * @param  {jQuery} target TR element that is to be moved
-	 * @private
-	 */
+ * Mouse down event handler. Read initial positions and add event handlers
+ * for the move.
+ *
+ * @param  {object} e      Mouse event
+ * @param  {jQuery} target TR element that is to be moved
+ * @private
+ */
 	_mouseDown: function ( e, target )
 	{
 		var that = this;
@@ -361,12 +361,12 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Mouse move event handler - move the cloned row and shuffle the table's
-	 * rows if required.
-	 *
-	 * @param  {object} e Mouse event
-	 * @private
-	 */
+ * Mouse move event handler - move the cloned row and shuffle the table's
+ * rows if required.
+ *
+ * @param  {object} e Mouse event
+ * @private
+ */
 	_mouseMove: function ( e )
 	{
 		this._clonePosition( e );
@@ -438,12 +438,12 @@ $.extend( RowReorder.prototype, {
 
 
 	/**
-	 * Mouse up event handler - release the event handlers and perform the
-	 * table updates
-	 *
-	 * @param  {object} e Mouse event
-	 * @private
-	 */
+ * Mouse up event handler - release the event handlers and perform the
+ * table updates
+ *
+ * @param  {object} e Mouse event
+ * @private
+ */
 	_mouseUp: function ( e )
 	{
 		var dt = this.s.dt;
@@ -543,42 +543,42 @@ $.extend( RowReorder.prototype, {
  */
 RowReorder.defaults = {
 	/**
-	 * Data point in the host row's data source object for where to get and set
-	 * the data to reorder. This will normally also be the sorting column.
-	 *
-	 * @type {Number}
-	 */
+ * Data point in the host row's data source object for where to get and set
+ * the data to reorder. This will normally also be the sorting column.
+ *
+ * @type {Number}
+ */
 	dataSrc: 0,
 
 	/**
-	 * Editor instance that will be used to perform the update
-	 *
-	 * @type {DataTable.Editor}
-	 */
+ * Editor instance that will be used to perform the update
+ *
+ * @type {DataTable.Editor}
+ */
 	editor: null,
 
 	/**
-	 * Drag handle selector. This defines the element that when dragged will
-	 * reorder a row.
-	 *
-	 * @type {String}
-	 */
+ * Drag handle selector. This defines the element that when dragged will
+ * reorder a row.
+ *
+ * @type {String}
+ */
 	selector: 'td:first-child',
 
 	/**
-	 * Optionally lock the dragged row's x-position. This can be `true` to
-	 * fix the position match the host table's, `false` to allow free movement
-	 * of the row, or a number to define an offset from the host table.
-	 *
-	 * @type {Boolean|number}
-	 */
+ * Optionally lock the dragged row's x-position. This can be `true` to
+ * fix the position match the host table's, `false` to allow free movement
+ * of the row, or a number to define an offset from the host table.
+ *
+ * @type {Boolean|number}
+ */
 	snapX: false,
 
 	/**
-	 * Update the table's data on drop
-	 *
-	 * @type {Boolean}
-	 */
+ * Update the table's data on drop
+ *
+ * @type {Boolean}
+ */
 	update: true
 };
 

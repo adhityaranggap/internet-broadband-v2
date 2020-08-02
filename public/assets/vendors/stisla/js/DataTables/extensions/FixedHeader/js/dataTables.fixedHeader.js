@@ -132,14 +132,14 @@ var FixedHeader = function ( dt, config ) {
  */
 $.extend( FixedHeader.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * API methods
-	 */
+ * API methods
+ */
 	
 	/**
-	 * Enable / disable the fixed elements
-	 *
-	 * @param  {boolean} enable `true` to enable, `false` to disable
-	 */
+ * Enable / disable the fixed elements
+ *
+ * @param  {boolean} enable `true` to enable, `false` to disable
+ */
 	enable: function ( enable )
 	{
 		this.s.enable = enable;
@@ -156,10 +156,10 @@ $.extend( FixedHeader.prototype, {
 	},
 	
 	/**
-	 * Set header offset 
-	 *
-	 * @param  {int} new value for headerOffset
-	 */
+ * Set header offset 
+ *
+ * @param  {int} new value for headerOffset
+ */
 	headerOffset: function ( offset )
 	{
 		if ( offset !== undefined ) {
@@ -171,10 +171,10 @@ $.extend( FixedHeader.prototype, {
 	},
 	
 	/**
-	 * Set footer offset
-	 *
-	 * @param  {int} new value for footerOffset
-	 */
+ * Set footer offset
+ *
+ * @param  {int} new value for footerOffset
+ */
 	footerOffset: function ( offset )
 	{
 		if ( offset !== undefined ) {
@@ -187,8 +187,8 @@ $.extend( FixedHeader.prototype, {
 
 	
 	/**
-	 * Recalculate the position of the fixed elements and force them into place
-	 */
+ * Recalculate the position of the fixed elements and force them into place
+ */
 	update: function ()
 	{
 		this._positions();
@@ -197,15 +197,15 @@ $.extend( FixedHeader.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+ * Constructor
+ */
 	
 	/**
-	 * FixedHeader constructor - adding the required event listeners and
-	 * simple initialisation
-	 *
-	 * @private
-	 */
+ * FixedHeader constructor - adding the required event listeners and
+ * simple initialisation
+ *
+ * @private
+ */
 	_constructor: function ()
 	{
 		var that = this;
@@ -235,19 +235,19 @@ $.extend( FixedHeader.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
+ * Private methods
+ */
 
 	/**
-	 * Clone a fixed item to act as a place holder for the original element
-	 * which is moved into a clone of the table element, and moved around the
-	 * document to give the fixed effect.
-	 *
-	 * @param  {string}  item  'header' or 'footer'
-	 * @param  {boolean} force Force the clone to happen, or allow automatic
-	 *   decision (reuse existing if available)
-	 * @private
-	 */
+ * Clone a fixed item to act as a place holder for the original element
+ * which is moved into a clone of the table element, and moved around the
+ * document to give the fixed effect.
+ *
+ * @param  {string}  item  'header' or 'footer'
+ * @param  {boolean} force Force the clone to happen, or allow automatic
+ *   decision (reuse existing if available)
+ * @private
+ */
 	_clone: function ( item, force )
 	{
 		var dt = this.s.dt;
@@ -282,16 +282,16 @@ $.extend( FixedHeader.prototype, {
 	},
 
 	/**
-	 * Copy widths from the cells in one element to another. This is required
-	 * for the footer as the footer in the main table takes its sizes from the
-	 * header columns. That isn't present in the footer so to have it still
-	 * align correctly, the sizes need to be copied over. It is also required
-	 * for the header when auto width is not enabled
-	 *
-	 * @param  {jQuery} from Copy widths from
-	 * @param  {jQuery} to   Copy widths to
-	 * @private
-	 */
+ * Copy widths from the cells in one element to another. This is required
+ * for the footer as the footer in the main table takes its sizes from the
+ * header columns. That isn't present in the footer so to have it still
+ * align correctly, the sizes need to be copied over. It is also required
+ * for the header when auto width is not enabled
+ *
+ * @param  {jQuery} from Copy widths from
+ * @param  {jQuery} to   Copy widths to
+ * @private
+ */
 	_matchWidths: function ( from, to ) {
 		var type = function ( name ) {
 			var toWidths = $(name, from)
@@ -309,14 +309,14 @@ $.extend( FixedHeader.prototype, {
 	},
 
 	/**
-	 * Remove assigned widths from the cells in an element. This is required
-	 * when inserting the footer back into the main table so the size is defined
-	 * by the header columns and also when auto width is disabled in the
-	 * DataTable.
-	 *
-	 * @param  {string} item The `header` or `footer`
-	 * @private
-	 */
+ * Remove assigned widths from the cells in an element. This is required
+ * when inserting the footer back into the main table so the size is defined
+ * by the header columns and also when auto width is disabled in the
+ * DataTable.
+ *
+ * @param  {string} item The `header` or `footer`
+ * @private
+ */
 	_unsize: function ( item ) {
 		var el = this.dom[ item ].floating;
 
@@ -326,13 +326,13 @@ $.extend( FixedHeader.prototype, {
 	},
 
 	/**
-	 * Reposition the floating elements to take account of horizontal page
-	 * scroll
-	 *
-	 * @param  {string} item       The `header` or `footer`
-	 * @param  {int}    scrollLeft Document scrollLeft
-	 * @private
-	 */
+ * Reposition the floating elements to take account of horizontal page
+ * scroll
+ *
+ * @param  {string} item       The `header` or `footer`
+ * @param  {int}    scrollLeft Document scrollLeft
+ * @private
+ */
 	_horizontal: function ( item, scrollLeft )
 	{
 		var itemDom = this.dom[ item ];
@@ -347,20 +347,20 @@ $.extend( FixedHeader.prototype, {
 	},
 
 	/**
-	 * Change from one display mode to another. Each fixed item can be in one
-	 * of:
-	 *
-	 * * `in-place` - In the main DataTable
-	 * * `in` - Floating over the DataTable
-	 * * `below` - (Header only) Fixed to the bottom of the table body
-	 * * `above` - (Footer only) Fixed to the top of the table body
-	 * 
-	 * @param  {string}  mode        Mode that the item should be shown in
-	 * @param  {string}  item        'header' or 'footer'
-	 * @param  {boolean} forceChange Force a redraw of the mode, even if already
-	 *     in that mode.
-	 * @private
-	 */
+ * Change from one display mode to another. Each fixed item can be in one
+ * of:
+ *
+ * * `in-place` - In the main DataTable
+ * * `in` - Floating over the DataTable
+ * * `below` - (Header only) Fixed to the bottom of the table body
+ * * `above` - (Footer only) Fixed to the top of the table body
+ * 
+ * @param  {string}  mode        Mode that the item should be shown in
+ * @param  {string}  item        'header' or 'footer'
+ * @param  {boolean} forceChange Force a redraw of the mode, even if already
+ *     in that mode.
+ * @private
+ */
 	_modeChange: function ( mode, item, forceChange )
 	{
 		var dt = this.s.dt;
@@ -428,11 +428,11 @@ $.extend( FixedHeader.prototype, {
 	},
 
 	/**
-	 * Cache the positional information that is required for the mode
-	 * calculations that FixedHeader performs.
-	 *
-	 * @private
-	 */
+ * Cache the positional information that is required for the mode
+ * calculations that FixedHeader performs.
+ *
+ * @private
+ */
 	_positions: function ()
 	{
 		var dt = this.s.dt;
@@ -469,13 +469,13 @@ $.extend( FixedHeader.prototype, {
 
 
 	/**
-	 * Mode calculation - determine what mode the fixed items should be placed
-	 * into.
-	 *
-	 * @param  {boolean} forceChange Force a redraw of the mode, even if already
-	 *     in that mode.
-	 * @private
-	 */
+ * Mode calculation - determine what mode the fixed items should be placed
+ * into.
+ *
+ * @param  {boolean} forceChange Force a redraw of the mode, even if already
+ *     in that mode.
+ * @private
+ */
 	_scroll: function ( forceChange )
 	{
 		var windowTop = $(document).scrollTop();

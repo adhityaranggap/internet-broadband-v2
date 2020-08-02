@@ -133,7 +133,7 @@ class AllTicketController extends Controller
     public function store(Request $request)
     {
         // $this->validate($request,[
-    	// 	'name' => 'required|string|max:255',
+   // 	'name' => 'required|string|max:255',
         //     'speed' => 'required|string|max:15',
         // ]);
 

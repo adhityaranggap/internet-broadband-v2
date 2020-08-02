@@ -74,8 +74,8 @@ var AutoFill = function( dt, opts )
 	);
 
 	/**
-	 * @namespace Settings object which contains customisable information for AutoFill instance
-	 */
+ * @namespace Settings object which contains customisable information for AutoFill instance
+ */
 	this.s = {
 		/** @type {DataTable.Api} DataTables' API instance */
 		dt: new DataTable.Api( dt ),
@@ -97,17 +97,17 @@ var AutoFill = function( dt, opts )
 
 
 	/**
-	 * @namespace Common and useful DOM elements for the class instance
-	 */
+ * @namespace Common and useful DOM elements for the class instance
+ */
 	this.dom = {
 		/** @type {jQuery} AutoFill handle */
 		handle: $('<div class="dt-autofill-handle"/>'),
 
 		/**
-		 * @type {Object} Selected cells outline - Need to use 4 elements,
-		 *   otherwise the mouse over if you back into the selected rectangle
-		 *   will be over that element, rather than the cells!
-		 */
+	 * @type {Object} Selected cells outline - Need to use 4 elements,
+	 *   otherwise the mouse over if you back into the selected rectangle
+	 *   will be over that element, rather than the cells!
+	 */
 		select: {
 			top:    $('<div class="dt-autofill-select top"/>'),
 			right:  $('<div class="dt-autofill-select right"/>'),
@@ -137,14 +137,14 @@ var AutoFill = function( dt, opts )
 
 $.extend( AutoFill.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+ * Constructor
+ */
 
 	/**
-	 * Initialise the RowReorder instance
-	 *
-	 * @private
-	 */
+ * Initialise the RowReorder instance
+ *
+ * @private
+ */
 	_constructor: function ()
 	{
 		var that = this;
@@ -176,16 +176,16 @@ $.extend( AutoFill.prototype, {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
+ * Private methods
+ */
 
 	/**
-	 * Display the AutoFill drag handle by appending it to a table cell. This
-	 * is the opposite of the _detach method.
-	 *
-	 * @param  {node} node TD/TH cell to insert the handle into
-	 * @private
-	 */
+ * Display the AutoFill drag handle by appending it to a table cell. This
+ * is the opposite of the _detach method.
+ *
+ * @param  {node} node TD/TH cell to insert the handle into
+ * @private
+ */
 	_attach: function ( node )
 	{
 		var dt = this.s.dt;
@@ -223,13 +223,13 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Determine can the fill type should be. This can be automatic, or ask the
-	 * end user.
-	 *
-	 * @param {array} cells Information about the selected cells from the key
-	 *     up function
-	 * @private
-	 */
+ * Determine can the fill type should be. This can be automatic, or ask the
+ * end user.
+ *
+ * @param {array} cells Information about the selected cells from the key
+ *     up function
+ * @private
+ */
 	_actionSelector: function ( cells )
 	{
 		var that = this;
@@ -288,10 +288,10 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Remove the AutoFill handle from the document
-	 *
-	 * @private
-	 */
+ * Remove the AutoFill handle from the document
+ *
+ * @private
+ */
 	_detach: function ()
 	{
 		this.dom.attachedTo = null;
@@ -300,13 +300,13 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Draw the selection outline by calculating the range between the start
-	 * and end cells, then placing the highlighting elements to draw a rectangle
-	 *
-	 * @param  {node}   target End cell
-	 * @param  {object} e      Originating event
-	 * @private
-	 */
+ * Draw the selection outline by calculating the range between the start
+ * and end cells, then placing the highlighting elements to draw a rectangle
+ *
+ * @param  {node}   target End cell
+ * @param  {object} e      Originating event
+ * @private
+ */
 	_drawSelection: function ( target, e )
 	{
 		// Calculate boundary for start cell to this one
@@ -377,13 +377,13 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Use the Editor API to perform an update based on the new data for the
-	 * cells
-	 *
-	 * @param {array} cells Information about the selected cells from the key
-	 *     up function
-	 * @private
-	 */
+ * Use the Editor API to perform an update based on the new data for the
+ * cells
+ *
+ * @param {array} cells Information about the selected cells from the key
+ *     up function
+ * @private
+ */
 	_editor: function ( cells )
 	{
 		var dt = this.s.dt;
@@ -450,12 +450,12 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Emit an event on the DataTable for listeners
-	 *
-	 * @param  {string} name Event name
-	 * @param  {array} args Event arguments
-	 * @private
-	 */
+ * Emit an event on the DataTable for listeners
+ *
+ * @param  {string} name Event name
+ * @param  {array} args Event arguments
+ * @private
+ */
 	_emitEvent: function ( name, args )
 	{
 		this.s.dt.iterator( 'table', function ( ctx, i ) {
@@ -465,11 +465,11 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Attach suitable listeners (based on the configuration) that will attach
-	 * and detach the AutoFill handle in the document.
-	 *
-	 * @private
-	 */
+ * Attach suitable listeners (based on the configuration) that will attach
+ * and detach the AutoFill handle in the document.
+ *
+ * @private
+ */
 	_focusListener: function ()
 	{
 		var that = this;
@@ -520,11 +520,11 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Start mouse drag - selects the start cell
-	 *
-	 * @param  {object} e Mouse down event
-	 * @private
-	 */
+ * Start mouse drag - selects the start cell
+ *
+ * @param  {object} e Mouse down event
+ * @private
+ */
 	_mousedown: function ( e )
 	{
 		var that = this;
@@ -571,12 +571,12 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Mouse drag - selects the end cell and update the selection display for
-	 * the end user
-	 *
-	 * @param  {object} e Mouse move event
-	 * @private
-	 */
+ * Mouse drag - selects the end cell and update the selection display for
+ * the end user
+ *
+ * @param  {object} e Mouse move event
+ * @private
+ */
 	_mousemove: function ( e )
 	{	
 		var that = this;
@@ -592,11 +592,11 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * End mouse drag - perform the update actions
-	 *
-	 * @param  {object} e Mouse up event
-	 * @private
-	 */
+ * End mouse drag - perform the update actions
+ *
+ * @param  {object} e Mouse up event
+ * @private
+ */
 	_mouseup: function ( e )
 	{
 		$(document.body).off( '.autoFill' );
@@ -646,13 +646,13 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Create an array with a range of numbers defined by the start and end
-	 * parameters passed in (inclusive!).
-	 * 
-	 * @param  {integer} start Start
-	 * @param  {integer} end   End
-	 * @private
-	 */
+ * Create an array with a range of numbers defined by the start and end
+ * parameters passed in (inclusive!).
+ * 
+ * @param  {integer} start Start
+ * @param  {integer} end   End
+ * @private
+ */
 	_range: function ( start, end )
 	{
 		var out = [];
@@ -674,16 +674,16 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Move the window and DataTables scrolling during a drag to scroll new
-	 * content into view. This is done by proximity to the edge of the scrolling
-	 * container of the mouse - for example near the top edge of the window
-	 * should scroll up. This is a little complicated as there are two elements
-	 * that can be scrolled - the window and the DataTables scrolling view port
-	 * (if scrollX and / or scrollY is enabled).
-	 *
-	 * @param  {object} e Mouse move event object
-	 * @private
-	 */
+ * Move the window and DataTables scrolling during a drag to scroll new
+ * content into view. This is done by proximity to the edge of the scrolling
+ * container of the mouse - for example near the top edge of the window
+ * should scroll up. This is a little complicated as there are two elements
+ * that can be scrolled - the window and the DataTables scrolling view port
+ * (if scrollX and / or scrollY is enabled).
+ *
+ * @param  {object} e Mouse move event object
+ * @private
+ */
 	_shiftScroll: function ( e )
 	{
 		var that = this;
@@ -781,15 +781,15 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Update the DataTable after the user has selected what they want to do
-	 *
-	 * @param  {false|undefined} result Return from the `execute` method - can
-	 *   be false internally to do nothing. This is not documented for plug-ins
-	 *   and is used only by the cancel option.
-	 * @param {array} cells Information about the selected cells from the key
-	 *     up function, argumented with the set values
-	 * @private
-	 */
+ * Update the DataTable after the user has selected what they want to do
+ *
+ * @param  {false|undefined} result Return from the `execute` method - can
+ *   be false internally to do nothing. This is not documented for plug-ins
+ *   and is used only by the cancel option.
+ * @param {array} cells Information about the selected cells from the key
+ *     up function, argumented with the set values
+ * @private
+ */
 	_update: function ( result, cells )
 	{
 		// Do nothing on `false` return from an execute function
