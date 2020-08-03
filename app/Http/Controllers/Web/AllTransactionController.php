@@ -113,7 +113,7 @@ class AllTransactionController extends Controller
                     return
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name).
-                    \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Package '. $data->name);
+                    \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon::parse($data->expired_date)->format('M Y'));
                     
         })
         ->addIndexColumn()
@@ -127,7 +127,7 @@ class AllTransactionController extends Controller
      */
     public function create()
     {
-        $packages = \App\Package::all();
+        $packages = Package::all();
         return view('cms.transactions.alltransaction.create', compact('packages'));
     }
 
@@ -139,7 +139,80 @@ class AllTransactionController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $package_id = $request['package'];
+        $data = Package::select('price')->where('id', $package_id)->first();
+        $maxPaid = $data->price;
+        
+        $sisa    = $data->price - $request->paid;
+
+        $this->validate($request,[
+            'users_has_packages_id'       => 'required|max:50',
+            'expired_date'                => 'required|max:100',
+            'paid'                        => 'required|numeric|max:'.$maxPaid,
+        ]);
+
+
+    //payment_proof
+        if($request->type_payment === "Transfer"){
+            $this->validate($request, [
+                'payment_proof' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
+            ]);
+        }
+
+        // $request['updated_at'] = now();        
+        // $request['created_at'] = now();        
+        $request['notes']      = '-';        
+        $request['price']      = $data->price;
+        if($sisa == 0){
+            $request['status'] = \EnumTransaksi::STATUS_LUNAS;
+        }else{
+            $request['status'] = \EnumTransaksi::STATUS_BELUM_LUNAS;
+        }
+        
+            //  Transaction::create($request->except('_token'));
+
+
+            if($request->type_payment === "Transfer"){
+                //payment_proof
+                    if($request->file('payment_proof')){
+                        $dir = 'payment_proof/';
+                        $size = '360';
+                        $format = 'file';
+                        $image = $request->file('payment_proof');         
+                        // $request['file'] = Storage::disk('minio')->put($image);
+                        $request['file'] = \ImageUploadHelper::pushStorage($dir, $size, $format, $image);
+                        
+                    }
+                    // TransactionHasModified::create([
+                    //     'user_id'               => Auth::user()->id,
+                    //     'transaction_id'        => $id,
+                    //     'action'                => \EnumTransaksiHasModified::UPDATE
+                    // ]);
+                    // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
+
+                    Transaction::create($request->except('_token'));
+                    // TransactionHasModified::create([
+                    //     'user_id'               => Auth::user()->id,
+                    //     'transaction_id'        => $id,
+                    //     'action'                => \EnumTransaksiHasModified::UPDATE
+                    // ]);
+                    // $transaction->notify(new InvoicePaid($invoice));
+
+                }else{
+                   
+                    // TransactionHasModified::create([
+                    //     'user_id'               => Auth::user()->id,
+                    //     'transaction_id'        => $id,
+                    //     'action'                => \EnumTransaksiHasModified::UPDATE
+                    // ]);
+                    // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
+                    Transaction::create($request->except('_token','file'));
+                    // $transaction->notify(new InvoicePaid($invoice));
+                    // $transaction->notify(new InvoicePaid("Payment Received!"));
+
+
+                    
+                }    
     }
 
     /**
@@ -226,7 +299,7 @@ class AllTransactionController extends Controller
     public function update(Request $request, $id)
     {
         $transaction = Transaction::where('id', $id)->first();
-        $maxPaid = $transaction->price-$transaction->paid;
+        $maxPaid = $transaction->price - $transaction->paid;
         $UserPay = $request->paid+$transaction->paid;
         
         $this->validate($request, [

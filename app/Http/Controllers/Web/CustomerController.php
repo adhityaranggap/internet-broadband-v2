@@ -90,7 +90,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-   	'username'       => 'required|max:50',
+   	        'username'       => 'required|max:50',
             'address'        => 'required|max:100',
             'name'           => 'required|max:50', 
             'password'       => 'required|min:8', 

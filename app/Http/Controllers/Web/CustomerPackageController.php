@@ -121,7 +121,7 @@ class CustomerPackageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-   	'user_id' => 'required|integer',
+   	        'user_id' => 'required|integer',
             'package_id' => 'required|integer|max:15',
             'note'  => 'nullable',
         ]);
@@ -204,7 +204,7 @@ class CustomerPackageController extends Controller
 
         
         if($data){
-            UserHasPackage::where('id', $id)->update($request->only('package_id'));
+        UserHasPackage::where('id', $id)->update($request->only('package_id'));
         }
         
         return false;
