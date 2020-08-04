@@ -26,10 +26,11 @@ class LoginController extends Controller
         $auth = Auth::attempt($credential);
 
         if($auth){ //sukses login
-            return redirect()->route('dashboard-index');
+            return redirect()->route('customer-index');
 
         }else{
-            return redirect()->back();
+            return redirect()->back()
+            ->withErrors($errors);
         }
 
 

@@ -11,7 +11,7 @@
     </div>
     <div class="package-list" style="margin-top:5px;"></div>
 
-    <div class="form-group" style="margin-top:15px; ">
+<div class="form-group" style="margin-top:15px; ">
         <label for="package">Name Package</label>
         <select class="form-control " id="package" name="package">
             @forelse($packages as $package)

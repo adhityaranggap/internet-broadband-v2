@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', 'Web\UserController@update')->name('profile-update');
  
     });
-    Route::middleware('AdminBillingOnly')->group(function () {
+    // Route::middleware('AdminBillingOnly')->group(function () {
 
     Route::prefix('transactions')->group(function () {
 
@@ -167,7 +167,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', 'Web\UnsolvedTicketController@store')->name('unsolved-ticket-store');      
         });
 
-    });
+    // });
 
     Route::prefix('router')->group(function () {
         Route::prefix('all-router')->group(function () {
