@@ -51,7 +51,6 @@ class AllTransactionController extends Controller
                 'users.role_id',
                 // 'trasanction_has_modified.transaction_id as transaction_modified'
             ];
-            // $data = transaction::all();
             if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
             $data = DB::table('users')
             ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
@@ -342,25 +341,7 @@ class AllTransactionController extends Controller
             $request['status'] = \EnumTransaksi::STATUS_BELUM_LUNAS;
         }
         
-        if($request->status === \EnumTransaksi::STATUS_LUNAS){
-           
-            Transaction::create([
-                'users_has_packages_id'         => $transaction->id,
-                'transaction_has_modified_id'   => 1,
-                'notes'                         => '-',
-                'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
-                'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                'price'                         => $transaction->price,
-                'fee'                           => $transaction->fee,
-                'paid'                          => $transaction->fee,
-                'created_at'                    => now(),                   
-            ]);
-            // TransactionHasModified::create([
-            //     'user_id'               => Auth::user()->id,
-            //     'transaction_id'        => DB::getPdo()->lastInsertId(),
-            //     'action'                => \EnumTransaksiHasModified::CREATE
-            // ]);
-        }
+        
 
         if($transaction){
 
@@ -391,7 +372,25 @@ class AllTransactionController extends Controller
                     //     'action'                => \EnumTransaksiHasModified::UPDATE
                     // ]);
                     // $transaction->notify(new InvoicePaid($invoice));
-
+                    if($request->status === \EnumTransaksi::STATUS_LUNAS){
+           
+                        Transaction::create([
+                            'users_has_packages_id'         => $transaction->id,
+                            'transaction_has_modified_id'   => 1,
+                            'notes'                         => '-',
+                            'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                            'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                            'price'                         => $transaction->price,
+                            'fee'                           => $transaction->fee,
+                            'paid'                          => $transaction->fee,
+                            'created_at'                    => now(),                   
+                        ]);
+                        // TransactionHasModified::create([
+                        //     'user_id'               => Auth::user()->id,
+                        //     'transaction_id'        => DB::getPdo()->lastInsertId(),
+                        //     'action'                => \EnumTransaksiHasModified::CREATE
+                        // ]);
+                    }
                 }else{
                    
                     // TransactionHasModified::create([
@@ -404,7 +403,25 @@ class AllTransactionController extends Controller
                     // $transaction->notify(new InvoicePaid($invoice));
                     // $transaction->notify(new InvoicePaid("Payment Received!"));
 
-
+                    if($request->status === \EnumTransaksi::STATUS_LUNAS){
+           
+                        Transaction::create([
+                            'users_has_packages_id'         => $transaction->id,
+                            'transaction_has_modified_id'   => 1,
+                            'notes'                         => '-',
+                            'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                            'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                            'price'                         => $transaction->price,
+                            'fee'                           => $transaction->fee,
+                            'paid'                          => $transaction->fee,
+                            'created_at'                    => now(),                   
+                        ]);
+                        // TransactionHasModified::create([
+                        //     'user_id'               => Auth::user()->id,
+                        //     'transaction_id'        => DB::getPdo()->lastInsertId(),
+                        //     'action'                => \EnumTransaksiHasModified::CREATE
+                        // ]);
+                    }
                     
                 }    
                 
@@ -504,6 +521,7 @@ class AllTransactionController extends Controller
     }
     public function destroy($id)
     {
+    if (Auth::check() && auth()->user()->role_id ==  ADMIN){
           // menghapus data trx berdasarkan id yang dipilih
     $trx = Transaction::where('id', $id)->first();
 
@@ -537,6 +555,6 @@ class AllTransactionController extends Controller
         $trx->delete();
        
     }
-
+    }
     }
 }
