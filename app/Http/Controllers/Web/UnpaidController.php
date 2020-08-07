@@ -34,16 +34,31 @@ class UnpaidController extends Controller
             'transactions.id as id',
             'transactions.status as status',
         ];
-        // $data = transaction::all();
-        $data = DB::table('users')
-        ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
-        ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-        ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
-        ->where('transactions.status', '!=', \EnumTransaksi::STATUS_LUNAS)
-        ->orderBy('transactions.expired_date','desc')
-        ->select($arrSelect)
+        if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
+
+            $data = DB::table('users')
+            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+            ->where('users_has_packages.user_id', auth()->user()->id)
+            ->where('transactions.status', '!=', \EnumTransaksi::STATUS_LUNAS)
+            ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
+            ->orderBy('transactions.expired_date','desc')
+            
+            ->select($arrSelect)
+            ->get();
+        }else{
+            $data = DB::table('users')
+            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+            ->where('transactions.status', '!=', \EnumTransaksi::STATUS_LUNAS)
+            ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
+            ->orderBy('transactions.expired_date','desc')
+            
+            ->select($arrSelect)
         ->get();
- 
+        }
         return Datatables::of($data)  
         ->editColumn('name',
             function ($data){

@@ -17,8 +17,8 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Transactions</span></a>
                 <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{route ('unpaid-index') }}">Unpaid</a></li>
                   <li><a class="nav-link" href="{{route ('all-transaction-index')}}">All Transaction</a></li>
-                  <li><a class="nav-link" href="{{route ('unpaid-index') }}">Unpaid</a></li>
                   <li><a class="nav-link" href="#">Payments</a></li>
                 </ul>
               </li>
