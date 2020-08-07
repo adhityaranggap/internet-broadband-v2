@@ -58,7 +58,7 @@
             {data: 'review', name:'review'},
             {data: 'package_name', name:'package_name'},
             {data: 'star', name:'star'},
-            {data: 'action', name:'action'},           
+             {data: 'action', name:'action' searchable: false}           
         ]
     });
 </script>

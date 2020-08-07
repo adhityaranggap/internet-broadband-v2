@@ -106,7 +106,7 @@
             // {data: 'price', name:'price'},
             {data: 'expired_date', name:'expired_date'},
         {data: 'status', name:'status'},
-            {data: 'action', name:'action'},           
+             {data: 'action', name:'action' searchable: false}           
         ]
     });
 </script> -->
@@ -126,7 +126,7 @@ $(document).ready(function (){
             // {data: 'price', name:'price'},
             {data: 'expired_date', name:'expired_date'},
             {data: 'status', name:'status'},
-            {data: 'action', name:'action'},           
+             {data: 'action', name:'action' searchable: false}           
         ],
       'select': {
          'style': 'multi'

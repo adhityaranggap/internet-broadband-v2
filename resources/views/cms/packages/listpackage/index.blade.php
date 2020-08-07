@@ -53,7 +53,7 @@
             {data: 'name', name:'name'},
             {data: 'speed', name:'speed'},
             {data: 'price', name:'price'},
-            {data: 'action', name:'action'},           
+             {data: 'action', name:'action' searchable: false}           
         ]
     });
 </script>
