@@ -77,7 +77,7 @@
             {data: 'package_name', name:'package_name'},
             {data: 'speed', name:'speed'},
             {data: 'price', name:'price'},
-             {data: 'action', name:'action' searchable: false}           
+             {data: 'action', name:'action', searchable: false}           
         ]
     });
 </script>

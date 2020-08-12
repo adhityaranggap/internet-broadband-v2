@@ -57,7 +57,7 @@
             {data: 'customer', name:'customer'},
             {data: 'created_at', name:'created_at'},
             {data: 'status', name:'status'},           
-             {data: 'action', name:'action' searchable: false}           
+             {data: 'action', name:'action', searchable: false}           
         ],
         order: [[0, 'desc']]
 

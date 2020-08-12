@@ -75,7 +75,7 @@
             {data: 'host', name:'host'},
             {data: 'port', name:'port'},
             {data: 'address', name:'address'},
-             {data: 'action', name:'action' searchable: false}           
+             {data: 'action', name:'action', searchable: false}           
         ]
     });
 </script>

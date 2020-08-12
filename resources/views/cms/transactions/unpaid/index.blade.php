@@ -81,7 +81,7 @@
             {data: 'price', name:'price'},
             {data: 'expired_date', name:'expired_date'},
             {data: 'status', name:'status'},
-             {data: 'action', name:'action' searchable: false}           
+             {data: 'action', name:'action', searchable: false}           
         ]
     });
 </script>

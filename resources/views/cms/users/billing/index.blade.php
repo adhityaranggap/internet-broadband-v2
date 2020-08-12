@@ -75,7 +75,7 @@
             {data: 'username', name:'username'},
             {data: 'contact_person', name:'contact_person'},
             {data: 'address', name:'address'}, 
-             {data: 'action', name:'action' searchable: false}           
+             {data: 'action', name:'action', searchable: false}           
         ]
     });
 </script>

@@ -76,7 +76,7 @@
             {data: 'name', name:'name'},
             {data: 'address', name:'address'},
             {data: 'uptime', name:'uptime'}, 
-            //  {data: 'action', name:'action' searchable: false}           
+            //  {data: 'action', name:'action', searchable: false}           
         ]
     });
 </script>
