@@ -89,18 +89,18 @@ class UnpaidController extends Controller
             function ($data){
                 return $data->name;
         })     
-        // ->editColumn('month_date',
-        //     function ($data){
-        //         return date('M Y', strtotime($data->expired_date));
-        // })                
+        ->editColumn('month_date',
+            function ($data){
+                return date('M Y', strtotime($data->expired_date));
+        })                
         ->editColumn('package_name',
             function ($data){
                 return $data->package_name;
         })   
-        // ->editColumn('price',
-        //     function ($data){
-        //         return $data->price;
-        // })   
+        ->editColumn('price',
+            function ($data){
+                return $data->price;
+        })   
         ->editColumn('expired_date',
             function ($data){
                 return Carbon::parse($data->expired_date)->format('d M Y');
