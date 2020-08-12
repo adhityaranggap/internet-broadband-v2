@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', 'Web\UnpaidController@store')->name('unpaid-store');
             Route::get('/edit/{id}', 'Web\UnpaidController@edit')->name('unpaid-edit');
             Route::post('/update/{id}', 'Web\UnpaidController@update')->name('unpaid-update');
+            Route::get('/detail/{id}', 'Web\UnpaidController@detail')->name('unpaid-detail');//done
             Route::delete('/destroy/{id}', 'Web\UnpaidController@destroy')->name('unpaid-destroy');              
         });
 
