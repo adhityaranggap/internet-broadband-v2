@@ -17,10 +17,8 @@
                     <tr>
                     <th scope="col">No</th>
                         <th scope="col">Nama</th>
-                        <th scope="col">Bulan Pembayaran</th>
                         <th scope="col">Paket</th>
-                        <th scope="col">Harga</th>
-                        <th scope="col">Tenggang Pembayaran</th>
+                        <th scope="col">Expired Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -76,9 +74,7 @@
         columns:[
             {data: 'DT_RowIndex', name:'name', searchable: false},
             {data: 'name', name:'name'},
-            {data: 'month_date', name:'month_date'},
             {data: 'package_name', name:'package_name'},
-            {data: 'price', name:'price'},
             {data: 'expired_date', name:'expired_date'},
             {data: 'status', name:'status'},
              {data: 'action', name:'action', searchable: false}           
