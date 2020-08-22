@@ -521,12 +521,12 @@ class AllTransactionController extends Controller
     }
     public function destroy($id)
     {
-    if (Auth::check() && auth()->user()->role_id ==  ADMIN){
+    // if (Auth::check() && auth()->user()->role_id ==  ADMIN){
           // menghapus data trx berdasarkan id yang dipilih
     $trx = Transaction::where('id', $id)->first();
 
     if (is_null($trx)){
-        return 'tidak ditemukan';
+        return 'Tidak ditemukan';
     }
     //check status payment
     elseif($trx->status == \EnumTransaksi::STATUS_LUNAS){
@@ -554,7 +554,7 @@ class AllTransactionController extends Controller
     }else{
         $trx->delete();
        
-    }
+    // }
     }
     }
 }

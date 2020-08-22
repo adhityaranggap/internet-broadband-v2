@@ -58,7 +58,7 @@ class UnpaidController extends Controller
             ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
             // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
             ->where('users_has_packages.user_id', auth()->user()->id)
-            ->where('transactions.status', '!=' ,\EnumTransaksi::STATUS_BELUM_LUNAS)
+            ->where('transactions.status', '!=' ,\EnumTransaksi::STATUS_LUNAS)
             ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
             ->orderBy('transactions.expired_date','desc')
             ->select($arrSelect)
@@ -71,7 +71,7 @@ class UnpaidController extends Controller
             ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
             // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
             ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
-            ->where('transactions.status', '!=' , \EnumTransaksi::STATUS_BELUM_LUNAS)
+            ->where('transactions.status', '!=' , \EnumTransaksi::STATUS_LUNAS)
 
             ->orderBy('transactions.expired_date','desc')
             ->select($arrSelect)
@@ -519,12 +519,12 @@ class UnpaidController extends Controller
     }
     public function destroy($id)
     {
-    if (Auth::check() && auth()->user()->role_id ==  ADMIN){
+    // if (Auth::check() && auth()->user()->role_id != Role::ROLE_CUSTOMER){
           // menghapus data trx berdasarkan id yang dipilih
     $trx = Transaction::where('id', $id)->first();
 
     if (is_null($trx)){
-        return 'tidak ditemukan';
+        return 'Tidak ditemukan';
     }
     //check status payment
     elseif($trx->status == \EnumTransaksi::STATUS_LUNAS){
@@ -552,7 +552,7 @@ class UnpaidController extends Controller
     }else{
         $trx->delete();
        
-    }
+    // }
     }
     }
 }
