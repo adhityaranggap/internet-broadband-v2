@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('all-transaction-store') }}">
+<form method="post" action="{{ route('unpaid-store') }}">
 @csrf
 
     <div class="form-group ">
@@ -38,10 +38,10 @@
     <input type="text" class="form-control datepicker" name="expired_date" id="expired_date" value="{{ Carbon\Carbon::now()->addMonths(1) }}">
     </div>
     
-    <div class="form_group"></div>
+    <!-- <div class="form_group"></div>
     <label for="payment_date">Tanggal Pembayaran</label>
     <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ Carbon\Carbon::now()}}">
-    </div>
+    </div> -->
     
     <div class="form-group ">
     <label for="name">Biaya Admin</label>
@@ -49,7 +49,7 @@
     </div>
     <div class="form-group ">
     <label for="paid">Nominal Dibayar</label>
-        <input class="form-control" name="paid" type="number" value="0" disabled="yes" id="paid">
+        <input class="form-control" name="paid" type="number" value="0" readonly id="paid">
     </div>
 
 

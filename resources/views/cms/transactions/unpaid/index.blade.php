@@ -6,9 +6,9 @@
     <div class="card card-primary">
         <div class="card-header">
             <h4>Unpaid Transaction</h4>
-            <!-- <div class="card-header-action">
+            <div class="card-header-action">
                 <a href="{{ route('unpaid-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>                
-            </div> -->
+            </div>
         </div>
         <div class="card-body ">
             <div class="table">
@@ -43,6 +43,9 @@
 <link rel='stylesheet' href='https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css'>
 <link rel='stylesheet' href='https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css'>
 <link rel='stylesheet' href='https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css'>
+!-- Datepicker -->
+<link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
 
 @endpush
 
@@ -60,7 +63,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+<!-- Datepicker -->
+<script src="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+
 <script>
+
  $('#appTable').DataTable({
         rowReorder: {
             selector: 'td:nth-child(2)'

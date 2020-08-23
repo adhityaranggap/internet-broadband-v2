@@ -58,7 +58,7 @@
     
     <div class="form_group"></div>
     <label for="payment_date">Tanggal Pembayaran</label>
-    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ $data->payment_date }}">
+    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ Carbon\Carbon::now() }}">
     </div>
     
     <div class="form-group ">

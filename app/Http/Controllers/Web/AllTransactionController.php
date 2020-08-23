@@ -297,13 +297,30 @@ class AllTransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $transaction = Transaction::where('id', $id)->first();
+        $arrResponse = [
+            'users_has_packages.id as id',
+            'transactions.expired_date',
+            'transactions.fee',
+            'transactions.paid',
+            'transactions.status',
+            'packages.price',
+            'users.email',
+        ];
+        $transaction = DB::table('transactions')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
+        ->join('users','users_has_packages.user_id','users.id')
+        ->join('packages','users_has_packages.package_id','packages.id')
+        ->select($arrResponse)
+        ->where('transactions.id', $id)
+        ->first();
+        
         $maxPaid = $transaction->price - $transaction->paid;
         $UserPay = $request->paid+$transaction->paid;
         // $expiredCheck = Carbon::parse($transaction->expired_date)->addMonths(1);
         // return $expiredCheck;
         $this->validate($request, [
             'paid'         =>  'required|numeric|max:'.$maxPaid,
+            'payment_date'         =>  'required'
             // 'expired_date' =>  'required|string|max:'.$expiredCheck
 
         ]);
@@ -317,24 +334,6 @@ class AllTransactionController extends Controller
 
         $request['updated_at'] = now();
         $request['paid'] = $UserPay;
-
-        $arrResponse = [
-            'users_has_packages.id as id',
-            'transactions.expired_date',
-            'transactions.fee',
-            'transactions.status',
-            'packages.price',
-            'users.email',
-        ];
-
-       
-        $transaction = DB::table('transactions')
-        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
-        ->join('users','users_has_packages.user_id','users.id')
-        ->join('packages','users_has_packages.package_id','packages.id')
-        ->select($arrResponse)
-        ->where('transactions.id', $id)->first();
-
         $sisa = $transaction->price - $request->paid;
 
         if($sisa == 0){
@@ -342,9 +341,6 @@ class AllTransactionController extends Controller
         }else{
             $request['status'] = \EnumTransaksi::STATUS_BELUM_LUNAS;
         }
-        
-        
-
         if($transaction){
 
             if($transaction->status != \EnumTransaksi::STATUS_LUNAS){
@@ -367,7 +363,7 @@ class AllTransactionController extends Controller
                     // ]);
                     // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','payment_date,','expired_date','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','payment_date','expired_date','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
                     // TransactionHasModified::create([
                     //     'user_id'               => Auth::user()->id,
                     //     'transaction_id'        => $id,
@@ -401,7 +397,7 @@ class AllTransactionController extends Controller
                     //     'action'                => \EnumTransaksiHasModified::UPDATE
                     // ]);
                     // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
-                    Transaction::where('id', $id)->update($request->only('updated_at','payment_date,','expired_date','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','payment_date','expired_date','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
                     // $transaction->notify(new InvoicePaid($invoice));
                     // $transaction->notify(new InvoicePaid("Payment Received!"));
 

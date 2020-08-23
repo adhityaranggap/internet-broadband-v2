@@ -20,7 +20,11 @@
     </tr>
     <tr>
       <th scope="col"><b>Tanggal Bayar</b></th>
-      <th>{{ $data->payment_date}}</th>    
+      @if(empty($data->payment_date))
+      <th>Belum Pembayaran</th>    
+      @else
+      <th>{{Carbon\Carbon::parse($data->payment_date)->format('d M Y')}}</th> 
+      @endif      
     </tr>
     <tr>
       <th scope="col"><b>History Pembayaran</b></th>

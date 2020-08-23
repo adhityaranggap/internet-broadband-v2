@@ -59,7 +59,6 @@ class UnpaidController extends Controller
             // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
             ->where('users_has_packages.user_id', auth()->user()->id)
             ->where('transactions.status', '!=' ,\EnumTransaksi::STATUS_LUNAS)
-            ->where('transactions.expired_date', '>=' ,Carbon::now()->addMonths(1))
             ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
             ->orderBy('transactions.expired_date','desc')
             ->select($arrSelect)
@@ -71,7 +70,6 @@ class UnpaidController extends Controller
             ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
             ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
             // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
-            ->where('transactions.expired_date', '>=' ,Carbon::now()->addMonths(1))
             ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
             ->where('transactions.status', '!=' , \EnumTransaksi::STATUS_LUNAS)
 
@@ -257,7 +255,7 @@ class UnpaidController extends Controller
         return view('cms.transactions.unpaid.edit', compact ('data'));    }
 
     /**
-     * Detail the specified resource in storage.
+     * `Detail` the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -267,15 +265,17 @@ class UnpaidController extends Controller
     {
         $arrResponse = [
             'transactions.id as id',
-            'users.name',
-            'users.contact_person',
-            'transactions.paid',
-            'packages.name as package_name',
-            'transactions.price as payment_billing', 
-            'expired_date',
             'transactions.updated_at',
             'transactions.type_payment',
-            'transactions.file'
+            'transactions.expired_date',
+            'transactions.payment_date',
+            'transactions.price as payment_billing', 
+            'transactions.paid',
+            'transactions.file',
+            'users.name',
+            'users.contact_person',
+            'packages.name as package_name'
+           
         ];
 
         $data = DB::table('transactions')
@@ -286,7 +286,8 @@ class UnpaidController extends Controller
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
         
-        
+        // return response()->json($data);
+
         return view('cms.transactions.unpaid.detail', compact ('data'));
     }
 

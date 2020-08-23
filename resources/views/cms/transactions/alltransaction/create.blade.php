@@ -49,7 +49,7 @@
     </div>
     <div class="form-group ">
     <label for="paid">Nominal Dibayar</label>
-        <input class="form-control" name="paid" type="number" value="0" disabled="yes" id="paid">
+        <input class="form-control" name="paid" type="number" value="0" readonly id="paid">
     </div>
 
 
