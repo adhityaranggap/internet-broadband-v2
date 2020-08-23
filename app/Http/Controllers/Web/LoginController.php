@@ -29,8 +29,8 @@ class LoginController extends Controller
             return redirect()->route('customer-index');
 
         }else{
-            return redirect()->back()
-            ->withErrors($errors);
+            return redirect()->back();
+            // ->withErrors($errors);
         }
 
 

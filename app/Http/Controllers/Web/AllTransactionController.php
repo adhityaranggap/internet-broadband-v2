@@ -284,7 +284,6 @@ class AllTransactionController extends Controller
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
         
-        
         return view('cms.transactions.alltransaction.detail', compact ('data'));
     }
 
@@ -300,9 +299,11 @@ class AllTransactionController extends Controller
         $transaction = Transaction::where('id', $id)->first();
         $maxPaid = $transaction->price - $transaction->paid;
         $UserPay = $request->paid+$transaction->paid;
-        
+        $expiredCheck = Carbon::parse($transaction->expired_date)->addMonths(1);
+        // return $expiredCheck;
         $this->validate($request, [
-            'paid' =>  'required|numeric|max:'.$maxPaid,
+            'paid'         =>  'required|numeric|max:'.$maxPaid,
+            'expired_date' =>  'required|string|maximum:'.$expiredCheck
 
         ]);
     //payment_proof
