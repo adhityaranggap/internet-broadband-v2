@@ -6,9 +6,9 @@
     <div class="card card-primary">
         <div class="card-header">
             <h4>Unpaid Transaction</h4>
-            <div class="card-header-action">
+            <!-- <div class="card-header-action">
                 <a href="{{ route('unpaid-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>                
-            </div>
+            </div> -->
         </div>
         <div class="card-body ">
             <div class="table">

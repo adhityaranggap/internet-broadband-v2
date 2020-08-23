@@ -15,6 +15,7 @@ class Transaction extends Model
         'users_has_packages_id',
         'notes',
         'expired_date',
+        'payment_date',
         'status',
         'price',
         'paid',

@@ -235,13 +235,14 @@ class AllTransactionController extends Controller
     {
         $arrResponse = [
             'transactions.id as id',
+            'transactions.paid',
+            'transactions.payment_date',
+            'transactions.price as payment_billing', 
+            'transactions.expired_date',
+            'transactions.updated_at',
             'users.name',
             'users.contact_person',
-            'transactions.paid',
-            'packages.name as package_name',
-            'transactions.price as payment_billing', 
-            'expired_date',
-            'transactions.updated_at'
+            'packages.name as package_name'
         ];
 
         $data = DB::table('transactions')
@@ -272,6 +273,7 @@ class AllTransactionController extends Controller
             'transactions.price as payment_billing', 
             'expired_date',
             'transactions.updated_at',
+            'transactions.payment_date',
             'transactions.type_payment',
             'transactions.file'
         ];
@@ -366,7 +368,7 @@ class AllTransactionController extends Controller
                     // ]);
                     // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
 
-                    Transaction::where('id', $id)->update($request->only('updated_at','expired_date','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','payment_date,','expired_date','transaction_has_modified_id','type_payment','notes', 'file', 'fee', 'status', 'paid'));
                     // TransactionHasModified::create([
                     //     'user_id'               => Auth::user()->id,
                     //     'transaction_id'        => $id,
@@ -400,7 +402,7 @@ class AllTransactionController extends Controller
                     //     'action'                => \EnumTransaksiHasModified::UPDATE
                     // ]);
                     // $request['transaction_has_modified_id'] = DB::getPDO()->lastInsertId();
-                    Transaction::where('id', $id)->update($request->only('updated_at','expired_date','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
+                    Transaction::where('id', $id)->update($request->only('updated_at','payment_date,','expired_date','transaction_has_modified_id','notes','type_payment', 'fee', 'status', 'paid'));
                     // $transaction->notify(new InvoicePaid($invoice));
                     // $transaction->notify(new InvoicePaid("Payment Received!"));
 

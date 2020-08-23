@@ -56,6 +56,11 @@
     <input type="text" class="form-control datepicker" name="expired_date" id="expired_date" value="{{ $data->expired_date }}">
     </div>
     
+    <div class="form_group"></div>
+    <label for="payment_date">Tanggal Pembayaran</label>
+    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ $data->payment_date }}">
+    </div>
+    
     <div class="form-group ">
     <label for="name">Biaya Admin</label>
         <input class="form-control" name="fee" type="number" value="0" id="fee" readonly>

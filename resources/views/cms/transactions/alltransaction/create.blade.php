@@ -38,13 +38,18 @@
     <input type="text" class="form-control datepicker" name="expired_date" id="expired_date" value="{{ Carbon\Carbon::now()->addMonths(1) }}">
     </div>
     
+    <div class="form_group"></div>
+    <label for="payment_date">Tanggal Pembayaran</label>
+    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ Carbon\Carbon::now()}}">
+    </div>
+    
     <div class="form-group ">
     <label for="name">Biaya Admin</label>
         <input class="form-control" name="fee" type="number" value="0" id="fee" readonly>
     </div>
     <div class="form-group ">
     <label for="paid">Nominal Dibayar</label>
-        <input class="form-control" name="paid" type="number" value="" id="paid">
+        <input class="form-control" name="paid" type="number" value="0" disabled="yes" id="paid">
     </div>
 
 

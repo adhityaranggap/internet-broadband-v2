@@ -19,6 +19,10 @@
       <th>{{ $data->expired_date}}</th>    
     </tr>
     <tr>
+      <th scope="col"><b>Tanggal Bayar</b></th>
+      <th>{{ $data->payment_date}}</th>    
+    </tr>
+    <tr>
       <th scope="col"><b>History Pembayaran</b></th>
       <th>{{ $data->updated_at}}</th>    
     </tr>
