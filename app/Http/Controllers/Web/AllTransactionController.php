@@ -236,7 +236,6 @@ class AllTransactionController extends Controller
         $arrResponse = [
             'transactions.id as id',
             'transactions.paid',
-            'transactions.payment_date',
             'transactions.price as payment_billing', 
             'transactions.expired_date',
             'transactions.updated_at',

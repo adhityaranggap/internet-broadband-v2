@@ -59,6 +59,7 @@ class UnpaidController extends Controller
             // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
             ->where('users_has_packages.user_id', auth()->user()->id)
             ->where('transactions.status', '!=' ,\EnumTransaksi::STATUS_LUNAS)
+            ->where('transactions.expired_date', '>=' ,Carbon::now()->addMonths(1))
             ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
             ->orderBy('transactions.expired_date','desc')
             ->select($arrSelect)
@@ -70,6 +71,7 @@ class UnpaidController extends Controller
             ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
             ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
             // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
+            ->where('transactions.expired_date', '>=' ,Carbon::now()->addMonths(1))
             ->whereBetween('transactions.expired_date', array(Carbon::now()->addYears(-1), Carbon::now()->addMonths(1)))
             ->where('transactions.status', '!=' , \EnumTransaksi::STATUS_LUNAS)
 
