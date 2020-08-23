@@ -19,10 +19,6 @@
       <th>{{ $data->expired_date}}</th>    
     </tr>
     <tr>
-      <th scope="col"><b>History Pembayaran</b></th>
-      <th>{{ $data->updated_at}}</th>    
-    </tr>
-    <tr>
       <th scope="col"><b>Biaya Tagihan</b></th>
       <th>{{ $data->payment_billing}}</th>    
     </tr>
