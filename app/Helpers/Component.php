@@ -23,6 +23,10 @@ class Component
     {
         return '<a href="'.$src.'" class="btn btn-outline-danger btn-delete" title="'.$title.'"><i class="fas fa-trash"></i> Hapus</a> ';
     }
+    public static function btnWhatsapp($src, $title)
+    {
+        return '<a href="'.$src.'" target="_blank" class="btn btn-outline-primary" title="'.$title.'"><i class="fab fa-whatsapp-square"></i> Send</a> ';
+    }
 
     public static function btnToPdf($src, $title)
     {

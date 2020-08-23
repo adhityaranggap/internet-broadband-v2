@@ -299,11 +299,11 @@ class AllTransactionController extends Controller
         $transaction = Transaction::where('id', $id)->first();
         $maxPaid = $transaction->price - $transaction->paid;
         $UserPay = $request->paid+$transaction->paid;
-        $expiredCheck = Carbon::parse($transaction->expired_date)->addMonths(1);
+        // $expiredCheck = Carbon::parse($transaction->expired_date)->addMonths(1);
         // return $expiredCheck;
         $this->validate($request, [
             'paid'         =>  'required|numeric|max:'.$maxPaid,
-            'expired_date' =>  'required|string|maximum:'.$expiredCheck
+            // 'expired_date' =>  'required|string|max:'.$expiredCheck
 
         ]);
     //payment_proof
