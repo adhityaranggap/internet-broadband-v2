@@ -54,7 +54,7 @@
     
     <div class="form_group"></div>
     <label for="payment_date">Tanggal Pembayaran</label>
-    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ Carbon\Carbon::now() }}">
+    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="">
     </div>
     
     <div class="form-group ">
@@ -69,24 +69,24 @@
 
     <script>
 
-$('.datepicker').daterangepicker({
-        locale: {format: 'YYYY-MM-DD hh:mm'},
-        singleDatePicker: true,
-        timePicker: true,
-        timePicker24Hour: true,
-      });
-    // $('.datepicker').daterangepicker({
-    //       locale: {format: 'YYYY-MM-DD hh:mm:ss'},
-    //       singleDatePicker: true,
-    //     });
+      $('.datepicker').daterangepicker({
+              locale: {format: 'YYYY-MM-DD hh:mm'},
+              singleDatePicker: true,
+              timePicker: true,
+              timePicker24Hour: true,
+            });
+          // $('.datepicker').daterangepicker({
+          //       locale: {format: 'YYYY-MM-DD hh:mm:ss'},
+          //       singleDatePicker: true,
+          //     });
 
-    // Timepicker
-      $(".timepicker").timepicker({
-        icons: {
-          up: 'fas fa-chevron-up',
-          down: 'fas fa-chevron-down'
-        }
-      });
+          // Timepicker
+            $(".timepicker").timepicker({
+              icons: {
+                up: 'fas fa-chevron-up',
+                down: 'fas fa-chevron-down'
+              }
+            });
 
     </script>
 </form>

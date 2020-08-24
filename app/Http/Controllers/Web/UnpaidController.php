@@ -141,7 +141,7 @@ class UnpaidController extends Controller
         $maxPaid = $data->price;
         
         $sisa    = $data->price - $request->paid;
-
+        
         $this->validate($request,[
             'users_has_packages_id'       => 'required|max:50',
             'expired_date'                => 'required|max:100',

@@ -8,7 +8,7 @@
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/jqueryui/css/jquery-ui.min.css')}}">
   <link rel="shortcut icon" href="../assets/img/logo2.ico" type="image/x-icon" />
-  
+
   <!-- Script -->
   <script src="{{asset('/assets/vendors/jquery/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
   <script src="{{asset('/assets/vendors/jqueryui/js/jquery-ui.min.js')}}" type="text/javascript"></script>
