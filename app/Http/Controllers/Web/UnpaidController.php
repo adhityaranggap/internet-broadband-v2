@@ -108,6 +108,7 @@ class UnpaidController extends Controller
             function ($data){                                
             
                     return
+                    \Component::btnWhatsapp(route('unpaid-wa', $data->id), 'Send WA '. $data->name).
                     \Component::btnRead(route('unpaid-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('unpaid-edit', $data->id), 'Ubah Transaction '. $data->name).
                     \Component::btnDelete(route('unpaid-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon::parse($data->expired_date)->format('M Y'));
@@ -126,6 +127,37 @@ class UnpaidController extends Controller
     {
         $packages = Package::all();
         return view('cms.transactions.unpaid.create', compact('packages'));
+    }
+
+    public function NotificationWA($id)
+    {
+        $arrResponse = [
+            'transactions.id as id',
+            'transactions.paid',
+            'transactions.price',
+            'transactions.price as payment_billing', 
+            'transactions.expired_date',
+            'transactions.updated_at',
+            'users.name',
+            'users.contact_person',
+            'users.address',
+            'packages.name as package_name'
+        ];
+
+        $data = DB::table('transactions')
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
+        ->join('packages','users_has_packages.package_id','packages.id')
+        ->join('users','users_has_packages.user_id','users.id')
+        ->select($arrResponse)
+        ->where('transactions.id', $id)->first();
+
+        $contactPerson  = $data->contact_person;
+        $address        = $data->address;
+        $package_name   = $data->package_name;
+        $price          = $data->price;
+        $user           = $data->name;
+
+        return Redirect::away('https://api.whatsapp.com/send?phone='.$contactPerson.'&text=Kepada%20Yth%20Bapak/Ibu:%20'.$user.',%0D%0AAlamat:%20'.$address.',%0D%0APaket:%20'.$package_name.',%0D%0ATotal%20Tagihan:%20Rp.%20'.$price.',%0D%0APembayaran%20mulai%20tanggal%201-5%20tiap%20bulannya,%20pembayaran%20bisa%20dilakukan%20via%20transfer%20bank%20ke%20BCA%206755070622%20a.n%20Adhitya%20Rangga%20Putra%20KCP%20Jatiasih%20(Rumah%20Internet%20Payment).%0D%0ATerimakasih%20atas%20pengertiannya.');
     }
 
     /**
