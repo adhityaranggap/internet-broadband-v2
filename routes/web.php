@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');//done
             Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');//done
             Route::get('/detail/{id}', 'Web\AllTransactionController@detail')->name('all-transaction-detail');//done
+            Route::get('/wa/{id}', 'Web\AllTransactionController@NotificationWA')->name('all-transaction-wa');//done
             Route::post('/update/{id}', 'Web\AllTransactionController@update')->name('all-transaction-update');//done
             Route::get('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
             Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');

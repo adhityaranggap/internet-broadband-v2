@@ -25,7 +25,7 @@ class Component
     }
     public static function btnWhatsapp($src, $title)
     {
-        return '<a href="'.$src.'" target="_blank" class="btn btn-outline-primary" title="'.$title.'"><i class="fab fa-whatsapp-square"></i> Send</a> ';
+        return '<a href="'.$src.'" target="_blank" class="btn btn-outline-success" title="'.$title.'"><i class="fab fa-whatsapp"></i> Send WA</a> ';
     }
 
     public static function btnToPdf($src, $title)
@@ -37,7 +37,6 @@ class Component
     {
         return '<a href="'.$src.'" class="btn btn-outline-primary btn-show" title="'.$title.'"><i class="far fa-eye"></i> Detail Paket</a> ';
     }
-
 
     
     public static function badgetLinkSuccess($title)

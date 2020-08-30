@@ -1,26 +1,23 @@
-@extends('_layout.app')
-@section('title', 'All Transaction')
-@section('page_header', 'Transaction')
-@section('content')
+@extends('_layout.app') @section('title', 'All Transaction') @section('page_header', 'Transaction') @section('content')
 
-    <div class="card card-primary">
-        <div class="card-header">
-            <h4>All Transaction</h4>
-            
-            <div class="card-header-action">
-                <button id="lunas" class="btn btn-info">Set Lunas</button>
-                <a href="{{ route('all-transaction-sync') }}" class="btn btn-outline-primary title="Sync Data App\Component::btnDelete><i class="fas fa-sync"> Sync Data </i></a>                                
-            </div>
-            <div class="card-header-action">
-                <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>                
-            </div>
+<div class="card card-primary">
+    <div class="card-header">
+        <h4>All Transaction</h4>
+
+        <div class="card-header-action">
+            <button id="lunas" class="btn btn-info">Set Lunas</button>
+            <a href="{{ route('all-transaction-sync') }}" class="btn btn-outline-primary title=" Sync Data App\Component::btnDelete><i class="fas fa-sync"> Sync Data </i></a>
         </div>
-        <div class="card-body ">
-            <div class="table">
-                <table id="appTable" class="table nowrap table-bordered table-hover dataTable table-striped" style="width:100%">
-                    <thead>
+        <div class="card-header-action">
+            <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>
+        </div>
+    </div>
+    <div class="card-body ">
+        <div class="table">
+            <table id="appTable" class="table nowrap table-bordered table-hover dataTable table-striped" style="width:100%">
+                <thead>
                     <tr>
-                    <th scope="col">No</th>
+                        <th scope="col">No</th>
                         <th scope="col">id</th>
                         <th scope="col">Nama</th>
                         <!-- <th scope="col">Bulan Pembayaran</th> -->
@@ -30,17 +27,14 @@
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
-                    </thead>
-                </table>    
-            </div>
+                </thead>
+            </table>
         </div>
     </div>
+</div>
 
 
-@endsection
-
-
-@push('css')
+@endsection @push('css')
 <!-- add Css Here -->
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
@@ -56,11 +50,7 @@
 
 <!-- Datepicker -->
 <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
-
-@endpush
-
-@push('js')
+<link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" /> @endpush @push('js')
 <!-- add Js Script Here -->
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -114,100 +104,121 @@
 </script> -->
 
 <script>
-$(document).ready(function (){
-   var table = $('#appTable').DataTable({
-    processing:true,
-    serverSide:true,
-    ajax: "{{ url()->current().'/datatables' }}",
-        columns:[
-            {data: 'DT_RowIndex', name:'name', searchable: false},
-            {data: 'id', visible: false, className: 'id'},
-            {data: 'name', name:'name'},
-            // {data: 'month_date', name:'month_date'},
-            {data: 'package_name', name:'package_name'},
-            // {data: 'price', name:'price'},
-            {data: 'expired_date', name:'expired_date'},
-            {data: 'status', name:'status'},
-             {data: 'action', name:'action', searchable: false}           
-        ],
-      'select': {
-         'style': 'multi'
-      },
-      'order': [[1, 'asc']]
-   });
+    $(document).ready(function() {
+        var table = $('#appTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url()->current().'/datatables' }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'name',
+                    searchable: false
+                }, {
+                    data: 'id',
+                    visible: false,
+                    className: 'id'
+                }, {
+                    data: 'name',
+                    name: 'name'
+                },
+                // {data: 'month_date', name:'month_date'},
+                {
+                    data: 'package_name',
+                    name: 'package_name'
+                },
+                // {data: 'price', name:'price'},
+                {
+                    data: 'expired_date',
+                    name: 'expired_date'
+                }, {
+                    data: 'status',
+                    name: 'status'
+                }, {
+                    data: 'action',
+                    name: 'action',
+                    searchable: false
+                }
+            ],
+            'select': {
+                'style': 'multi'
+            },
+            'order': [
+                [1, 'asc']
+            ]
+        });
 
-   $('#appTable tbody').on( 'click', 'tr', function () {
-        // $(this).toggleClass('selected');
-        var tblData = table.rows('.selected').data();
-        // var tmpData;
-        // $.each(tblData, function(i, val) {
-        //     tmpData = tblData[i];
+        $('#appTable tbody').on('click', 'tr', function() {
+            // $(this).toggleClass('selected');
+            var tblData = table.rows('.selected').data();
+            // var tmpData;
+            // $.each(tblData, function(i, val) {
+            //     tmpData = tblData[i];
             // alert(tmpData);
-        // })
-    } );
- 
-    $('#lunas').click( function () {
-        // var selectedIds = table.rows('.selected').data()
-        // selectedIds.push(table[0]);
-        // console.log(selectedIds);
-        $.each(table.rows('.selected').nodes(), function(i, item) {
-    var id = item.id;
-    var data = table.row(this).data();
+            // })
+        });
 
-    alert("Produt Id : " +
-      id + " && product Status:  " + data[2]);
-  })
-        // alert( table.rows('.selected').data());
-    } );
-   // Handle form submission event
+        $('#lunas').click(function() {
+            // var selectedIds = table.rows('.selected').data()
+            // selectedIds.push(table[0]);
+            // console.log(selectedIds);
+            $.each(table.rows('.selected').nodes(), function(i, item) {
+                    var id = item.id;
+                    var data = table.row(this).data();
 
-//    $('#lunas').on('click', function(e){
+                    alert("Produt Id : " +
+                        id + " && product Status:  " + data[2]);
+                })
+                // alert( table.rows('.selected').data());
+        });
+        // Handle form submission event
 
-//     var selectedIds = tbl.columns().checkboxes.selected()[0];
-//    console.log(selectedIds)
+        //    $('#lunas').on('click', function(e){
 
-//    selectedIds.forEach(function(selectedId) {
-//        alert(selectedId);
-//    });
-    // var table = table.row(this).data();                          
-    // console.log(table.rows(this).data());
+        //     var selectedIds = tbl.columns().checkboxes.selected()[0];
+        //    console.log(selectedIds)
 
-    // var table = table.column(0).checkboxes.selected();
-    //     console.log(table.rows(this).data());
+        //    selectedIds.forEach(function(selectedId) {
+        //        alert(selectedId);
+        //    });
+        // var table = table.row(this).data();                          
+        // console.log(table.rows(this).data());
+
+        // var table = table.column(0).checkboxes.selected();
+        //     console.log(table.rows(this).data());
 
 
-    // // Iterate over all selected checkboxes
-    // $.each(table, function(index, rowId){
-    // // Create a hidden element
-    // console.log(index);
-    // console.log(rowId);
-    // $(form).append(
-    //     $('<input>')
-    //         .attr('type', 'hidden')
-    //         .attr('name', 'id[]')
-    //         .val(rowId)
-    // );
+        // // Iterate over all selected checkboxes
+        // $.each(table, function(index, rowId){
+        // // Create a hidden element
+        // console.log(index);
+        // console.log(rowId);
+        // $(form).append(
+        //     $('<input>')
+        //         .attr('type', 'hidden')
+        //         .attr('name', 'id[]')
+        //         .val(rowId)
+        // );
+        // });
+
+        // alert('beres');
+
+        //   var form = this;
+
+        //   var rows_selected = table.column(0).checkboxes.selected();
+
+        //   // Iterate over all selected checkboxes
+        //   $.each(rows_selected, function(index, rowId){
+        //      // Create a hidden element
+        //      console.log(index);
+        //      console.log(rowId);
+        //      $(form).append(
+        //          $('<input>')
+        //             .attr('type', 'hidden')
+        //             .attr('name', 'id[]')
+        //             .val(rowId)
+        //      );
+        //   });
+    });
     // });
-
-    // alert('beres');
-
-    //   var form = this;
-
-    //   var rows_selected = table.column(0).checkboxes.selected();
-
-    //   // Iterate over all selected checkboxes
-    //   $.each(rows_selected, function(index, rowId){
-    //      // Create a hidden element
-    //      console.log(index);
-    //      console.log(rowId);
-    //      $(form).append(
-    //          $('<input>')
-    //             .attr('type', 'hidden')
-    //             .attr('name', 'id[]')
-    //             .val(rowId)
-    //      );
-    //   });
-});
-// });
 </script>
 @endpush

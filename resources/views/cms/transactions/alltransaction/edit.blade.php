@@ -29,9 +29,7 @@
     <tr>
       <th scope="col"><b>Admin</b></th>
       <th>{{ auth()->user()->name }}</th>    
-      <!-- TODO auth 
-        auth()->user()->name
-      -->
+     
     </tr>
   </thead> 
 </table>

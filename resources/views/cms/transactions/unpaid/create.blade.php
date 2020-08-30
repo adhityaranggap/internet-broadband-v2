@@ -20,28 +20,11 @@
             @endforelse
         </select>    
     </div>
-    
-    <!-- <div class="form-group ">
-    <label for="type_payment">Tipe Pembayaran</label>
-    <select class="form-control" id="type_payment" name="type_payment">
-            <option value="Transfer">Transfer</option>
-            <option value="Cash">Cash</option>
-        </select>
-    </div>   
-    <div class="form-group ">
-    <label for="payment_proof">Upload Bukti Bayar</label>
-        <input class="form-control-file" name="payment_proof" type="file" id="payment_proof">
-    </div> -->
-
+   
     <div class="form_group"></div>
     <label for="expired_date">Expired Date</label>
     <input type="text" class="form-control datepicker" name="expired_date" id="expired_date" value="{{ Carbon\Carbon::now()->addMonths(1) }}">
     </div>
-    
-    <!-- <div class="form_group"></div>
-    <label for="payment_date">Tanggal Pembayaran</label>
-    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="{{ Carbon\Carbon::now()}}">
-    </div> -->
     
     <div class="form-group ">
     <label for="name">Biaya Admin</label>
