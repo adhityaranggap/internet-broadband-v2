@@ -5,7 +5,7 @@
         <h4>All Transaction</h4>
 
         <div class="card-header-action">
-            <button id="lunas" class="btn btn-info">Set Lunas</button>
+            {{-- <button id="lunas" class="btn btn-info">Set Lunas</button> --}}
             <a href="{{ route('all-transaction-sync') }}" class="btn btn-outline-primary title=" Sync Data App\Component::btnDelete><i class="fas fa-sync"> Sync Data </i></a>
         </div>
         <div class="card-header-action">
@@ -20,9 +20,7 @@
                         <th scope="col">No</th>
                         <th scope="col">id</th>
                         <th scope="col">Nama</th>
-                        <!-- <th scope="col">Bulan Pembayaran</th> -->
                         <th scope="col">Paket</th>
-                        <!-- <th scope="col">Harga</th> -->
                         <th scope="col">Expired Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>

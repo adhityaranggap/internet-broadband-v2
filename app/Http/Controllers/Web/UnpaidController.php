@@ -408,25 +408,25 @@ class UnpaidController extends Controller
                     //     'action'                => \EnumTransaksiHasModified::UPDATE
                     // ]);
                     // $transaction->notify(new InvoicePaid($invoice));
-                    if($request->status === \EnumTransaksi::STATUS_LUNAS){
+                    // if($request->status === \EnumTransaksi::STATUS_LUNAS){
            
-                        Transaction::create([
-                            'users_has_packages_id'         => $transaction->id,
-                            'transaction_has_modified_id'   => 1,
-                            'notes'                         => '-',
-                            'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
-                            'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                            'price'                         => $transaction->price,
-                            'fee'                           => $transaction->fee,
-                            'paid'                          => $transaction->fee,
-                            'created_at'                    => now(),                   
-                        ]);
-                        // TransactionHasModified::create([
-                        //     'user_id'               => Auth::user()->id,
-                        //     'transaction_id'        => DB::getPdo()->lastInsertId(),
-                        //     'action'                => \EnumTransaksiHasModified::CREATE
-                        // ]);
-                    }
+                    //     Transaction::create([
+                    //         'users_has_packages_id'         => $transaction->id,
+                    //         'transaction_has_modified_id'   => 1,
+                    //         'notes'                         => '-',
+                    //         'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                    //         'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                    //         'price'                         => $transaction->price,
+                    //         'fee'                           => $transaction->fee,
+                    //         'paid'                          => $transaction->fee,
+                    //         'created_at'                    => now(),                   
+                    //     ]);
+                    //     // TransactionHasModified::create([
+                    //     //     'user_id'               => Auth::user()->id,
+                    //     //     'transaction_id'        => DB::getPdo()->lastInsertId(),
+                    //     //     'action'                => \EnumTransaksiHasModified::CREATE
+                    //     // ]);
+                    // }
                 }else{
                    
                     // TransactionHasModified::create([
@@ -439,27 +439,41 @@ class UnpaidController extends Controller
                     // $transaction->notify(new InvoicePaid($invoice));
                     // $transaction->notify(new InvoicePaid("Payment Received!"));
 
-                    if($request->status === \EnumTransaksi::STATUS_LUNAS){
+                    // if($request->status === \EnumTransaksi::STATUS_LUNAS){
            
-                        Transaction::create([
-                            'users_has_packages_id'         => $transaction->id,
-                            'transaction_has_modified_id'   => 1,
-                            'notes'                         => '-',
-                            'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
-                            'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
-                            'price'                         => $transaction->price,
-                            'fee'                           => $transaction->fee,
-                            'paid'                          => $transaction->fee,
-                            'created_at'                    => now(),                   
-                        ]);
-                        // TransactionHasModified::create([
-                        //     'user_id'               => Auth::user()->id,
-                        //     'transaction_id'        => DB::getPdo()->lastInsertId(),
-                        //     'action'                => \EnumTransaksiHasModified::CREATE
-                        // ]);
-                    }
+                    //     Transaction::create([
+                    //         'users_has_packages_id'         => $transaction->id,
+                    //         'transaction_has_modified_id'   => 1,
+                    //         'notes'                         => '-',
+                    //         'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                    //         'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                    //         'price'                         => $transaction->price,
+                    //         'fee'                           => $transaction->fee,
+                    //         'paid'                          => $transaction->fee,
+                    //         'created_at'                    => now(),                   
+                    //     ]);
+                    //     // TransactionHasModified::create([
+                    //     //     'user_id'               => Auth::user()->id,
+                    //     //     'transaction_id'        => DB::getPdo()->lastInsertId(),
+                    //     //     'action'                => \EnumTransaksiHasModified::CREATE
+                    //     // ]);
+                    // }
                     
-                }    
+                }
+                if($request->status === \EnumTransaksi::STATUS_LUNAS){
+           
+                    Transaction::create([
+                        'users_has_packages_id'         => $transaction->id,
+                        'transaction_has_modified_id'   => 1,
+                        'notes'                         => '-',
+                        'expired_date'                  => Carbon::parse($transaction->expired_date)->addMonths(1),
+                        'status'                        => \EnumTransaksi::STATUS_BELUM_BAYAR,
+                        'price'                         => $transaction->price,
+                        'fee'                           => $transaction->fee,
+                        'paid'                          => $transaction->fee,
+                        'created_at'                    => now(),                   
+                    ]);
+                };        
                 
             }
           
