@@ -10,9 +10,15 @@ class Package extends Model
     protected $primaryKey = "id";
 
     protected $fillable = [
-        'id',         
+        'id',   
         'name',
-        'speed',
+        'upload',
+        'download',
+        'upload_unit',
+        'download_unit',
+        'ip_gateway',
+        'ip_pool_start',
+        'ip_pool_end',
         'price',
         'created_at',
         'updated_at'

@@ -35,10 +35,10 @@
 </table>
 <div class="form-group ">
     <label for="type_payment">Tipe Pembayaran</label>
-    <select class="form-control" id="type_payment" name="type_payment">
-            <option value="Transfer">Transfer</option>
-            <option value="Cash">Cash</option>
-        </select>
+      <select class="form-control" id="type_payment" name="type_payment">
+              <option value="Transfer">Transfer</option>
+              <option value="Cash">Cash</option>
+      </select>
     </div>   
     <div class="form-group ">
     <label for="payment_proof">Upload Bukti Bayar</label>

@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use DataTables;
-use App\Package, App\Role;
+use App\Package, App\Role, App\Router;
+use \RouterOS\Client;
+use \RouterOS\Query;
+use Illuminate\Support\Facades\DB;
+
 
 class ListPackageController extends Controller
 {
@@ -21,17 +26,13 @@ class ListPackageController extends Controller
     public function datatables()
     {       
     
-        $data = package::all();
-
+        $data = Package::all();
+    
         return Datatables::of($data)  
         ->editColumn('name',
             function ($data){
                 return $data->name;
-        })     
-        ->editColumn('speed',
-            function ($data){
-                return $data->speed;
-        })         
+        })       
         ->editColumn('price',
             function ($data){
                 return $data->price;
@@ -70,12 +71,57 @@ class ListPackageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-   	'name' => 'required|string|max:255',
-            'speed' => 'required|string|max:15',
-            'price' => 'required|numeric|digits_between:1,10'
+   	        'name'          => 'required|string|max:255',
+            'upload'        => 'required|numeric',
+            'download'      => 'required|numeric',
+            'ip_gateway'    => 'required|string',
+            'ip_pool_start' => 'required|string',
+            'ip_pool_end'   => 'required|string',
+            'price'         => 'required|numeric|digits_between:1,10'
         ]);
-
+        
+        //create to database
         Package::create($request->except('_token'));
+        //create package to router
+        $id = DB::getPDO()->lastInsertId();
+        $package = Package::where('id', $id)->first();
+        $ip_pool = $package->ip_pool_start .'-'. $package->ip_pool_end;
+        $speed = $package->download . $package->download_unit .'/'. $package->upload . $package->upload_unit;
+        
+        $routers = Router::all();
+        
+        foreach($routers as $key => $router){
+            $encryptedValue = $router->password;
+            $decrypted = Crypt::decryptString($encryptedValue);
+           
+            $client = new Client([
+                'host' => $router->host,
+                'port' => $router->port,
+                'user' => $router->user,
+                'pass' => $decrypted
+            ]);
+            $query = (new Query('/ip/pool/add'))
+            ->equal('name', $package->name)
+            ->equal('ranges', $ip_pool);
+
+            // $query = (new Query('/ppp/profile/add'))
+            // ->equal('name', $package->name);
+           $client->query($query)->read();
+            
+            $query = (new Query('/ppp/profile/add'))
+            ->equal('name', $package->name)
+            ->equal('local-address', $package->ip_gateway)
+            ->equal('dns-address', $package->ip_gateway)
+            ->equal('remote-address', $package->name)
+            ->equal('rate-limit', $speed);
+
+            // $query = (new Query('/ppp/profile/add'))
+            // ->equal('name', $package->name);
+            $response = $client->query($query)->read();
+            
+
+
+        }
     }
 
     /**
@@ -112,9 +158,13 @@ class ListPackageController extends Controller
     {
         $data = Package::where('id', $id)->first();
         $this->validate($request,[
-            'name'      =>  'required|max:255|string',
-            'speed'  =>  'required|max:255|string,',
-            'price'  =>  'required|max:10|integer,',
+            'name'          => 'required|string|max:255',
+            'upload'        => 'required|string|max:15',
+            'download'      => 'required|string|max:15',
+            'ip_gateway'    => 'required|string|max:15',
+            'ip_pool_start' => 'required|string|max:15',
+            'ip_pool_end'   => 'required|string|max:15',
+            'price' => 'required|numeric|digits_between:1,10'
 
         ]);
 

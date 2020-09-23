@@ -15,25 +15,48 @@ class PackageSeeder extends Seeder
         $arrUser =[
           [
             'name'  =>  '150K 4M',
-            'speed'  =>  '4Mbps',
+            'upload'  =>  '2',
+            'download'  =>  '2',
+            'upload_unit'  =>  'M',
+            'download_unit'  =>  'M',
+            'ip_gateway'  =>  '10.150.150.1',
+            'ip_pool_start'  =>  '10.150.150.2',
+            'ip_pool_end'  =>  '10.150.150.254',
             'price'  =>  '150000'
           ],
           [
             'name'  =>  '200K 6M',
-            'speed'  =>  '6Mbps',
+            'upload'  =>  '3',
+            'download'  =>  '6',
+            'upload_unit'  =>  'M',
+            'download_unit'  =>  'M',
+            'ip_gateway'  =>  '10.200.200.1',
+            'ip_pool_start'  =>  '10.200.200.2',
+            'ip_pool_end'  =>  '10.200.200.254',
             'price'  =>  '200000'
           ],
           [
             'name'  =>  '250K 8M',
-            'speed'  =>  '8Mbps',
+            'upload'  =>  '4',
+            'download'  =>  '8',
+            'upload_unit'  =>  'M',
+            'download_unit'  =>  'M',
+            'ip_gateway'  =>  '10.250.250.1',
+            'ip_pool_start'  =>  '10.200.200.2',
+            'ip_pool_end'  =>  '10.200.200.254',            
             'price'  =>  '250000'
           ],
           [
             'name'  =>  '300K 10M',
-            'speed'  =>  '10Mbps',
+            'upload'  =>  '5',
+            'download'  =>  '10',
+            'upload_unit'  =>  'M',
+            'download_unit'  =>  'M',
+            'ip_gateway'  =>  '10.300.300.1',
+            'ip_pool_start'  =>  '10.200.200.2',
+            'ip_pool_end'  =>  '10.200.200.254',            
             'price'  =>  '300000'
           ]
-
         ];
 
         foreach($arrUser as $data){

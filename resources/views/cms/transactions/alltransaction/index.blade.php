@@ -6,7 +6,7 @@
 
         <div class="card-header-action">
             {{-- <button id="lunas" class="btn btn-info">Set Lunas</button> --}}
-            <a href="{{ route('all-transaction-sync') }}" class="btn btn-outline-primary title=" Sync Data App\Component::btnDelete><i class="fas fa-sync"> Sync Data </i></a>
+            <a class="btn btn-outline-primary btn-confirm" href="{{route('all-transaction-sync') }} " title="Sync Data"><i class="fas fa-sync"> Sync Data </i></a>
         </div>
         <div class="card-header-action">
             <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>

@@ -241,6 +241,29 @@ $(document).ready(function() {
             }
         });
     });
+    $('#app').on('click', '.btn-confirm', function(event) {
+        event.preventDefault();
+
+        var me = $(this),
+            url = me.attr('href'),
+            title = me.attr('title');
+
+        swal({
+            title: 'Anda yakin ' + title + ' ?',
+            text: 'Kamu akan melakukan ' + title + ' setelah ini',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3DBB51',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+
+            if (result.value) {
+                window.location = url; //redo
+            };
+        });
+    });
 
     $('#modal-btn-save').click(function(event) {
         event.preventDefault();

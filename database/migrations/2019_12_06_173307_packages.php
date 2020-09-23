@@ -16,7 +16,13 @@ class Packages extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('speed');
+            $table->integer('upload');
+            $table->integer('download');
+            $table->string('upload_unit');
+            $table->string('download_unit');
+            $table->string('ip_gateway');
+            $table->string('ip_pool_start');
+            $table->string('ip_pool_end');
             $table->integer('price');
             $table->timestamps();
         });

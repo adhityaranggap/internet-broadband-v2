@@ -17,7 +17,6 @@
                     <tr>
                     <th scope="col">No</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Speed</th>
                         <th scope="col">Price</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -51,7 +50,6 @@
         columns:[
             {data: 'DT_RowIndex', name:'name', searchable: false},
             {data: 'name', name:'name'},
-            {data: 'speed', name:'speed'},
             {data: 'price', name:'price'},
              {data: 'action', name:'action', searchable: false}           
         ]
