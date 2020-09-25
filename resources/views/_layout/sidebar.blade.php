@@ -19,7 +19,7 @@
                 <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{route ('unpaid-index') }}">Unpaid</a></li>
                   <li><a class="nav-link" href="{{route ('all-transaction-index')}}">All Transaction</a></li>
-                  <li><a class="nav-link" href="#">Payments</a></li>
+                  <!-- <li><a class="nav-link" href="#">Payments</a></li> -->
                 </ul>
               </li>
 
@@ -38,7 +38,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="{{ route('customer-package-index') }}">Customer package</a></li>
                   <li><a href="{{ route('list-package-index') }}">List package</a></li>
-                  <li><a href="#">Package Track</a></li>
+                  <!-- <li><a href="#">Package Track</a></li> -->
  
                 </ul>
               </li>
@@ -48,8 +48,8 @@
                 <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('all-ticket-index') }}">All Ticket</a></li>
                
-                  <li><a class="nav-link" href="#">Create Ticket</a></li>
-                  <li><a class="nav-link" href=" ml">Unsolved Ticket</a></li>
+                  <!-- <li><a class="nav-link" href="#">Create Ticket</a></li> -->
+                  <!-- <li><a class="nav-link" href=" ml">Unsolved Ticket</a></li> -->
                 </ul>
                 
               </li>

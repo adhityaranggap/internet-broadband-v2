@@ -28,7 +28,8 @@ class CustomerPackageController extends Controller
             'users.username as username',
             'users_has_packages.id as id',
             'packages.name as package_name',
-            'packages.speed as speed',
+            'packages.download as speed',
+            'packages.download_unit as unit',
             'packages.price as price'
         ];
         // $data = transaction::all();
@@ -49,7 +50,7 @@ class CustomerPackageController extends Controller
         })         
         ->editColumn('speed',
             function ($data){
-                return $data->speed;
+                return $data->speed . ' ' .$data->unit . 'bps';
         })         
         ->editColumn('price',
             function ($data){
@@ -172,7 +173,7 @@ class CustomerPackageController extends Controller
             'users.username as username',
             'users_has_packages.id as id',
             'packages.name as package_name',
-            'packages.speed as speed',
+            'packages.download as speed',
             'packages.id as package_id',
             'packages.price as price'
         ];

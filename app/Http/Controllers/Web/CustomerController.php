@@ -263,7 +263,13 @@ class CustomerController extends Controller
         
         $data['package'] = DB::table('users_has_packages')
             ->join('packages','users_has_packages.package_id','packages.id')
-            ->select('packages.name as package_name','packages.speed', 'packages.price')
+            ->select(
+                'packages.name as package_name',
+                'packages.upload', 
+                'packages.download', 
+                'packages.download_unit', 
+                'packages.upload_unit', 
+                'packages.price')
             ->where('users_has_packages.user_id', $data['user']->id)
             ->get();
 

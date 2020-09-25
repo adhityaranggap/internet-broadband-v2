@@ -15,7 +15,8 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama Package</th>
                 <th scope="col">Harga Package</th>
-                <th scope="col">Speed</th>
+                <th scope="col">Kecepatan Upload</th>
+                <th scope="col">Kecepatan Download</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +25,8 @@
                 <th scope="row">{{ $key+1 }}</th>
                 <td>{{ $package->package_name }}</td>
                 <td>{{ $package->price }}</td>
-                <td>{{ $package->speed }}</td>
+                <td>{{ $package->upload  . ' ' .$package->upload_unit . 'bps'}}</td>
+                <td>{{ $package->download  . ' ' .$package->download_unit . 'bps' }}</td>
                 </tr>
             @empty
                 <tr>Data Paket Kosong</tr>

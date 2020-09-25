@@ -69,7 +69,7 @@
 <!-- End Count -->
 
 <!-- Start Transaction -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-8 col-md-12 col-12 col-sm-12">
         <div class="card">
             <div class="card-header">
@@ -146,7 +146,7 @@
         </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- End Transaction -->
 <div class="row">
 <div class="col-lg-8 col-md-8 col-12">
@@ -198,7 +198,7 @@
             </div>
         </div>
     </div>
-
+<!-- 
     <script>
         var url = "{{ url()->current().'/chart' }}";
         var Week = new Array();
@@ -234,6 +234,8 @@
               });
           });
         });
-        </script>
+        </script> -->
 
     @endsection
+
+    
