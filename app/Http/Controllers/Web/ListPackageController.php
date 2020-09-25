@@ -36,8 +36,17 @@ class ListPackageController extends Controller
         ->editColumn('price',
             function ($data){
                 return $data->price;
-        })               
-              
+        }) 
+        ->editColumn('Download',
+        function ($data){
+            return $data->download . ' ' .$data->download_unit . 'bps';
+
+        })
+        ->editColumn('Upload',
+        function ($data){
+            return $data->upload . ' ' .$data->upload_unit . 'bps';
+
+        }) 
         ->editColumn('action',
             function ($data){                                
             

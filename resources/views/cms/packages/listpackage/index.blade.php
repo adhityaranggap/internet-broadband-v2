@@ -18,6 +18,8 @@
                     <th scope="col">No</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Download</th>
+                        <th scope="col">Upload</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -51,6 +53,8 @@
             {data: 'DT_RowIndex', name:'name', searchable: false},
             {data: 'name', name:'name'},
             {data: 'price', name:'price'},
+            {data: 'download', name:'download'},
+            {data: 'upload', name:'upload'},
              {data: 'action', name:'action', searchable: false}           
         ]
     });
