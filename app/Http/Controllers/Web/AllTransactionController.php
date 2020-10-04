@@ -357,7 +357,7 @@ class AllTransactionController extends Controller
         // $expiredCheck = Carbon::parse($transaction->expired_date)->addMonths(1);
         // return $expiredCheck;
         $this->validate($request, [
-            'paid'                 =>  'required|numeric|min:1|max:'.$maxPaid,
+            'paid'                 =>  'required|numeric|min:0|max:'.$maxPaid,
             'payment_date'         =>  'required'
             // 'expired_date' =>  'required|string|max:'.$expiredCheck
 
