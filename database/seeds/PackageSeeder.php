@@ -14,9 +14,20 @@ class PackageSeeder extends Seeder
         
         $arrUser =[
           [
-            'name'  =>  '150K 4M',
+            'name'  =>  '100K 2M',
             'upload'  =>  '2',
             'download'  =>  '2',
+            'upload_unit'  =>  'M',
+            'download_unit'  =>  'M',
+            'ip_gateway'  =>  '10.100.100.1',
+            'ip_pool_start'  =>  '10.100.100.2',
+            'ip_pool_end'  =>  '10.100.100.254',
+            'price'  =>  '100000'
+          ],
+          [
+            'name'  =>  '150K 4M',
+            'upload'  =>  '4',
+            'download'  =>  '4',
             'upload_unit'  =>  'M',
             'download_unit'  =>  'M',
             'ip_gateway'  =>  '10.150.150.1',
