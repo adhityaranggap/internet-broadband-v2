@@ -353,12 +353,11 @@ class AllTransactionController extends Controller
         ->where('transactions.id', $id)
         ->first();
         
-        $maxPaid = $transaction->price - $transaction->paid;
-        $UserPay = $request->paid+$transaction->paid;
+        $maxPaid = $transaction->price - $transaction->paid;        
         // $expiredCheck = Carbon::parse($transaction->expired_date)->addMonths(1);
         // return $expiredCheck;
         $this->validate($request, [
-            'paid'                 =>  'required|numeric|max:'.$maxPaid,
+            'paid'                 =>  'required|numeric|min:1|max:'.$maxPaid,
             'payment_date'         =>  'required'
             // 'expired_date' =>  'required|string|max:'.$expiredCheck
 
@@ -369,11 +368,13 @@ class AllTransactionController extends Controller
                 'payment_proof' =>  'mimes:jpeg,jpg,png,gif|required|max:8000'
             ]);
         }
-        $request['transaction_has_modified_id'] = 1;
 
+        $request['transaction_has_modified_id'] = auth()->user()->id;
+        $UserPay = $request->paid+$transaction->paid;
         $request['updated_at'] = now();
         $request['paid'] = $UserPay;
         $sisa = $transaction->price - $request->paid;
+
 
         if($sisa == 0){
             $request['status'] = \EnumTransaksi::STATUS_LUNAS;
