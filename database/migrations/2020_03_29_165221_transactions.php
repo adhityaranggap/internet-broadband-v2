@@ -27,6 +27,10 @@ class Transactions extends Migration
             $table->string('type_payment')->nullable();
             $table->integer('fee');
             $table->unsignedInteger('transaction_has_modified')->nullable();
+            $table->string('type_payment')->nullable();
+            $table->string('snap_token')->nullable();
+            $table->string('transaction_code')->nullable();
+
             $table->timestamps();
         });
     }

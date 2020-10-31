@@ -18,11 +18,21 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
  
+use Veritrans_Config;
+use Veritrans_Snap;
+use Veritrans_Notification;
+
 class AllTransactionController extends Controller
 {
     use Notifiable;
     use \Illuminate\Notifications\Notifiable;
-
+    public function __construct()
+    {
+        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
+        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
+        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
+        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+    }
 
     /**
      * Display a listing of the resource.
@@ -112,6 +122,7 @@ class AllTransactionController extends Controller
             function ($data){                                
             
                     return
+                    \Component::btnPay(route('all-transaction-pay', $data->id), 'Pay ').
                     \Component::btnWhatsapp(route('all-transaction-wa', $data->id), 'Send WA '. $data->name).
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name).
@@ -164,7 +175,124 @@ class AllTransactionController extends Controller
         $packages = Package::all();
         return view('cms.transactions.alltransaction.create', compact('packages'));
     }
+    public function pay($id)
+    {
+        $data = Transaction::where('id', $id)->first();
 
+        $data->update([
+            'transaction_code'    => 'SANDBOX-' . uniqid()
+        ]);
+        $arrResponse = [
+            'transactions.id as id',
+            'users.name',
+            'users.email',
+            'users.contact_person',
+            'transactions.paid',
+            'packages.name as package_name',
+            'transactions.price', 
+            'expired_date',
+            'transactions.updated_at',
+            'transactions.payment_date',
+            'transactions.type_payment',
+            'transactions.file',
+            'transactions.transaction_code'
+        ];
+
+        $transaction = DB::table('transactions')
+      
+        ->join('users_has_packages','transactions.users_has_packages_id','users_has_packages.id')
+        ->join('packages','users_has_packages.package_id','packages.id')
+        ->join('users','users_has_packages.user_id','users.id')
+        ->select($arrResponse)
+        ->where('transactions.id', $id)->first();
+    
+        // \DB::transaction(function () use ($request){
+        //     $transaction = Transaction::create([
+        //         'transaction_code'      =>  'SANDBOX-' . uniqid(),
+        //         'transaction_name'      =>  $request->transaction_name,
+        //         'transaction_email'     =>  $request->transaction_email,
+        //         'transaction_type'      =>  $request->transaction_type,
+        //         'block_home'            =>  $request->block_home,
+        //         'home_number'           =>  $request->home_number,
+        //         'amount'                =>  \floatval($request->amount),
+        //         'note'                  =>  ($request->note),
+ 
+        //     ]);
+            $payload = [
+                        'transaction_details' => [
+                            'order_id'      =>  $transaction->transaction_code,
+                            'gross_amount'  =>  $transaction->price,
+                        ],
+                        'customer_details'  => [
+                            'first_name'    => $transaction->name,
+                            'email'         => $transaction->email,
+                            // 'phone'         => '08888888888',
+                            // 'address'       => '',     
+                        ],
+                        'item_details'      =>[
+                            [
+                                'id'       => $transaction->package_name,
+                                'price'    => $transaction->price,
+                                'quantity' => 1,
+                                'name'     => ucwords(str_replace('_', ' ', $transaction->package_name))
+                            ]
+                        ]
+                    ];
+            $snapToken = Veritrans_Snap::getSnapToken($payload);
+            // $transaction->snap_token = $snapToken;
+            // $transaction->save();
+            
+            if($transaction){
+                $transaction = Transaction::where('id', $id)->first();
+
+                $transaction->update([
+                    'snap_token'    => $snapToken
+                ]);
+            };
+
+        return response()->json($snapToken);
+    }
+
+    public function notification(){
+        $notif = new Veritrans_Notification();
+        \DB::transaction(function () use ($notif) {
+            $transactionStatus = $notif->transaction_status;
+            $paymentType       = $notif->payment_type;
+            $paymentDate       = $notif->settlement_time;
+            $amountPaid        = $notif->gross_amount;
+            $orderId           = $notif->order_id;
+            $fraudStatus       = $notif->fraud_status;
+            $transaction          = Transaction::where('transaction_code', $orderId)->first();
+
+            if($transactionStatus   == 'capture'){
+                if($paymentType     == 'credit _card'){
+                    if($fraudStatus == 'challenge'){
+                        $transaction->setStatusPending();
+                    }else{
+                        $transaction->setStatusSuccess();
+                    }
+                }
+            } elseif ($transactionStatus == 'settlement'){
+                $transaction->setStatusSuccess();
+                $data          = Transaction::where('transaction_code', $orderId)->first();
+                $data->update([
+                    'type_payment'    => $paymentType,
+                    'paid'            => $amountPaid,
+                    'payment_date'    => $paymentDate
+                ]);
+            } elseif ($transactionStatus == 'pending'){
+                $transaction->setStatusPending();
+            } elseif ($transactionStatus == 'deny'){
+                $transaction->setStatusFailed();
+            } elseif ($transactionStatus == 'expired'){
+                $transaction->setStatusExpired();
+            } elseif ($transactionStatus == 'cancel'){
+                $transaction->setStatusCancel();
+            }
+
+        });
+        return;
+    }
     /**
      * Store a newly created resource in storage.
      *

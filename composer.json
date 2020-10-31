@@ -24,6 +24,7 @@
         "sopamo/laravel-filepond": "^0.4.0",
         "syamsoul/laravel-datatable-ssp": "^2.3",
         "tymon/jwt-auth": "dev-develop",
+        "veritrans/veritrans-php": "^1.2",
         "yajra/laravel-datatables-oracle": "^9.7"
     },
     "require-dev": {

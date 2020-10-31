@@ -16,14 +16,14 @@
     </tr>
     <tr>
       <th scope="col"><b>Jatuh Tempo</b></th>
-      <th>{{ $data->expired_date}}</th>    
+      <th>{{Carbon\Carbon::parse($data->expired_date)->format('d M Y H:m')}} WIB</th>    
     </tr>
     <tr>
       <th scope="col"><b>Tanggal Bayar</b></th>
       @if(empty($data->payment_date))
       <th>Belum Pembayaran</th>    
       @else
-      <th>{{Carbon\Carbon::parse($data->payment_date)->format('d M Y')}}</th> 
+      <th>{{Carbon\Carbon::parse($data->payment_date)->format('d M Y H:m')}} WIB</th> 
       @endif   
     </tr>
     

@@ -358,4 +358,80 @@ $(document).ready(function() {
         $('#modal-title').text(title);
         $('#modal').modal('show');
     })
+
+    $('#app').on('click', '.btn-pay', function(event) {
+        event.preventDefault();
+
+        var me = $(this),
+            url = me.attr('href'),
+            csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                '_token': csrf_token
+            },
+
+            success: function(response) {
+
+
+                // start
+                snap.pay(response, {
+                    // Optional
+                    onSuccess: function(result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onPending: function(result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onError: function(result) {
+                        location.reload();
+                    }
+                });
+                return false;
+
+                // end
+
+                console.log(response);
+
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        });
+        // $.post("/api/transaction", {
+        //         _method: 'POST',
+        //         _token: '{{ csrf_token() }}',
+        //         transaction_name: $('input#transaction_name').val(),
+        //         transaction_email: $('input#transaction_email').val(),
+        //         package_name: $('select#package_name').val(),
+        //         block_home: $('select#block_home').val(),
+        //         home_number: $('select#home_number').val(),
+        //         transaction_type: $('select#transaction_type').val(),
+        //         amount: $('input#amount').val(),
+        //         note: $('t extarea#note').val(),
+        //     },
+        //     function(data, status) {
+        //         console.log(data);
+        //         snap.pay(data.snap_token, {
+        //             // Optional
+        //             onSuccess: function(result) {
+        //                 location.reload();
+        //             },
+        //             // Optional
+        //             onPending: function(result) {
+        //                 location.reload();
+        //             },
+        //             // Optional
+        //             onError: function(result) {
+        //                 location.reload();
+        //             }
+        //         });
+        //         return false;
+        //     });
+    })
 });

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', 'Api\LoginController@login');
 
+Route::post('/midtrans/notification', 'Web\AllTransactionController@notification')->name('all-transaction-notif-pay');
+
 Route::middleware(['jwt.verify'])->group(function () {
 
     Route::prefix('fetch')->group(function () {

@@ -31,6 +31,10 @@ class Component
     {
         return '<a href="'.$src.'" target="_blank" class="btn btn-outline-success" title="'.$title.'"><i class="fab fa-whatsapp"></i> Send WA</a> ';
     }
+    public static function btnPay($src, $title)
+    {
+        return '<a href="'.$src.'" class="btn btn-outline-primary btn-pay" title="'.$title.'"><i class="far fa-credit-card"></i> Pay</a> ';
+    }
 
     public static function btnToPdf($src, $title)
     {

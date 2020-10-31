@@ -29,6 +29,7 @@ Route::get('/register', function () {
     return view('register');
 });
 
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', 'Web\DashboardController@index')->name('dashboard-index')->middleware('AdminOnly');
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/sync', 'Web\AllTransactionController@sync')->name('all-transaction-sync');//done
             Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');//done
             Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');//done
+            Route::post('/pay/{id}', 'Web\AllTransactionController@pay')->name('all-transaction-pay');//midtrans
+            Route::post('/midtrans/notification', 'Web\AllTransactionController@notif-pay')->name('all-transaction-notif-pay');//midtrans
             Route::get('/detail/{id}', 'Web\AllTransactionController@detail')->name('all-transaction-detail');//done
             Route::get('/wa/{id}', 'Web\AllTransactionController@NotificationWA')->name('all-transaction-wa');//done
             Route::post('/update/{id}', 'Web\AllTransactionController@update')->name('all-transaction-update');//done
