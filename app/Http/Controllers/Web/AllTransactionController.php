@@ -441,6 +441,7 @@ class AllTransactionController extends Controller
             'transactions.updated_at',
             'transactions.payment_date',
             'transactions.type_payment',
+            'transactions.transaction_code',
             'transactions.file'
         ];
 

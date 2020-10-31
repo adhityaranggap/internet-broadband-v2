@@ -36,6 +36,10 @@
       <th>{{ $data->paid}}</th>    
     </tr>
     <tr>
+      <th scope="col"><b>Order ID</b></th>
+      <th>{{ $data->transaction_code}}</th>    
+    </tr>
+    <tr>
       <th scope="col"><b>Admin</b></th>
       <th>{{ auth()->user()->name }}</th>    
       
