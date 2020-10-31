@@ -1,4 +1,7 @@
-@extends('_layout.app') @section('title', 'All Transaction') @section('page_header', 'Transaction') @section('content')
+@extends('_layout.app') 
+@section('title', 'All Transaction') 
+@section('page_header', 'Transaction') 
+@section('content')
 
 <div class="card card-primary">
     <div class="card-header">
@@ -32,7 +35,9 @@
 </div>
 
 
-@endsection @push('css')
+@endsection
+
+@push('css')
 <!-- add Css Here -->
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
@@ -48,7 +53,9 @@
 
 <!-- Datepicker -->
 <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" /> @endpush @push('js')
+<link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" /> 
+@endpush 
+@push('js')
 <!-- add Js Script Here -->
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -112,8 +119,14 @@
 <script>
     $(document).ready(function() {
         var table = $('#appTable').DataTable({
-            processing: true,
-            serverSide: true,
+            rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive:true, 
+        dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+        processing:true,
+        serverSide:true,
             ajax: "{{ url()->current().'/datatables' }}",
             columns: [{
                     data: 'DT_RowIndex',
