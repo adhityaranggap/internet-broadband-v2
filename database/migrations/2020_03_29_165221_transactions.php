@@ -19,7 +19,7 @@ class Transactions extends Migration
             $table->text('notes');
             $table->unsignedInteger('transaction_has_modified_id');
             $table->dateTime('expired_date');
-            $table->dateTime('payment_date');
+            $table->dateTime('payment_date')->nullable();
             $table->tinyInteger('status');
             $table->integer('price');
             $table->integer('paid')->nullable();

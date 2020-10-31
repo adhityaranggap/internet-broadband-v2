@@ -25,9 +25,10 @@ class LoginController extends Controller
 
         $auth = Auth::attempt($credential);
 
-        if($auth){ //sukses login
+        if ($auth && Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
+            return redirect()->route('all-transaction-index');
+        }elseif($auth && Auth::check() && auth()->user()->role_id != Role::ROLE_CUSTOMER){
             return redirect()->route('customer-index');
-
         }else{
          
             return back()->with('error', 'Email atau Password Salah!');

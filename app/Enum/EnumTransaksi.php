@@ -13,9 +13,10 @@ class EnumTransaksi
     CONST STATUS_TENGGANG         = '1'; //TELAT BULAN
     CONST STATUS_VERIFIKASI       = '2'; //BUTUH VERIFIKASI    
     CONST STATUS_LUNAS            = '3'; //LUNAS    
-    CONST STATUS_FAILED           = '4'; //BELUM LUNAS    
-    CONST STATUS_EXPIRED          = '5'; //BELUM LUNAS    
-    CONST STATUS_PENDING          = '6'; //BELUM LUNAS    
+    CONST STATUS_BELUM_LUNAS      = '4'; //BELUM LUNAS    
+    CONST STATUS_FAILED           = '5'; //BELUM LUNAS    
+    CONST STATUS_EXPIRED          = '6'; //BELUM LUNAS    
+    CONST STATUS_PENDING          = '7'; //BELUM LUNAS    
 
 
     public static function status($status)

@@ -67,7 +67,33 @@
                 
                 </ul>
               </li>
-             
+              @elseif(Auth::check() && auth()->user()->role_id == App\Role::ROLE_CUSTOMER)
+              <ul class="sidebar-menu">
+              <li class="menu-header">Dashboard</li>
+              <li class="nav-item dropdown">
+                <a href="{{route ('dashboard-index')}}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <!-- <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
+                  <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
+                </ul> -->
+              </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Transactions</span></a>
+                <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{route ('unpaid-index') }}">Unpaid</a></li>
+                  <li><a class="nav-link" href="{{route ('all-transaction-index')}}">All Transaction</a></li>
+                  <!-- <li><a class="nav-link" href="#">Payments</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-invoice"></i> <span>Ticket</span></a>
+               
+                <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ route('all-ticket-index') }}">All Ticket</a></li>
+               
+                  <!-- <li><a class="nav-link" href="#">Create Ticket</a></li> -->
+                  <!-- <li><a class="nav-link" href=" ml">Unsolved Ticket</a></li> -->
+                </ul>
             </ul>
 
             <!-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
@@ -75,6 +101,9 @@
                 <i class="fas fa-rocket"></i> Documentation
               </a>
             </div> -->
+            
+                
+              </li>
             @endif
         </aside>
       </div>

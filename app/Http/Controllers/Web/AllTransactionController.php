@@ -41,7 +41,7 @@ class AllTransactionController extends Controller
      */
     public function index()
     {
-     
+        
         return view('cms.transactions.alltransaction.index');
     }
 
@@ -120,14 +120,18 @@ class AllTransactionController extends Controller
               
         ->editColumn('action',
             function ($data){                                
-            
+                if (Auth::check() && auth()->user()->role_id != Role::ROLE_CUSTOMER){
                     return
                     \Component::btnPay(route('all-transaction-pay', $data->id), 'Pay ').
                     \Component::btnWhatsapp(route('all-transaction-wa', $data->id), 'Send WA '. $data->name).
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name).
                     \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon::parse($data->expired_date)->format('M Y'));
-                    
+
+                }else if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
+                    return
+                    \Component::btnPay(route('all-transaction-pay', $data->id), 'Pay ');
+                };
         })
         ->addIndexColumn()
         ->rawColumns(['status', 'action']) 
@@ -177,8 +181,8 @@ class AllTransactionController extends Controller
     }
     public function pay($id)
     {
+        
         $data = Transaction::where('id', $id)->first();
-
         $data->update([
             'transaction_code'    => 'SANDBOX-' . uniqid()
         ]);
@@ -206,18 +210,6 @@ class AllTransactionController extends Controller
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
     
-        // \DB::transaction(function () use ($request){
-        //     $transaction = Transaction::create([
-        //         'transaction_code'      =>  'SANDBOX-' . uniqid(),
-        //         'transaction_name'      =>  $request->transaction_name,
-        //         'transaction_email'     =>  $request->transaction_email,
-        //         'transaction_type'      =>  $request->transaction_type,
-        //         'block_home'            =>  $request->block_home,
-        //         'home_number'           =>  $request->home_number,
-        //         'amount'                =>  \floatval($request->amount),
-        //         'note'                  =>  ($request->note),
- 
-        //     ]);
             $payload = [
                         'transaction_details' => [
                             'order_id'      =>  $transaction->transaction_code,
@@ -239,9 +231,7 @@ class AllTransactionController extends Controller
                         ]
                     ];
             $snapToken = Veritrans_Snap::getSnapToken($payload);
-            // $transaction->snap_token = $snapToken;
-            // $transaction->save();
-            
+        
             if($transaction){
                 $transaction = Transaction::where('id', $id)->first();
 
@@ -253,47 +243,8 @@ class AllTransactionController extends Controller
         return response()->json($snapToken);
     }
 
-    public function notification(){
-        $notif = new Veritrans_Notification();
-        \DB::transaction(function () use ($notif) {
-            $transactionStatus = $notif->transaction_status;
-            $paymentType       = $notif->payment_type;
-            $paymentDate       = $notif->settlement_time;
-            $amountPaid        = $notif->gross_amount;
-            $orderId           = $notif->order_id;
-            $fraudStatus       = $notif->fraud_status;
-            $transaction          = Transaction::where('transaction_code', $orderId)->first();
-
-            if($transactionStatus   == 'capture'){
-                if($paymentType     == 'credit _card'){
-                    if($fraudStatus == 'challenge'){
-                        $transaction->setStatusPending();
-                    }else{
-                        $transaction->setStatusSuccess();
-                    }
-                }
-            } elseif ($transactionStatus == 'settlement'){
-                $transaction->setStatusSuccess();
-                $data          = Transaction::where('transaction_code', $orderId)->first();
-                $data->update([
-                    'type_payment'    => $paymentType,
-                    'paid'            => $amountPaid,
-                    'payment_date'    => $paymentDate
-                ]);
-            } elseif ($transactionStatus == 'pending'){
-                $transaction->setStatusPending();
-            } elseif ($transactionStatus == 'deny'){
-                $transaction->setStatusFailed();
-            } elseif ($transactionStatus == 'expired'){
-                $transaction->setStatusExpired();
-            } elseif ($transactionStatus == 'cancel'){
-                $transaction->setStatusCancel();
-            }
-
-        });
-        return;
-    }
-    /**
+   
+     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
