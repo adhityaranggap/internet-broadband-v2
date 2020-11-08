@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
  
-use Veritrans_Config;
-use Veritrans_Snap;
-use Veritrans_Notification;
+// use Veritrans_Config;
+// use Veritrans_Snap;
+// use Veritrans_Notification;
 
 class AllTransactionController extends Controller
 {
@@ -28,10 +28,10 @@ class AllTransactionController extends Controller
     use \Illuminate\Notifications\Notifiable;
     public function __construct()
     {
-        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
-        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
-        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
-        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+        \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
+        \Midtrans\Config::$isProduction = config('services.midtrans.isProduction');
+        \Midtrans\Config::$isSanitized = config('services.midtrans.isSanitized');
+        \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
     }
 
     /**
@@ -230,7 +230,7 @@ class AllTransactionController extends Controller
                             ]
                         ]
                     ];
-            $snapToken = Veritrans_Snap::getSnapToken($payload);
+            $snapToken = \Midtrans\Snap::getSnapToken($payload);
         
             if($transaction){
                 $transaction = Transaction::where('id', $id)->first();

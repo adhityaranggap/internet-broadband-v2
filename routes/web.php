@@ -14,13 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 /* Temporary */
 Route::get('/', function () {
-    return view('login');
+    return view('login.login');
 })->name('login');
 
 Route::get('/login', function () {
-    return view('login');
+    return view('login.login');
 })->name('login');
 
+Route::get('/terms', function () {
+    return view('login.terms');
+})->name('terms');
+
+Route::get('/refund', function () {
+    return view('login.refundpolicy');
+})->name('refund');
 
 Route::post('/login-post', 'Web\LoginController@auth')->name('login-post');
 

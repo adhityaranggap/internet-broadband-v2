@@ -19,6 +19,8 @@
 </head>
 
 <body>
+@include('_layout.modal')
+
     <div id="app">
         <section class="section">
             <div class="d-flex flex-wrap align-items-stretch">
@@ -71,16 +73,18 @@
                             </div>
 
                             <div class="mt-5 text-center">
-                                Don't have an account? <a href="#">Create new one</a>
+                                Don't have an account? 
+                                Please contact support@rumahinternet.id
                             </div>
                         </form>
 
                         <div class="text-center mt-5 text-small">
                             Copyright &copy; Rumah Internet
                             <div class="mt-2">
-                                <a href="#">Privacy Policy</a>
+                                <a href="{{ route('refund') }}" class="btn btn-outline-primary btn-show" title="Refund Policy">Refund Policy</a>
+
                                 <div class="bullet"></div>
-                                <a href="#">Terms of Service</a>
+                                <a href="{{ route('terms') }}" class="btn btn-outline-primary btn-show" title="Terms of Service">Terms of Service</a>
                             </div>
                         </div>
                     </div>
@@ -103,12 +107,31 @@
 
     <!-- General JS Scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
-    <script src="{{asset('/assets/vendors/jquery/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/vendors/jquery/js/jquery-3.3.1.min.js' )}}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="../assets/js/stisla.js"></script>
+    <!-- General JS Scripts -->
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="{{ asset('assets/vendors/stisla/js/stisla.js') }}"></script>
+
+    <!-- JS Libraies -->
+
+    <!-- Custome Modal Js -->
+    <script src="{{ asset('js/modal.js') }}"></script>
+    @stack('script')
+
+    <script type="text/javascript" src="{{ asset('js/chat.js') }}"></script>
+
+    <script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
 
     <!-- JS Libraies -->
 

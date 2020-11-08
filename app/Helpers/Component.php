@@ -11,7 +11,7 @@ class Component
     //BTN CRUD table
     public static function btnRead($src, $title)
     {
-        return '<a href="'.$src.'" class="btn btn-outline-primary btn-show" title="'.$title.'"><i class="far fa-eye"></i> Detil</a> ';
+        return '<a href="'.$src.'" class="btn btn-outline-primary btn-show" title="'.$title.'"><i class="far fa-eye"></i> Detail</a> ';
     }
 
     public static function btnUpdate($src, $title)

@@ -19,10 +19,13 @@
         "laravel/framework": "^7.0",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
+        "livewire/livewire": "^2.3",
         "maatwebsite/excel": "^3.1",
+        "midtrans/midtrans-php": "^2.3",
         "nesbot/carbon": "^2.27",
         "sopamo/laravel-filepond": "^0.4.0",
         "syamsoul/laravel-datatable-ssp": "^2.3",
+        "symfony/http-kernel": "^5.1",
         "tymon/jwt-auth": "dev-develop",
         "veritrans/veritrans-php": "^1.2",
         "yajra/laravel-datatables-oracle": "^9.7"

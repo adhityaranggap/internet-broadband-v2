@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Transaction;
-use Veritrans_Config;
-use Veritrans_Snap;
-use Veritrans_Notification;
+// use Veritrans_Config;
+// use Veritrans_Snap;
+// use Veritrans_Notification;
 
 class AllTransactionController extends Controller
 {
@@ -22,7 +22,7 @@ class AllTransactionController extends Controller
 
     }
     public function notification(){
-        $notif = new Veritrans_Notification();
+        $notif = new \Midtrans\Notification();
         
         DB::transaction(function () use ($notif) {
             $transactionStatus = $notif->transaction_status;
