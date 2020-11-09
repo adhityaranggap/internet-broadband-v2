@@ -79,7 +79,7 @@
 <!-- <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('service.midtrans.clientkey') }}"></script> -->
      <!-- Production or Sandbox -->
     <script src="{{
-        !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}"
+        !config('services.midtrans.isProduction') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
         data-client-key="{{ config('services.midtrans.clientKey')
     }}"></script>
 <!-- Datepicker -->
