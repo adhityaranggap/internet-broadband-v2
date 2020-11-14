@@ -359,6 +359,7 @@ class AllTransactionController extends Controller
             'transactions.updated_at',
             'users.name',
             'users.contact_person',
+            'transactions.users_has_packages_id',
             'packages.name as package_name'
         ];
 
@@ -367,10 +368,45 @@ class AllTransactionController extends Controller
         ->join('packages','users_has_packages.package_id','packages.id')
         ->join('users','users_has_packages.user_id','users.id')
         ->select($arrResponse)
-        ->where('transactions.id', $id)->first();
+        ->where('transactions.id', $id)
+        ->first();
         
+        $data_verify = DB::table ('transactions')
+        ->select('users_has_packages_id', 'expired_date')
+        ->where('id', $id)->first();
+        $data_verified = Carbon::parse($data_verify->expired_date)->timestamp;
+
+        $dates = DB::table('transactions')
+        ->select('expired_date', 'status', 'id')
+        ->where('users_has_packages_id',$data_verify->users_has_packages_id)
+        ->where('status', '!=',\EnumTransaksi::STATUS_LUNAS)
+        ->orderBy('id', 'asc')
+        ->limit (1)
+        ->get();
         
-        return view('cms.transactions.alltransaction.edit', compact ('data'));    }
+        foreach ($dates as $key => $date){
+            $expired = $date->expired_date;
+        }
+        $check = Carbon::parse($expired)->timestamp;
+        $now = Carbon::parse(now())->timestamp;
+        // return $check;
+        $data_null = 'Pembayaran bermasalah';
+        if($check < $now && $data_verified < $now){
+
+            // return 'yes';
+            return view('cms.transactions.alltransaction.edit', compact ('data'));
+        }else{
+            // return 'no';
+            return $data_null;
+        }
+        // return $time;
+
+        // return Carbon::createFromTimestamp('1605016608')->format( 'Y-m-d');
+        // return Carbon::parse('2020-10-9')->timestamp;
+        // return Carbon::strtotime(now())->format( 'Y-m-d');
+        
+     
+    }
 
     /**
      * Detail the specified resource in storage.
