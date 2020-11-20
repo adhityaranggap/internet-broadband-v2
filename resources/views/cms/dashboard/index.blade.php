@@ -198,6 +198,11 @@
             </div>
         </div>
     </div>
+    @push('js')
+    <script type="text/javascript" src="{{ asset('js/chat.js') }}"></script>
+
+    <script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
+    @endpush
 <!-- 
     <script>
         var url = "{{ url()->current().'/chart' }}";
