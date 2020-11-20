@@ -46,8 +46,9 @@ class AllTransactionController extends Controller
     }
 
 
-    public function datatables()
+    public function datatables(Request $request)
     {       
+        
         // $modified = DB::table('transaction_has_modified')
         // ->join('transactions', 'transaction_has_modified.transaction_id', 'transactions.id')
         // ->get();
@@ -75,15 +76,30 @@ class AllTransactionController extends Controller
             ->get();
  
             }else{
-            $data = DB::table('users')
-            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
-            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
-            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
-            // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
-       
-            ->orderBy('transactions.expired_date','desc')
-            ->select($arrSelect)
-            ->get();
+                if($request->range){
+                    $date_range = explode(" - ", $request->range);
+                    $data = DB::table('users')
+                    ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+                    ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+                    ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+                    ->whereBetween('expired_date', [$date_range[0], $date_range[1]])
+                    // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
+               
+                    ->orderBy('transactions.expired_date','desc')
+                    ->select($arrSelect)
+                    ->get();
+                }else{
+                    $data = DB::table('users')
+                    ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+                    ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+                    ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+                    // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
+               
+                    ->orderBy('transactions.expired_date','desc')
+                    ->select($arrSelect)
+                    ->get();
+                }
+           
  
             }
             
@@ -104,7 +120,7 @@ class AllTransactionController extends Controller
         ->editColumn('package_name',
             function ($data){
                 return $data->package_name;
-        })   
+        })
         // ->editColumn('price',
         //     function ($data){
         //         return $data->price;

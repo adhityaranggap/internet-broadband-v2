@@ -7,6 +7,11 @@
     <div class="card-header">
         <h4>All Transaction</h4>
 
+        @if(!empty(request()->range))
+        <div class="card-header-action">
+          <a class="btn btn-outline-primary" href="{{route('all-transaction-index') }} " title="Reset Data"> Reset Data </i></a>
+        </div>
+        @endif
         <div class="card-header-action">
             {{-- <button id="lunas" class="btn btn-info">Set Lunas</button> --}}
             <a class="btn btn-outline-primary btn-confirm" href="{{route('all-transaction-sync') }} " title="Sync Data"><i class="fas fa-sync"> Sync Data </i></a>
@@ -14,11 +19,23 @@
         <div class="card-header-action">
             <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>
         </div>
+        <div class="card-header-action">
+
+            <i class="glyphicon glyphicon-calendar"></i> 
+            <input type="text" name="datefilter" placeholder="Search by date range.."/> 
+            {{-- <input type="text" name="datefilter" value="Filter date" /> --}}
+
+        </div>
+        
     </div>
     <div class="card-body ">
+        
         <div class="table">
+            
             <table id="appTable" class="table nowrap table-bordered table-hover dataTable table-striped" style="width:100%">
+                
                 <thead>
+                    
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">id</th>
@@ -54,10 +71,14 @@
 <!-- Datepicker -->
 <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" /> 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 @endpush 
 @push('js')
 <!-- add Js Script Here -->
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -83,8 +104,31 @@
         data-client-key="{{ config('services.midtrans.clientKey')
     }}"></script>
 <!-- Datepicker -->
-<script src="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function() {
+    
+      $('input[name="datefilter"]').daterangepicker({
+          autoUpdateInput: false,
+          locale: {
+              cancelLabel: 'Clear'
+          }
+      });
+    
+      $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+        document.location.href = "{{ route('all-transaction-index') }}" +'?range='+picker.startDate.format('YYYY-MM-DD')+' - '+picker.endDate.format('YYYY-MM-DD');
+          $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+                  
+
+      });
+    
+      $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
+      });
+    
+    });
+    </script>
 
 <!-- <script>
  $('#appTable').DataTable({
@@ -103,7 +147,7 @@
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],    
         processing:true,
         serverSide:true,
-        ajax: "{{ url()->current().'/datatables' }}",
+        {{-- ajax: "{{ url()->current().'/datatables' }}", --}}
         columns:[
             {data: 'DT_RowIndex', name:'name', searchable: false},
             {data: 'name', name:'name'},
@@ -129,7 +173,7 @@
         processing:true,
         
         serverSide:true,
-            ajax: "{{ url()->current().'/datatables' }}",
+            ajax: "{{ url()->current().'/datatables'.(empty(request()->range) == true ? null : ('?range='.request()->range)) }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'name',
@@ -161,36 +205,36 @@
                 }
             ],
             'select': {
-                'style': 'multi'
+                // 'style': 'multi'
             },
             'order': [
                 [1, 'asc']
             ]
         });
 
-        $('#appTable tbody').on('click', 'tr', function() {
-            // $(this).toggleClass('selected');
-            var tblData = table.rows('.selected').data();
-            // var tmpData;
-            // $.each(tblData, function(i, val) {
-            //     tmpData = tblData[i];
-            // alert(tmpData);
-            // })
-        });
+        // $('#appTable tbody').on('click', 'tr', function() {
+        //     // $(this).toggleClass('selected');
+        //     var tblData = table.rows('.selected').data();
+        //     // var tmpData;
+        //     // $.each(tblData, function(i, val) {
+        //     //     tmpData = tblData[i];
+        //     // alert(tmpData);
+        //     // })
+        // });
 
-        $('#lunas').click(function() {
-            // var selectedIds = table.rows('.selected').data()
-            // selectedIds.push(table[0]);
-            // console.log(selectedIds);
-            $.each(table.rows('.selected').nodes(), function(i, item) {
-                    var id = item.id;
-                    var data = table.row(this).data();
+        // $('#lunas').click(function() {
+        //     // var selectedIds = table.rows('.selected').data()
+        //     // selectedIds.push(table[0]);
+        //     // console.log(selectedIds);
+        //     $.each(table.rows('.selected').nodes(), function(i, item) {
+        //             var id = item.id;
+        //             var data = table.row(this).data();
 
-                    alert("Produt Id : " +
-                        id + " && product Status:  " + data[2]);
-                })
-                // alert( table.rows('.selected').data());
-        });
+        //             alert("Produt Id : " +
+        //                 id + " && product Status:  " + data[2]);
+        //         })
+        //         // alert( table.rows('.selected').data());
+        // });
         // Handle form submission event
 
         //    $('#lunas').on('click', function(e){
