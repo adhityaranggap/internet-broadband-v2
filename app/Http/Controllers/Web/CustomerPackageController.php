@@ -17,6 +17,13 @@ class CustomerPackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // Check login or not
+    public function __construct()
+    {
+    $this->redirectTo = route('customer-index');
+    $this->middleware('guest', ['except' => 'logout']);
+    }
+    // end check
     public function index()
     {
         return view('cms.packages.customerpackage.index');
