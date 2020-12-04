@@ -27,6 +27,12 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/stisla/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/stisla/css/components.css') }}"> @stack('css')
+
+    <style>
+        .daterangepicker {
+            z-index: 1 !important;
+        }
+    </style>
 </head>
 
 <body>

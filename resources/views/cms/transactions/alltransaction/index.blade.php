@@ -15,17 +15,23 @@
         <div class="card-header-action">
             {{-- <button id="lunas" class="btn btn-info">Set Lunas</button> --}}
             <a class="btn btn-outline-primary btn-confirm" href="{{route('all-transaction-sync') }} " title="Sync Data"><i class="fas fa-sync"> Sync Data </i></a>
-        </div>
-        <div class="card-header-action">
             <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>
+           
         </div>
         <div class="card-header-action">
+            <input type="text" name="datefilter" class="form-control datefilter" placeholder="Search by date range.."/> 
+        </div>
+       
+        {{-- <div class="card-header-action">
+            <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>
+        </div> --}}
+        {{-- <div class="card-header-action">
 
             <i class="glyphicon glyphicon-calendar"></i> 
             <input type="text" name="datefilter" placeholder="Search by date range.."/> 
-            {{-- <input type="text" name="datefilter" value="Filter date" /> --}}
+            <input type="text" name="datefilter" value="Filter date" />
 
-        </div>
+        </div> --}}
         
     </div>
     <div class="card-body ">
@@ -105,7 +111,7 @@
 <script type="text/javascript">
     $(function() {
     
-      $('input[name="datefilter"]').daterangepicker({
+      $('.datefilter').daterangepicker({
           autoUpdateInput: false,
           locale: {
               cancelLabel: 'Clear'
@@ -126,36 +132,6 @@
     });
     </script>
 
-<!-- <script>
- $('#appTable').DataTable({
-    columnDefs: [ {
-            orderable: false,
-            // className: 'select-checkbox',
-            targets:   0
-        } ],
-        select: {
-            style:    'multi',
-            selector: 'td:first-child'
-        },
-        order: [[ 1, 'asc' ]],
-        responsive:true, 
-        dom: '<"top"fB>rt<"bottom"lp><"clear">',
-        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],    
-        processing:true,
-        serverSide:true,
-        {{-- ajax: "{{ url()->current().'/datatables' }}", --}}
-        columns:[
-            {data: 'DT_RowIndex', name:'name', searchable: false},
-            {data: 'name', name:'name'},
-            // {data: 'month_date', name:'month_date'},
-            {data: 'package_name', name:'package_name'},
-            // {data: 'price', name:'price'},
-            {data: 'expired_date', name:'expired_date'},
-        {data: 'status', name:'status'},
-             {data: 'action', name:'action', searchable: false}           
-        ]
-    });
-</script> -->
 
 <script>
     $(document).ready(function() {
