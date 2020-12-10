@@ -387,34 +387,34 @@ class AllTransactionController extends Controller
         ->where('transactions.id', $id)
         ->first();
         
-        $data_verify = DB::table ('transactions')
-        ->select('users_has_packages_id', 'expired_date')
-        ->where('id', $id)->first();
-        $data_verified = Carbon::parse($data_verify->expired_date)->timestamp;
+        // $data_verify = DB::table ('transactions')
+        // ->select('users_has_packages_id', 'expired_date')
+        // ->where('id', $id)->first();
+        // $data_verified = Carbon::parse($data_verify->expired_date)->timestamp;
 
-        $dates = DB::table('transactions')
-        ->select('expired_date', 'status', 'id')
-        ->where('users_has_packages_id',$data_verify->users_has_packages_id)
-        ->where('status', '!=',\EnumTransaksi::STATUS_LUNAS)
-        ->orderBy('id', 'asc')
-        ->limit (1)
-        ->get();
+        // $dates = DB::table('transactions')
+        // ->select('expired_date', 'status', 'id')
+        // ->where('users_has_packages_id',$data_verify->users_has_packages_id)
+        // ->where('status', '!=',\EnumTransaksi::STATUS_LUNAS)
+        // ->orderBy('id', 'asc')
+        // ->limit (1)
+        // ->get();
         
-        foreach ($dates as $key => $date){
-            $expired = $date->expired_date;
-        }
-        $check = Carbon::parse($expired)->timestamp;
-        $now = Carbon::parse(now())->timestamp;
-        // return $check;
-        $data_null = 'Pembayaran bermasalah';
-        if($check < $now && $data_verified < $now){
+        // foreach ($dates as $key => $date){
+        //     $expired = $date->expired_date;
+        // }
+        // $check = Carbon::parse($expired)->timestamp;
+        // $now = Carbon::parse(now())->timestamp;
+        // // return $check;
+        // $data_null = 'Pembayaran bermasalah';
+        // if($check < $now && $data_verified < $now){
 
             // return 'yes';
             return view('cms.transactions.alltransaction.edit', compact ('data'));
-        }else{
-            // return 'no';
-            return $data_null;
-        }
+        // }else{
+        //     // return 'no';
+        //     return $data_null;
+        // }
         // return $time;
 
         // return Carbon::createFromTimestamp('1605016608')->format( 'Y-m-d');
