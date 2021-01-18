@@ -29,7 +29,7 @@ class Component
     }
     public static function btnWhatsapp($src, $title)
     {
-        return '<a href="'.$src.'" target="_blank" class="btn btn-outline-success" title="'.$title.'"><i class="fab fa-whatsapp"></i> Send WA</a> ';
+        return '<a href="'.$src.'" target="_blank" class="btn btn-outline-success" title="'.$title.'"><i class="fab fa-whatsapp"></i>WA</a> ';
     }
     public static function btnPay($src, $title)
     {

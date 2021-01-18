@@ -22,9 +22,9 @@ class EnumTransaksi
     public static function status($status)
     {
         if($status == 0){
-            return \Component::badgetLinkDanger("Belum Dibayar");
+            return \Component::badgetLinkDanger("Unpaid");
         }else if($status == 1){
-            return \Component::badgetLinkDanger("Pembayaran Telat");
+            return \Component::badgetLinkDanger("Expired");
         }else if($status == 2){
             return \Component::badgetLinkDanger("Butuh Verifikasi");
         }else if($status == 3){

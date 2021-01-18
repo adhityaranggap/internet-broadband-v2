@@ -113,18 +113,7 @@ class AllTransactionController extends Controller
             function ($data){
                 return $data->name;
         })     
-        // ->editColumn('month_date',
-        //     function ($data){
-        //         return date('M Y', strtotime($data->expired_date));
-        // })                
-        ->editColumn('package_name',
-            function ($data){
-                return $data->package_name;
-        })
-        // ->editColumn('price',
-        //     function ($data){
-        //         return $data->price;
-        // })   
+     
         ->editColumn('expired_date',
             function ($data){
                 return Carbon::parse($data->expired_date)->format('d M Y');
@@ -138,8 +127,7 @@ class AllTransactionController extends Controller
             function ($data){                                
                 if (Auth::check() && auth()->user()->role_id != Role::ROLE_CUSTOMER){
                     return
-                    \Component::btnPay(route('all-transaction-pay', $data->id), 'Pay ').
-                    \Component::btnWhatsapp(route('all-transaction-wa', $data->id), 'Send WA '. $data->name).
+                    
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name).
                     \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon::parse($data->expired_date)->format('M Y'));
@@ -455,7 +443,6 @@ class AllTransactionController extends Controller
         ->join('users','users_has_packages.user_id','users.id')
         ->select($arrResponse)
         ->where('transactions.id', $id)->first();
-        
         return view('cms.transactions.alltransaction.detail', compact ('data'));
     }
 

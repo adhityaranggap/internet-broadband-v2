@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::share('appName', 'Internet Broadband V2');
+        // View::share('companyName', 'PT Garuda Media Telamatika');
+        View::share('companyName', env('COMPANY_NAME'));
         Builder::defaultStringLength(191); // Update defaultStringLength
 
     }

@@ -51,7 +51,9 @@
  <img class="img-fluid" src="{{ url('storage/'.$data->file) }}" alt="" style="50%">
 
 </div>
+<div class="form-group">
+
+<a href="{{ route('invoice-print',  $data->id) }}" class="btn btn-warning modal-show form-control" title="Cetak Invoice"><i class="fas fa-edit"></i> Print Invoice</a> 
+</div>
 
 </form>
-
-

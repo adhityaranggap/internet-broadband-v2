@@ -68,6 +68,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
             Route::delete('/destroy/{id}', 'Web\AllTransactionController@destroy')->name('all-transaction-destroy');
         });
+
+        Route::prefix('invoice')->group(function(){
+            Route::get('/print/{id}', 'Web\InvoiceController@print')->name('invoice-print');
+        });
     });
         Route::prefix('unpaid')->group(function () {
             Route::get('/', 'Web\UnpaidController@index')->name('unpaid-index');
