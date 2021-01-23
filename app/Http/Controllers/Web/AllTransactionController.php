@@ -127,7 +127,7 @@ class AllTransactionController extends Controller
             function ($data){                                
                 if (Auth::check() && auth()->user()->role_id != Role::ROLE_CUSTOMER){
                     return
-                    \
+                    
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
                     \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name);
                 }else if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){

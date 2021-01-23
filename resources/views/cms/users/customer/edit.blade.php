@@ -42,6 +42,7 @@
     <div class="form-group ">
         <label for="name">Daftar Paket</label>
         <select id="list-packages" class="form-control">
+            <option value="" hidden selected>--Pilih Data Paket--</option>
             @forelse($data['package'] as $package)
             <option value="{{$package->id}}">{{$package->package_name}}</option>
             @empty
@@ -71,6 +72,9 @@
 
                 // debugging
                 // console.log(response);
+                // const moment = require('moment');
+                // const today = moment();
+                // console.log(today.format());
 
                
                 if(response.length > 0){                    
@@ -87,6 +91,8 @@
                         data += '<tr>'+
                                 '<td>'+value.id+'</td>'+
                                 '<td>'+value.expired_date+'</td>'+
+                                // '<td>'+moment(value.expired_date).format('mm d Y')+'</td>'+
+
                                 '<td>'+value.status+'</td>'+
                                 '<td>'+button+
                             '</tr>';
