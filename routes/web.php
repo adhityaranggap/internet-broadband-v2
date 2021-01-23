@@ -142,6 +142,7 @@ Route::middleware('auth')->group(function () {
 
             Route::post('/store', 'Web\CustomerPackageController@store')->name('customer-package-store');//done
             Route::get('/edit/{id}', 'Web\CustomerPackageController@edit')->name('customer-package-edit');//done
+            Route::get('/show-by-user', 'Web\CustomerPackageController@showByUserPackage')->name('customer-package-show-by-user-package');//develop
             
             Route::post('/update/{id}', 'Web\CustomerPackageController@update')->name('customer-package-update');//done
             Route::delete('/destroy/{id}', 'Web\CustomerPackageController@destroy')->name('customer-package-destroy');  //only admin

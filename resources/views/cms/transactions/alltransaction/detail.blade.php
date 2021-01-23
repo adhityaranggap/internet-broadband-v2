@@ -52,8 +52,17 @@
 
 </div>
 <div class="form-group">
+@if($data->status == \EnumTransaksi::STATUS_LUNAS)
+<a href="{{ route('invoice-print',  $data->id) }}" target="_blank" class="btn btn-warning form-control" title="Cetak Invoice"><i class="fas fa-edit"></i> Print Invoice</a> 
+@else
+<a href="{{ route('all-transaction-wa',  $data->id) }}" target="_blank" class="btn btn-success  form-control" title="Send Notification"><i class="fab fa-whatsapp"></i> Send WhatsApp Notification</a> 
+@endif
+<div class="p-1">
 
-<a href="{{ route('invoice-print',  $data->id) }}" class="btn btn-warning modal-show form-control" title="Cetak Invoice"><i class="fas fa-edit"></i> Print Invoice</a> 
+{!!
+  \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon\Carbon::parse($data->expired_date)->format('M Y'), $fullsize = true, $reload = true)
+!!}
+</div>
 </div>
 
 </form>

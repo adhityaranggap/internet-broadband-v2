@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Web\Redirect;
 use DataTables, Auth;
 use App\Notifications\InvoicePaid;
 use Illuminate\Notifications\Notifiable;
@@ -76,8 +77,8 @@ class UnpaidController extends Controller
             ->orderBy('transactions.expired_date','desc')
             ->select($arrSelect)
             ->get();
- 
-            }
+            
+            };
             
         return Datatables::of($data)  
 
@@ -97,7 +98,7 @@ class UnpaidController extends Controller
      
         ->editColumn('expired_date',
             function ($data){
-                return Carbon::parse($data->expired_date)->format('d M Y');
+                return Carbon::parse($data->expired_date)->format('Y-m-d');
         })              
         ->editColumn('status',
             function ($data){
@@ -108,11 +109,8 @@ class UnpaidController extends Controller
             function ($data){                                
             
                     return
-                    \Component::btnWhatsapp(route('unpaid-wa', $data->id), 'Send WA '. $data->name).
                     \Component::btnRead(route('unpaid-detail', $data->id), 'Detail Transaction '. $data->name).
-                    \Component::btnUpdate(route('unpaid-edit', $data->id), 'Ubah Transaction '. $data->name).
-                    \Component::btnDelete(route('unpaid-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon::parse($data->expired_date)->format('M Y'));
-                    
+                    \Component::btnUpdate(route('unpaid-edit', $data->id), 'Ubah Transaction '. $data->name);
         })
         ->addIndexColumn()
         ->rawColumns(['status', 'action']) 
@@ -301,6 +299,7 @@ class UnpaidController extends Controller
             'transactions.type_payment',
             'transactions.expired_date',
             'transactions.payment_date',
+            'transactions.status',
             'transactions.price as payment_billing', 
             'transactions.paid',
             'transactions.file',

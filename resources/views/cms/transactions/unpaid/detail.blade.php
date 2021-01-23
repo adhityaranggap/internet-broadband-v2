@@ -45,31 +45,21 @@
 </table>
 <!-- <a href="{{url('storage/app/'.$data->file)}}" src="{{ asset('storage/app/'.$data->file) }}" class="btn pop btn-primary btn-sm" size="25%" title="{{$data->file}}">{{ $data->file }}</a> -->
 <div class="form-group">
- <!-- <input type="file" class="form-control" name="user_photo" id="userphoto">
- <img style="max-width: calc(100% - 20px)" src="/storage/app/{{ $data->file }}"> -->
+
  <img class="img-fluid" src="{{ url('storage/'.$data->file) }}" alt="" style="50%">
 
 </div>
-<!-- <div class="form-group ">
-    <label for="type_payment">Tipe Pembayaran</label>
-    <select class="form-control" id="type_payment" name="type_payment">
-            <option value="Transfer">Transfer</option>
-            <option value="Cash">Cash</option>
-        </select>
-    </div>   
-    <div class="form-group ">
-    <label for="file">Upload Bukti Bayar</label>
-        <input class="form-control-file" name="file" type="file" id="file">
-    </div>
-    <div class="form-group ">
-    <label for="name">Biaya Admin</label>
-        <input class="form-control" name="fee" type="number" value="0" id="fee" readonly>
-    </div>
-    <div class="form-group ">
-    <label for="paid">Nominal Dibayar</label>
-        <input class="form-control" name="paid" type="number" value="{{ $data->payment_billing - $data->paid}}" id="paid">
-    </div> -->
+@if($data->status == \EnumTransaksi::STATUS_LUNAS)
+<a href="{{ route('invoice-print',  $data->id) }}" target="_blank" class="btn btn-warning  form-control" title="Cetak Invoice"><i class="fas fa-edit"></i> Print Invoice</a> 
+@else
+<a href="{{ route('unpaid-wa',  $data->id) }}" target="_blank" class="btn btn-success form-control" title="Send Notification"><i class="fab fa-whatsapp"></i> Send WhatsApp Notification</a> 
 
+@endif
+<div class="p-1">
+
+  {!!
+    \Component::btnDelete(route('unpaid-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon\Carbon::parse($data->expired_date)->format('M Y'), true)
+  !!}
 </form>
 
 

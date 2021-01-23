@@ -219,14 +219,23 @@ class CustomerPackageController extends Controller
      */
     public function destroy($id)
     {
-     // menghapus data pegawai berdasarkan id yang dipilih
-	$data= UserHasPackage::where('id', $id)->first();
+        // menghapus data pegawai berdasarkan id yang dipilih
+        $data= UserHasPackage::where('id', $id)->first();
+            
+        if (is_null($data)){
+            return 'tidak ditemukan';
+        }else{
+            $data->delete();
         
-    if (is_null($data)){
-        return 'tidak ditemukan';
-    }else{
-        $data->delete();
-       
+        }
     }
+
+    public function showByUserPackage(Request $request) //id user customer
+    {        
+        $data = [];
+        if($request->has('user_package_id')){
+            $data = Transaction::where('users_has_packages_id', $request->user_package_id)->get();
+        }
+        return $data;        
     }
 }

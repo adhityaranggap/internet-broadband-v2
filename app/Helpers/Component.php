@@ -19,9 +19,11 @@ class Component
         return '<a href="'.$src.'" class="btn btn-outline-warning modal-show edit" title="'.$title.'"><i class="fas fa-edit"></i> Ubah</a> ';
     }
 
-    public static function btnDelete($src, $title)
+    public static function btnDelete($src, $title, $fullsize = null, $reload = false)
     {
-        return '<a href="'.$src.'" class="btn btn-outline-danger btn-delete" title="'.$title.'"><i class="fas fa-trash"></i> Hapus</a> ';
+        $fullsize = is_null($fullsize) ? null : 'form-control';
+        $reload = $reload == false ? null : 'reload';
+        return '<a href="'.$src.'" class="btn btn-outline-danger btn-delete '.$fullsize.' '.$reload.'" title="'.$title.'"><i class="fas fa-trash"></i> Hapus</a> ';
     }
     public static function btnSync($src, $title)
     {

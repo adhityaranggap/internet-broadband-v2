@@ -264,16 +264,17 @@ class CustomerController extends Controller
         $data['package'] = DB::table('users_has_packages')
             ->join('packages','users_has_packages.package_id','packages.id')
             ->select(
+                'users_has_packages.id as id',
                 'packages.name as package_name',
+                'packages.id as package_id',
                 'packages.upload', 
                 'packages.download', 
                 'packages.download_unit', 
                 'packages.upload_unit', 
                 'packages.price')
             ->where('users_has_packages.user_id', $data['user']->id)
-            ->get();
+            ->get();            
 
-            
         return view('cms.users.customer.edit', compact ('data'));
     }
 

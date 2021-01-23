@@ -35,9 +35,9 @@
     </style>
 </head>
 
-<body>
-    @include('_layout.modal')
+<body>    
     <div id="app">
+        @include('_layout.modal')
         <div class="main-wrapper">
             <!-- <div class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion"></div> -->
             <div class="navbar-bg"></div>

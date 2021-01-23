@@ -116,7 +116,7 @@ class AllTransactionController extends Controller
      
         ->editColumn('expired_date',
             function ($data){
-                return Carbon::parse($data->expired_date)->format('d M Y');
+                return Carbon::parse($data->expired_date)->format('Y-m-d');
         })              
         ->editColumn('status',
             function ($data){
@@ -127,11 +127,9 @@ class AllTransactionController extends Controller
             function ($data){                                
                 if (Auth::check() && auth()->user()->role_id != Role::ROLE_CUSTOMER){
                     return
-                    
+                    \
                     \Component::btnRead(route('all-transaction-detail', $data->id), 'Detail Transaction '. $data->name).
-                    \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name).
-                    \Component::btnDelete(route('all-transaction-destroy', $data->id), 'Hapus Transaction '. $data->name . ' '. Carbon::parse($data->expired_date)->format('M Y'));
-
+                    \Component::btnUpdate(route('all-transaction-edit', $data->id), 'Ubah Transaction '. $data->name);
                 }else if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
                     return
                     \Component::btnPay(route('all-transaction-pay', $data->id), 'Pay ');
@@ -433,6 +431,7 @@ class AllTransactionController extends Controller
             'transactions.payment_date',
             'transactions.type_payment',
             'transactions.transaction_code',
+            'transactions.status',
             'transactions.file'
         ];
 

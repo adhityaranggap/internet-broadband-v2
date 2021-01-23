@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Auth, Redirect;
 use PDF;
 use App\User, App\Router, App\UserHasPackage, App\Role, App\Package, App\Transaction, App\TransactionHasModified;
@@ -52,6 +53,7 @@ class InvoiceController extends Controller
             'transactions.payment_date',
             'transactions.expired_date',
             'transactions.type_payment',
+            'transactions.status',
             'transactions.file'
         ];
 
@@ -65,8 +67,15 @@ class InvoiceController extends Controller
 
    
         $pdf = PDF::loadView('cms.transactions.invoice.print', ['data' => $data]);
-        // return $pdf->stream();
-        return $pdf->stream("invoice.pdf",array("Attachment" => 0));
+        return $pdf->stream();
+        // return $pdf->stream("invoice.pdf");
+
+        // $output = $pdf->output();
+
+        // return new Response($output, 200, [
+        //     'Content-Type' => 'application/pdf',
+        //     'Content-Disposition' =>  'inline; filename="invoice.pdf"',
+        // ]);
 
 
 

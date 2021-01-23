@@ -43,7 +43,7 @@
 <link rel='stylesheet' href='https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css'>
 <link rel='stylesheet' href='https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css'>
 <link rel='stylesheet' href='https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css'>
-!-- Datepicker -->
+<!-- Datepicker -->
 <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
 
@@ -86,6 +86,9 @@
             {data: 'expired_date', name:'expired_date'},
             {data: 'status', name:'status'},
              {data: 'action', name:'action', searchable: false}           
+        ],
+        'order': [
+                [3, 'desc']
         ]
     });
 </script>
