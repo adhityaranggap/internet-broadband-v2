@@ -234,7 +234,10 @@ class CustomerPackageController extends Controller
     {        
         $data = [];
         if($request->has('user_package_id')){
-            $data = Transaction::where('users_has_packages_id', $request->user_package_id)->get();
+            $data = Transaction::where([
+                ['users_has_packages_id', '=', $request->user_package_id],
+                ['status', '!=', \EnumTransaksi::STATUS_LUNAS],
+            ])->get();
         }
         return $data;        
     }
