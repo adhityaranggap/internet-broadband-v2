@@ -36,8 +36,8 @@
 <div class="form-group ">
     <label for="type_payment">Tipe Pembayaran</label>
       <select class="form-control" id="type_payment" name="type_payment">
-              <option value="Transfer">Transfer</option>
-              <option value="Cash">Cash</option>
+          <option value="Cash">Cash</option>
+          <option value="Transfer">Transfer</option>  
       </select>
     </div>   
     <div class="form-group ">
@@ -46,13 +46,13 @@
     </div>
 
     <div class="form_group"></div>
-    <label for="expired_date">Expired Date</label>
-    <input type="text" class="form-control datepicker" name="expired_date" id="expired_date" value="{{ $data->expired_date }}">
+      <label for="expired_date">Expired Date</label>
+      <input type="text" class="form-control datepicker" name="expired_date" id="datepicker">
     </div>
-    
+
     <div class="form_group"></div>
     <label for="payment_date">Tanggal Pembayaran</label>
-    <input type="text" class="form-control datepicker" name="payment_date" id="payment_date" value="">
+    <input type="text" class="form-control datepicker" name="payment_date" id="datepicker2" value="{{ \Carbon\Carbon::parse(now())->format('Y-m-d h:i') }}">
     </div>
     
     <div class="form-group ">
@@ -64,28 +64,21 @@
         <input class="form-control" name="paid" type="number" value="{{ $data->payment_billing - $data->paid}}" id="paid">
     </div>
 
-
     <script>
+      // $(document).ready(function() {     
 
-      $('.datepicker').daterangepicker({
-              locale: {format: 'YYYY-MM-DD hh:mm'},
-              singleDatePicker: true,
-              timePicker: true,
-              timePicker24Hour: true,
-            });
-          // $('.datepicker').daterangepicker({
-          //       locale: {format: 'YYYY-MM-DD hh:mm:ss'},
-          //       singleDatePicker: true,
-          //     });
+        $(".datepicker").daterangepicker({
+          locale: {
+            format: 'DD-MM-YYYY'
+          },
+          singleDatePicker: true,
+          // // Note : If you want to use time in date picker
+          // timePicker: true,
+          // timePicker24Hour: true,
+        });
 
-          // Timepicker
-            $(".timepicker").timepicker({
-              icons: {
-                up: 'fas fa-chevron-up',
-                down: 'fas fa-chevron-down'
-              }
-            });
-
+        // $('.date').datepicker({dateFormat: "dd-M-yy"});
+      // });
     </script>
 </form>
 

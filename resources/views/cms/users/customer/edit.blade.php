@@ -70,13 +70,6 @@
 
             success: function(response) {
 
-                // debugging
-                // console.log(response);
-                // const moment = require('moment');
-                // const today = moment();
-                // console.log(today.format());
-
-               
                 if(response.length > 0){                    
                     var data = '';
                     $.each(response, function(key,value){
@@ -90,10 +83,7 @@
 
                         data += '<tr>'+
                                 '<td>'+value.id+'</td>'+
-                                '<td>'+value.expired_date+'</td>'+
-                                // '<td>'+moment(value.expired_date).format('mm d Y')+'</td>'+
-
-                                '<td>'+value.status+'</td>'+
+                                '<td>'+moment(value.expired_date).format('LL')+'</td>'+
                                 '<td>'+button+
                             '</tr>';
                     });
@@ -107,9 +97,6 @@
                             '</td>'+
                             '<td>'+
                                 'Expired Date'+
-                            '</td>'+
-                            '<td>'+
-                                'Status'+
                             '</td>'+
                             '<td>'+
                                 'Action'+

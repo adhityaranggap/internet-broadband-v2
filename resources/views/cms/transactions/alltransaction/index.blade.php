@@ -78,6 +78,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
 
+{{-- Datepicker --}}
+<script src="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+
 <!-- add Js Script Here -->
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
@@ -102,10 +105,6 @@
 
     {{-- End Midtrans --}}
 
-<!-- Start Datepicker -->
-<script src="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-{{-- End DatePicker --}}
 
 <script type="text/javascript">
     $(function() {
@@ -119,8 +118,7 @@
     
       $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
         document.location.href = "{{ route('all-transaction-index') }}" +'?range='+picker.startDate.format('YYYY-MM-DD')+' - '+picker.endDate.format('YYYY-MM-DD');
-          $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-                  
+          $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));                  
 
       });
     

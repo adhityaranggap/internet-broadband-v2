@@ -7,7 +7,7 @@
     </div>
     <div class="form-group ">
     <label for="package_id">Package Name</label>
-    <select class="form-control" name="package_id">
+    <select class="form-control select2" name="package_id">
     @foreach($package as $package)
       <option value="{{$package->id}}"  {{ $package->id == $data->package_id ? 'selected' : '' }}>{{$package->name}}</option>
     @endforeach

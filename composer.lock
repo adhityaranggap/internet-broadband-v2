@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "111dc6aa63c5a0990f9d59d8b19b666e",
+    "content-hash": "7cc8f3ef04edc8cb6abd001989b6842c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -323,6 +323,75 @@
                 "source": "https://github.com/coraxster/flysystem-aws-s3-v3-minio/tree/1.0.15-m"
             },
             "time": "2017-09-26T08:08:44+00:00"
+        },
+        {
+            "name": "dapphp/radius",
+            "version": "2.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dapphp/radius.git",
+                "reference": "1954c34cd67f8a581b0a4c77241f472db0ef8199"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dapphp/radius/zipball/1954c34cd67f8a581b0a4c77241f472db0ef8199",
+                "reference": "1954c34cd67f8a581b0a4c77241f472db0ef8199",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-openssl": "To support hashing required by Pear_CHAP"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Crypt_CHAP_": "lib/"
+                },
+                "psr-4": {
+                    "Dapphp\\Radius\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Drew Phillips",
+                    "email": "drew@drew-phillips.com",
+                    "homepage": "https://drew-phillips.com/"
+                },
+                {
+                    "name": "SysCo/al",
+                    "homepage": "http://developer.sysco.ch/php/"
+                }
+            ],
+            "description": "A pure PHP RADIUS client based on the SysCo/al implementation",
+            "homepage": "https://github.com/dapphp/radius",
+            "keywords": [
+                "Authentication",
+                "authorization",
+                "chap",
+                "ms-chap",
+                "ms-chap v2",
+                "pap",
+                "radius",
+                "rfc1994",
+                "rfc2284",
+                "rfc2759",
+                "rfc2865",
+                "rfc2869"
+            ],
+            "support": {
+                "issues": "https://github.com/dapphp/radius/issues",
+                "source": "https://github.com/dapphp/radius/tree/composer-pear"
+            },
+            "time": "2018-04-26T01:55:40+00:00"
         },
         {
             "name": "divineomega/php-ssh-connection",

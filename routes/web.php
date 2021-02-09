@@ -18,7 +18,12 @@ Route::get('/', function () {
 })->name('login');
 
 Route::get('/login', function () {
-    return view('login.login');
+
+    if(is_null(auth()->user())){
+        return view('login.login');
+    }    
+
+    return redirect()->route('dashboard-index');
 })->name('login');
 
 Route::get('/terms', function () {

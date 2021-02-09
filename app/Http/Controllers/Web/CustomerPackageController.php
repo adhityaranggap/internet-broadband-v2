@@ -239,6 +239,11 @@ class CustomerPackageController extends Controller
                 ['status', '!=', \EnumTransaksi::STATUS_LUNAS],
             ])->get();
         }
-        return $data;        
+        if (is_null($data)){
+
+            return $data = [];
+        }else{
+            return $data;
+        }        
     }
 }
