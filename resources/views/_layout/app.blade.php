@@ -25,13 +25,16 @@
   <!-- Sweet Alert -->
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
 
+    <!-- CSS Select 2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/stisla/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/stisla/css/components.css') }}"> 
 
   <!-- Datepicker -->
-  <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-daterangepicker/daterangepicker.css" />
-  <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
+  <link rel="stylesheet" href="{{ asset('assets/vendors/stisla/css/daterangepicker.css') }}" />
+  <link rel="stylesheet" href="{{ asset('assets/vendors/stisla/css/bootstrap-timepicker.min.css') }}" />
 
   @stack('css')
 
