@@ -69,7 +69,8 @@
 
         $(".datepicker").daterangepicker({
           locale: {
-            format: 'DD-MM-YYYY'
+            // format: 'DD-MM-YYYY HH:mm'
+            format:'YYYY-MM-DD HH:mm'
           },
           singleDatePicker: true,
           // // Note : If you want to use time in date picker

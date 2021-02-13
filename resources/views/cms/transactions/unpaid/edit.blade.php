@@ -70,8 +70,8 @@
 $('.datepicker').daterangepicker({
         locale: {format: 'YYYY-MM-DD hh:mm'},
         singleDatePicker: true,
-        timePicker: true,
-        timePicker24Hour: true,
+        // timePicker: true,
+        // timePicker24Hour: true,
       });
     // $('.datepicker').daterangepicker({
     //       locale: {format: 'YYYY-MM-DD hh:mm:ss'},
