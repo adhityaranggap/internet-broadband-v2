@@ -16,10 +16,8 @@ class DashboardController extends Controller
         $customercount = User::all()->where('role_id', Role::ROLE_CUSTOMER)->count();
         $lunascount = Transaction::all()->where('status', \EnumTransaksi::STATUS_LUNAS)->count();
         $ticketcount = Ticket::all()->where('status', \EnumTicket::STATUS_OPEN)->count();
-        // $telatcount = Transaction::all()->where('status', \EnumTransaksi::STATUS_LUNAS)->count();
-        $telatcount = Transaction::all()->where('status', \EnumTransaksi::STATUS_TENGGANG)->count();
+        $telatcount = Transaction::all()->where('expired_date', '<' , now())->count();
         
-        // $data = Transaction::where('type_payment', '!=', '')->orderBy('created_at','desc')->take(5)->get();
         $arrSelect = [
             'users.username as name',
             'transactions.expired_date as expired_date',
