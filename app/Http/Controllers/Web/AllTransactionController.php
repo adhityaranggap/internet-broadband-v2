@@ -15,8 +15,10 @@ use Redirect;
 use \RouterOS\Client;
 use \RouterOS\Query;
 use Illuminate\Support\Facades\Crypt;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use App\Exports\AllTransactionExport;
  
 // use Veritrans_Config;
 // use Veritrans_Snap;
@@ -44,15 +46,49 @@ class AllTransactionController extends Controller
         
         return view('cms.transactions.alltransaction.index');
     }
+    /**
+     * Export data to excel .
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function export()
+    {
+        
+		return Excel::download(new AllTransactionExport, 'transaction.xlsx');
+    }
+    /**
+     * Import data to view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function import()
+    {
+        
+        return view('cms.transactions.alltransaction.import');
+    }
+    /**
+     * Import data to Database
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeImport(Request $request)
+    {
+
+        // validasi
+		$this->validate($request, [
+			'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        
+        
+    }
 
 
     public function datatables(Request $request)
     {       
         
-        // $modified = DB::table('transaction_has_modified')
-        // ->join('transactions', 'transaction_has_modified.transaction_id', 'transactions.id')
-        // ->get();
-        // return $modified;
+      $package = '150K 4M';
+
 
             $arrSelect = [
                 'users.username as name',
@@ -64,6 +100,20 @@ class AllTransactionController extends Controller
                 'users.role_id',
                 // 'trasanction_has_modified.transaction_id as transaction_modified'
             ];
+            //asd
+            $data = DB::table('users')
+            ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
+            ->join('packages', 'users_has_packages.package_id', '=', 'packages.id')
+            ->join('transactions', 'users_has_packages.id', '=', 'transactions.users_has_packages_id')
+            // ->join('transaction_has_modified', 'transactions.id', 'transaction_has_modified.transaction_id')
+            // ->where('users.name', $name)
+            ->where('packages.name', $package)
+            // ->whereRaw("`users`.`name` >= '$name' AND `packages`.`name` <= '$package'")
+            ->select($arrSelect)
+            ->get();
+            
+            return $data;
+            //asd
             if (Auth::check() && auth()->user()->role_id == Role::ROLE_CUSTOMER){
             $data = DB::table('users')
             ->join('users_has_packages', 'users.id', '=', 'users_has_packages.user_id')
@@ -116,7 +166,7 @@ class AllTransactionController extends Controller
      
         ->editColumn('expired_date',
             function ($data){
-                return Carbon::parse($data->expired_date)->format('Y-m-d');
+                return Carbon::parse($data->expired_date)->format('Y M d');
         })              
         ->editColumn('status',
             function ($data){

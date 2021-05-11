@@ -26,11 +26,11 @@ class EnumTransaksi
         }else if($status == 1){
             return \Component::badgetLinkDanger("Expired");
         }else if($status == 2){
-            return \Component::badgetLinkDanger("Butuh Verifikasi");
+            return \Component::badgetLinkDanger("Unverified");
         }else if($status == 3){
-            return \Component::badgetLinkSuccess("Lunas");
+            return \Component::badgetLinkSuccess("Paid");
         }else if($status == 4){
-            return \Component::badgetLinkWarning("Belum Lunas");
+            return \Component::badgetLinkWarning("Pending");
         }
     }
  

@@ -62,6 +62,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'Web\AllTransactionController@index')->name('all-transaction-index');//done
             Route::get('/datatables', 'Web\AllTransactionController@datatables')->name('all-transaction-datatables');//done
             Route::get('/create', 'Web\AllTransactionController@create')->name('all-transaction-create');//done
+            Route::get('/export', 'Web\AllTransactionController@export')->name('all-transaction-export');//done
+            Route::get('/import', 'Web\AllTransactionController@import')->name('all-transaction-import');//progress
+            Route::get('/store/import', 'Web\AllTransactionController@storeImport')->name('all-transaction-store-import');//progress
             Route::get('/sync', 'Web\AllTransactionController@sync')->name('all-transaction-sync');//done
             Route::post('/store', 'Web\AllTransactionController@store')->name('all-transaction-store');//done
             Route::get('/edit/{id}', 'Web\AllTransactionController@edit')->name('all-transaction-edit');//done

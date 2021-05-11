@@ -16,6 +16,8 @@
             {{-- <button id="lunas" class="btn btn-info">Set Lunas</button> --}}
             <a class="btn btn-outline-primary btn-confirm" href="{{route('all-transaction-sync') }} " title="Sync Data"><i class="fas fa-sync"> Sync Data </i></a>
             <a href="{{ route('all-transaction-create') }}" class="btn btn-outline-primary modal-show" title="Tambah Transaction Baru ">(+) Tambah Baru</a>
+            <a href="{{ route('all-transaction-export') }}" class="btn btn-outline-primary" title="Export Transaction">Export</a>
+            <a href="{{ route('all-transaction-import') }}" class="btn btn-outline-primary modal-show" title="Import Transaction">Import</a>
            
         </div>
         {{-- Start Date Filter --}}
